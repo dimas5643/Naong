@@ -10,18 +10,18 @@
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">Faça o Login</p>
                         <h1 class="display-5 mb-4">Login</h1>
-                        <form>
+                        <form action="processa_login.php" method="POST">
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="EMAIL">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL">
                                 </div>
                                 <div class="col-xl-12">
                                     <label for="">SENHA</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent" placeholder="SENHA">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                 </div>
                                 <div class="col-12">
-                                    <button type="button" class="btn btn-primary text-white w-100 py-3 px-5">LOGIN</button>
+                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">LOGIN</button>
                                 </div>
                             </div>
                         </form>
@@ -43,44 +43,45 @@
                             <div class="appointment-form rounded p-5">
                                 <p class="fs-4 text-uppercase text-primary">Preencha o formulario</p>
                                 <h1 class="display-5 mb-4">Cadastro de Doador</h1>
-                                <form>
+                                <form action="./model/doador_model.php" method="POST">
+                                
                                     <div class="row gy-3 gx-4">
 
                                         <div class="col-xl-6">
                                             <label for="">NOME</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="NOME">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">DOCUMENTO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="CPF/CNPJ">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="CPF/CNPJ">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CEP</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="CEP">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">ESTADO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="ESTADO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CIDADE</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="CIDADE">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">ENDEREÇO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="ENDEREÇO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CONTATO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent" placeholder="CONTATO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent" name="celular" placeholder="CONTATO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">EMAIL</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="EMAIL">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">SENHA</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent" placeholder="SENHA">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                         </div>
                                         <!-- <div class="col-xl-6">
                                         <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
@@ -92,7 +93,7 @@
                                     </div> -->
                                         <div class="col-xl-6">
                                             <label for="">DATA DE NASCIMENTO</label>
-                                            <input type="date" class="form-control py-3 border-primary bg-transparent">
+                                            <input type="date" class="form-control py-3 border-primary bg-transparent" name="data_nascimento">
                                         </div>
                                         <!-- <div class="col-xl-6">
                                         <select class="form-select py-3 border-primary bg-transparent" aria-label="Default select example">
@@ -106,8 +107,9 @@
                                         <textarea class="form-control border-primary bg-transparent text-white" name="text" id="area-text" cols="30" rows="5" placeholder="Write Comments"></textarea>
                                     </div> -->
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                            <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
                                         </div>
+                                        
                                     </div>
                                 </form>
                             </div>
@@ -118,46 +120,46 @@
                             <div class="appointment-form rounded p-5">
                                 <p class="fs-4 text-uppercase text-primary">Preencha o formulario</p>
                                 <h1 class="display-5 mb-4">Cadastro de ONG</h1>
-                                <form>
+                                <form action="./model/ong_model.php" method="POST">
                                     <div class="row gy-3 gx-4">
                                         <div class="col-xl-6">
                                             <label for="">NOME</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="NOME">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">DOCUMENTO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="DOCUMENTO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CEP</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="CEP">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">ESTADO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="ESTADO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CIDADE</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="CIDADE">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">ENDEREÇO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="ENDEREÇO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CONTATO</label>
-                                            <input type="phone" class="form-control py-3 border-primary bg-transparent" placeholder="CONTATO">
+                                            <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">EMAIL</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" placeholder="EMAIL">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">SENHA</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent" placeholder="SENHA">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                         </div>
                                         <div class="col-12">
-                                            <button type="button" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                            <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
                                         </div>
                                     </div>
                                 </form>

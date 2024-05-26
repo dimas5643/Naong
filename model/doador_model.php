@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $conn->real_escape_string($email);
     $celular = $conn->real_escape_string($celular);
     $senha = password_hash($senha, PASSWORD_DEFAULT); // Criptografa a senha
+
     $data_nascimento = $conn->real_escape_string($data_nascimento);
 
     $sql = "INSERT INTO doadores (nome, cpf_cnpj, cep, estado, cidade, endereco, email, telefone, senha, nascimento, cadastro, ativo)

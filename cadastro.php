@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6"  style="padding-top: 50px; margin-top: 50px;">
+            <div class="col-sm-6"  style="padding-top: 150px; padding-bottom: 50px;">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-doador-tab" data-bs-toggle="pill" data-bs-target="#pills-doador" type="button" role="tab" aria-controls="pills-doador" aria-selected="true">Doador</button>

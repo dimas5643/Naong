@@ -72,7 +72,7 @@
 <!-- Copyright End -->
 
 
-
+<div id="alert-container"></div>
 <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
 
 <!-- JavaScript Libraries -->
@@ -84,7 +84,18 @@
 <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
 <!-- Template Javascript -->
-<script src="js/main.js"></script>
+<script src="js/main.js">
+    function mensagemErro(text) {
+        const alertHTML = `
+                        <div class="alert alert-danger  " role="alert">
+                            ${text}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>`;
+
+        const alertContainer = document.getElementById("alert-container");
+        alertContainer.innerHTML = alertHTML;
+    }
+</script>
 </body>
 
 </html>

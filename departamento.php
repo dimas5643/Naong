@@ -9,14 +9,18 @@ include('./cabecalho.php'); ?>
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">CADASTRO </p>
                         <h1 class="display-5 mb-4">DEPARTAMENTO</h1>
-                        <form action="processa_login.php" method="POST">
+                        <form action="model/departamento_model.php" method="POST">
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">NOME</label>
                                     <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME">
                                 </div>
+                                <div class="col-xl-12">
+                                    <label for="">URL DO ICON</label>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="icon" placeholder="URL">
+                                </div>
                                 <div class="col-xl-12 form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked name="ativo">
                                     <label class="form-check-label" for="flexSwitchCheckDefault">ATIVO</label>
                                 </div>
                                 <div class="col-12">

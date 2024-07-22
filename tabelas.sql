@@ -35,11 +35,12 @@ CREATE TABLE `doadores` (
 ) 
 
 CREATE TABLE `departamentos` (
-  `id_departamento` int(11) NOT NULL,
+  `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
   `nome_departamento` varchar(45) DEFAULT NULL,
   `ativo` char(1) DEFAULT NULL,
+  `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_departamento`)
-)
+) 
 
 CREATE TABLE `necessidades` (
   `id_necessidade` int(11) NOT NULL,

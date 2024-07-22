@@ -1,6 +1,7 @@
     <?php
     include('./cabecalho.php');
     include('./model/consultas_ong.php');
+    include('./model/consultas_departamento.php');
 
     ?>
 
@@ -20,6 +21,30 @@
         </div>
         <div class="header-carousel-item">
             <img src="img/2.png" class="img-fluid w-100" alt="Image">
+            <!-- <div class="carousel-caption">
+                <div class="carousel-caption-content p-3">
+                    <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Physiotherapy Center</h5>
+                    <h1 class="display-1 text-capitalize text-white mb-4">Best Solution For Painful Life</h1>
+                    <p class="mb-5 fs-5 animated slideInDown">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    </p>
+                    <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#">Book Appointment</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="header-carousel-item">
+            <img src="img/3.png" class="img-fluid w-100" alt="Image">
+            <!-- <div class="carousel-caption">
+                <div class="carousel-caption-content p-3">
+                    <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Physiotherapy Center</h5>
+                    <h1 class="display-1 text-capitalize text-white mb-4">Best Solution For Painful Life</h1>
+                    <p class="mb-5 fs-5">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                    </p>
+                    <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#">Book Appointment</a>
+                </div>
+            </div> -->
+        </div>
+        <div class="header-carousel-item">
+            <img src="img/4.png" class="img-fluid w-100" alt="Image">
             <!-- <div class="carousel-caption">
                 <div class="carousel-caption-content p-3">
                     <h5 class="text-white text-uppercase fw-bold mb-4" style="letter-spacing: 3px;">Physiotherapy Center</h5>
@@ -116,133 +141,35 @@
                 <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat deleniti amet at atque sequi quibusdam cumque itaque repudiandae temporibus, eius nam mollitia voluptas maxime veniam necessitatibus saepe in ab? Repellat!</p> -->
             </div>
             <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-diagnoses fa-4x text-primary"></i>
+
+                <?php
+
+                foreach ($listDepartamento as $departamento) {
+
+                ?>
+                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="row-cols-1 feature-item p-4">
+                            <div class="col-12 text-center">
+                                <div class="feature-icon mb-4">
+                                    <div class="p-3 d-inline-flex bg-white rounded">
+                                    <img width="50" height="50" src="<?php echo $departamento['icon']?>" alt="shirt"/>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Licensed Therapist</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
+                                <div class="feature-content d-flex flex-column text-center">
+                                    <h5 class="mb-4"><?php echo $departamento['nome_departamento'] ?></h5>
+                                    <!-- <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p> -->
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-briefcase-medical fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Personalized Treatment</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-hospital-user fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Therapy Goals</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-users fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Practitioners Network</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-spa fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Comfortable Center</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-heart fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Experienced Stuff</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fab fa-pied-piper fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Therapy Goals</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="row-cols-1 feature-item p-4">
-                        <div class="col-12">
-                            <div class="feature-icon mb-4">
-                                <div class="p-3 d-inline-flex bg-white rounded">
-                                    <i class="fas fa-user-md fa-4x text-primary"></i>
-                                </div>
-                            </div>
-                            <div class="feature-content d-flex flex-column">
-                                <h5 class="mb-4">Licensed Therapist</h5>
-                                <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 text-center wow fadeInUp" data-wow-delay="0.2s">
-                    <a href="#" class="btn btn-primary rounded-pill text-white py-3 px-5">More Details</a>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>
     <!-- Feature End -->
+
+
 
 
     <!-- Modal Video -->

@@ -1,7 +1,7 @@
     <?php
     include('./cabecalho.php');
-    include('./model/consultas_ong.php');
-    include('./model/consultas_departamento.php');
+    include('consultas_ong.php');
+    include('consultas_departamento.php');
 
     ?>
 
@@ -144,7 +144,7 @@
 
                 <?php
 
-                foreach ($listDepartamento as $departamento) {
+                foreach ($listDepartamentoAtivos as $departamento) {
 
                 ?>
                     <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">

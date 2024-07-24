@@ -43,7 +43,7 @@
                             <div class="appointment-form rounded p-5">
                                 <p class="fs-4 text-uppercase text-primary">Preencha o formulario</p>
                                 <h1 class="display-5 mb-4">Cadastro de Doador</h1>
-                                <form action="./model/doador_model.php" method="POST">
+                                <form action="doador_model.php" method="POST">
                                 
                                     <div class="row gy-3 gx-4">
 
@@ -120,7 +120,7 @@
                             <div class="appointment-form rounded p-5">
                                 <p class="fs-4 text-uppercase text-primary">Preencha o formulario</p>
                                 <h1 class="display-5 mb-4">Cadastro de ONG</h1>
-                                <form action="./model/ong_model.php" method="POST">
+                                <form action="ong_model.php" method="POST">
                                     <div class="row gy-3 gx-4">
                                         <div class="col-xl-6">
                                             <label for="">NOME</label>

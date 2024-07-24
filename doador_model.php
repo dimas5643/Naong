@@ -1,5 +1,5 @@
 <?php
-include '../banco.php';
+include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
@@ -8,9 +8,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $estado = $_POST['estado'];
     $cidade = $_POST['cidade'];
     $endereco = $_POST['endereco'];
-    $contato = $_POST['contato'];
     $email = $_POST['email'];
+    $celular = $_POST['celular'];
     $senha = $_POST['senha'];
+    $data_nascimento = $_POST['data_nascimento'];
 
     // Proteção contra SQL Injection
     $nome = $conn->real_escape_string($nome);
@@ -19,16 +20,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $estado = $conn->real_escape_string($estado);
     $cidade = $conn->real_escape_string($cidade);
     $endereco = $conn->real_escape_string($endereco);
-    $contato = $conn->real_escape_string($contato);
     $email = $conn->real_escape_string($email);
+    $celular = $conn->real_escape_string($celular);
     $senha = password_hash($senha, PASSWORD_DEFAULT); // Criptografa a senha
 
-    // Inserir dados no banco de dados com a data e hora atual no campo cadastro
-    $sql = "INSERT INTO ongs (nome_fantasia, cnpj, cep, estado, cidade, endereco, telefone, email, senha, data_cadastro, ativo)
-            VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$contato', '$email', '$senha', NOW(), 'A')";
+    $data_nascimento = $conn->real_escape_string($data_nascimento);
+
+    $sql = "INSERT INTO doadores (nome, cpf_cnpj, cep, estado, cidade, endereco, email, telefone, senha, nascimento, cadastro, ativo)
+            VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$email', '$celular', '$senha', '$data_nascimento', NOW(), 'A')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Cadastro realizado com sucesso!";
+        //DIRECIONAR PARA A PAGINA PRINCIPAL 
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;
     }

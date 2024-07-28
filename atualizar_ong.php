@@ -1,89 +1,79 @@
 <?php
-include('./cabecalho.php');
-include('departamento_model.php');
 include './banco.php';
 
-$id = 0; //$_GET['id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST['id'];
+    $nome = $_POST['nome'];
+    $documento = $_POST['documento'];
+    $cep = $_POST['cep'];
+    $estado = $_POST['estado'];
+    $cidade = $_POST['cidade'];
+    $endereco = $_POST['endereco'];
+    $contato = $_POST['contato'];
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
+    $area_atuacao = $_POST['area_atuacao'];
 
-$sql = "SELECT * FROM ongs WHERE id_ong = $id";
-$result = $conn->query($sql);
+    // Proteção contra SQL Injection
+    $nome = $conn->real_escape_string($nome);
+    $documento = $conn->real_escape_string($documento);
+    $cep = $conn->real_escape_string($cep);
+    $estado = $conn->real_escape_string($estado);
+    $cidade = $conn->real_escape_string($cidade);
+    $endereco = $conn->real_escape_string($endereco);
+    $contato = $conn->real_escape_string($contato);
+    $email = $conn->real_escape_string($email);
+    $area_atuacao = $conn->real_escape_string($area_atuacao);
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-} else {
-    echo "Nenhum registro encontrado.";
-    exit;
+    // Verificar se uma nova senha foi fornecida e criptografá-la
+    if (!empty($senha)) {
+        $senha = password_hash($senha, PASSWORD_DEFAULT);
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+    } else {
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+    }
+
+    // Lidar com o upload da imagem
+    if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
+        $target_dir = "uploads/";
+        $target_file = $target_dir . basename($_FILES["foto_perfil"]["name"]);
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+        // Verificar se o arquivo é uma imagem
+        $check = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
+        if ($check !== false) {
+            // Verificar se o arquivo já existe
+            if (!file_exists($target_file)) {
+                // Verificar o tamanho do arquivo
+                if ($_FILES["foto_perfil"]["size"] <= 5000000) { // 5MB máximo
+                    // Permitir apenas certos formatos de arquivo
+                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif") {
+                        if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
+                            // Atualizar o caminho da imagem no banco de dados
+                            $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file' WHERE id_ong=$id";
+                        } else {
+                            echo "Desculpe, houve um erro ao enviar sua imagem.";
+                        }
+                    } else {
+                        echo "Desculpe, apenas arquivos JPG, JPEG, PNG e GIF são permitidos.";
+                    }
+                } else {
+                    echo "Desculpe, seu arquivo é muito grande.";
+                }
+            } else {
+                echo "Desculpe, o arquivo já existe.";
+            }
+        } else {
+            echo "O arquivo não é uma imagem.";
+        }
+    }
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Atualização realizada com sucesso!";
+    } else {
+        echo "Erro: " . $sql . "<br>" . $conn->error;
+    }
+
+    $conn->close();
 }
-
-$conn->close();
-?>
-
-<div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
-    <div class="container py-12" style="margin-top: 50px; padding-bottom: 50px;">
-        <div class="row g-12 align-items-center">
-            <div class="col-lg-12">
-                <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
-                    <div class="appointment-form rounded p-5">
-                        <p class="fs-4 text-uppercase text-primary">DADOS DO PERFIL</p>
-                        <h1 class="display-5 mb-4">PERFIL</h1>
-                        <form action="atualizar.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="id" value="<?php echo $row['id_ong']; ?>">
-                            <div class="row gy-3 gx-4">
-                                <div class="col-xl-6">
-                                    <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">DOCUMENTO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">CEP</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP" value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">ESTADO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO" value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">CIDADE</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE" value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">ENDEREÇO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO" value="<?php echo isset($row['endereco']) ? $row['endereco'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">CONTATO</label>
-                                    <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO" value="<?php echo isset($row['telefone']) ? $row['telefone'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">SENHA</label>
-                                    <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">ÁREA DE ATUAÇÃO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">FOTO DE PERFIL</label>
-                                    <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<?php
-include('./rodape.php');
 ?>

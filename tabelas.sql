@@ -16,7 +16,7 @@ CREATE TABLE `ongs` (
   `foto_perfil` varchar(255) DEFAULT NULL,
   `area_atuacao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_ong`,`cnpj`,`email`)
-) 
+)  
 
 CREATE TABLE `departamentos` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
@@ -24,7 +24,7 @@ CREATE TABLE `departamentos` (
   `ativo` char(1) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_departamento`)
-) 
+)  
 
 CREATE TABLE `necessidades` (
   `id_necessidade` int(11) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `necessidades` (
   KEY `fk_necessidade_departamento_idx` (`id_departamento`),
   CONSTRAINT `fk_necessidade_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_necessidade_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+) 
 
 CREATE TABLE `registro_doacoes` (
   `id_registro` int(11) NOT NULL,
@@ -53,4 +53,4 @@ CREATE TABLE `registro_doacoes` (
   KEY `fk_registro_ong_idx` (`id_ong`),
   CONSTRAINT `fk_registro_doador` FOREIGN KEY (`id_doador`) REFERENCES `doadores` (`id_doador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
+) 

@@ -35,10 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Lidar com o upload da imagem
     if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
-        $target_dir = "uploads/";
-        $target_file = $target_dir . basename($_FILES["foto_perfil"]["name"]);
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
+        $target_dir = "img/";
+        $imageFileType = str_replace('image/', '', $_FILES['foto_perfil']['type']);
+        $target_file = $target_dir . 'ong_' . $id . '.' . $imageFileType;
+        
         // Verificar se o arquivo é uma imagem
         $check = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
         if ($check !== false) {
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Verificar o tamanho do arquivo
                 if ($_FILES["foto_perfil"]["size"] <= 5000000) { // 5MB máximo
                     // Permitir apenas certos formatos de arquivo
-                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif") {
+                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
                         if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
                             // Atualizar o caminho da imagem no banco de dados
                             $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file' WHERE id_ong=$id";
@@ -76,4 +76,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 }
-?>

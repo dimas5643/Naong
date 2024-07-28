@@ -15,7 +15,6 @@ if ($result->num_rows > 0) {
     exit;
 }
 
-$conn->close();
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -29,7 +28,7 @@ $conn->close();
                         <?php if (!empty($row['foto_perfil'])): ?>
                             <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" style="width: 150px; height: 150px; border-radius: 50%;">
                         <?php endif; ?>
-                        <form action="atualizar.php" method="POST" enctype="multipart/form-data">
+                        <form action="atualizar_ong.php" method="POST" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="<?php echo $row['id_ong']; ?>">
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">

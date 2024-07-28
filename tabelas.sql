@@ -1,5 +1,5 @@
 CREATE TABLE `ongs` (
-  `id_ong` int(11) NOT NULL,
+  `id_ong` int(11) NOT NULL AUTO_INCREMENT,
   `cnpj` varchar(45) NOT NULL,
   `razao_social` varchar(45) DEFAULT NULL,
   `nome_fantasia` varchar(45) DEFAULT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE `registro_doacoes` (
 )
 
 CREATE TABLE `doadores` (
-  `id_doador` int(11) NOT NULL,
+  `id_doador` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) DEFAULT NULL,
   `cpf_cnpj` varchar(45) NOT NULL,
   `cidade` varchar(45) DEFAULT NULL,

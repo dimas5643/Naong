@@ -1,6 +1,6 @@
 CREATE TABLE `ongs` (
   `id_ong` int(11) NOT NULL,
-  `cpnj` varchar(45) NOT NULL,
+  `cnpj` varchar(45) NOT NULL,
   `razao_social` varchar(45) DEFAULT NULL,
   `nome_fantasia` varchar(45) DEFAULT NULL,
   `endereco` varchar(45) DEFAULT NULL,
@@ -13,25 +13,9 @@ CREATE TABLE `ongs` (
   `data_cadastro` datetime DEFAULT NULL,
   `ativo` char(1) DEFAULT NULL,
   `senha` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id_ong`,`cpnj`,`email`)
-)
-
-CREATE TABLE `doadores` (
-  `id_doador` int(11) NOT NULL,
-  `nome` varchar(45) DEFAULT NULL,
-  `cpf_cnpj` varchar(45) NOT NULL,
-  `cidade` varchar(45) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL,
-  `cep` varchar(45) DEFAULT NULL,
-  `pais` varchar(45) DEFAULT NULL,
-  `telefone` varchar(45) DEFAULT NULL,
-  `email` varchar(45) NOT NULL,
-  `senha` varchar(45) DEFAULT NULL,
-  `nascimento` date DEFAULT NULL,
-  `cadastro` datetime DEFAULT NULL,
-  `endereco` varchar(45) DEFAULT NULL,
-  `ativo` char(1) DEFAULT NULL,
-  PRIMARY KEY (`id_doador`,`email`,`cpf_cnpj`)
+  `foto_perfil` varchar(255) DEFAULT NULL,
+  `area_atuacao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_ong`,`cnpj`,`email`)
 ) 
 
 CREATE TABLE `departamentos` (

@@ -12,11 +12,29 @@ CREATE TABLE `ongs` (
   `email` varchar(45) NOT NULL,
   `data_cadastro` datetime DEFAULT NULL,
   `ativo` char(1) DEFAULT NULL,
-  `senha` varchar(45) DEFAULT NULL,
+  `senha` varchar(200) DEFAULT NULL,
   `foto_perfil` varchar(255) DEFAULT NULL,
   `area_atuacao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_ong`,`cnpj`,`email`)
-)  
+);  
+
+CREATE TABLE `doadores` (
+  `id_doador` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) DEFAULT NULL,
+  `cpf_cnpj` varchar(45) NOT NULL,
+  `cidade` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL,
+  `cep` varchar(45) DEFAULT NULL,
+  `pais` varchar(45) DEFAULT NULL,
+  `telefone` varchar(45) DEFAULT NULL,
+  `email` varchar(45) NOT NULL,
+  `senha` varchar(200) DEFAULT NULL,
+  `nascimento` date DEFAULT NULL,
+  `cadastro` datetime DEFAULT NULL,
+  `endereco` varchar(45) DEFAULT NULL,
+  `ativo` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id_doador`,`email`,`cpf_cnpj`)
+);
 
 CREATE TABLE `departamentos` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,
@@ -24,7 +42,7 @@ CREATE TABLE `departamentos` (
   `ativo` char(1) DEFAULT NULL,
   `icon` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_departamento`)
-)  
+);  
 
 CREATE TABLE `necessidades` (
   `id_necessidade` int(11) NOT NULL,
@@ -39,7 +57,7 @@ CREATE TABLE `necessidades` (
   KEY `fk_necessidade_departamento_idx` (`id_departamento`),
   CONSTRAINT `fk_necessidade_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_necessidade_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) 
+); 
 
 CREATE TABLE `registro_doacoes` (
   `id_registro` int(11) NOT NULL,
@@ -53,22 +71,4 @@ CREATE TABLE `registro_doacoes` (
   KEY `fk_registro_ong_idx` (`id_ong`),
   CONSTRAINT `fk_registro_doador` FOREIGN KEY (`id_doador`) REFERENCES `doadores` (`id_doador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-)
-
-CREATE TABLE `doadores` (
-  `id_doador` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) DEFAULT NULL,
-  `cpf_cnpj` varchar(45) NOT NULL,
-  `cidade` varchar(45) DEFAULT NULL,
-  `estado` varchar(45) DEFAULT NULL,
-  `cep` varchar(45) DEFAULT NULL,
-  `pais` varchar(45) DEFAULT NULL,
-  `telefone` varchar(45) DEFAULT NULL,
-  `email` varchar(45) NOT NULL,
-  `senha` varchar(45) DEFAULT NULL,
-  `nascimento` date DEFAULT NULL,
-  `cadastro` datetime DEFAULT NULL,
-  `endereco` varchar(45) DEFAULT NULL,
-  `ativo` char(1) DEFAULT NULL,
-  PRIMARY KEY (`id_doador`,`email`,`cpf_cnpj`)
-)
+);

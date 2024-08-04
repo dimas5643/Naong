@@ -1,5 +1,6 @@
 <?php
 include 'banco.php';
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -18,8 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $doador = $result->fetch_assoc();
         if (password_verify($senha, $doador['senha'])) {
             // Senha correta
+            $_SESSION['user_role'] = 'doador';
+            $_SESSION['user_id'] = $doador['id_doador'];
             echo "Login realizado com sucesso como Doador!";
             // Aqui você pode redirecionar o usuário para uma página específica
+            header('Location: index.php');
             exit();
         }
     }
@@ -33,8 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $ong = $result->fetch_assoc();
         if (password_verify($senha, $ong['senha'])) {
             // Senha correta
+            $_SESSION['user_role'] = 'ong';
+            $_SESSION['user_id'] = $ong['id_ong'];
             echo "Login realizado com sucesso como ONG!";
             // Aqui você pode redirecionar o usuário para uma página específica
+            header('Location: index.php');
             exit();
         }
     }

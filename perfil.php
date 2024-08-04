@@ -2,19 +2,35 @@
 include('./cabecalho.php');
 include('departamento_model.php');
 include './banco.php';
+session_start();
 
-$id = 0; //$_GET['id'];
+// Verificar se o usuário está logado e obter o ID e o tipo de usuário da sessão
+if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
+    $id = $_SESSION['user_id'];
+    $user_role = $_SESSION['user_role'];
 
-$sql = "SELECT * FROM ongs WHERE id_ong = $id";
-$result = $conn->query($sql);
+    // Determinar a tabela correta com base no tipo de usuário
+    if ($user_role == 'ong') {
+        $sql = "SELECT * FROM ongs WHERE id_ong = $id";
+    } elseif ($user_role == 'doador') {
+        $sql = "SELECT * FROM doadores WHERE id_doador = $id";
+    } else {
+        echo "Tipo de usuário inválido.";
+        exit;
+    }
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+    } else {
+        echo "Nenhum registro encontrado.";
+        exit;
+    }
 } else {
-    echo "Nenhum registro encontrado.";
+    echo "Usuário não está logado.";
     exit;
 }
-
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -28,16 +44,16 @@ if ($result->num_rows > 0) {
                         <?php if (!empty($row['foto_perfil'])): ?>
                             <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" style="width: 150px; height: 150px; border-radius: 50%;">
                         <?php endif; ?>
-                        <form action="atualizar_ong.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="id" value="<?php echo $row['id_ong']; ?>">
+                        <form action="atualizar_<?php echo $user_role; ?>.php" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : $row['nome']; ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">DOCUMENTO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : $row['documento']; ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CEP</label>
@@ -57,7 +73,7 @@ if ($result->num_rows > 0) {
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CONTATO</label>
-                                    <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO" value="<?php echo isset($row['telefone']) ? $row['telefone'] : ''; ?>">
+                                    <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO" value="<?php echo isset($row['telefone']) ? $row['telefone'] : $row['contato']; ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">EMAIL</label>
@@ -67,6 +83,7 @@ if ($result->num_rows > 0) {
                                     <label for="">SENHA</label>
                                     <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                 </div>
+                                <?php if ($user_role == 'ong'): ?>
                                 <div class="col-xl-6">
                                     <label for="">ÁREA DE ATUAÇÃO</label>
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>">
@@ -75,6 +92,7 @@ if ($result->num_rows > 0) {
                                     <label for="">FOTO DE PERFIL</label>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
                                 </div>
+                                <?php endif; ?>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
                                 </div>

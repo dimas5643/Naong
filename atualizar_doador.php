@@ -12,7 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contato = $_POST['contato'];
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-    $area_atuacao = $_POST['area_atuacao'];
 
     // Proteção contra SQL Injection
     $nome = $conn->real_escape_string($nome);
@@ -23,22 +22,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $endereco = $conn->real_escape_string($endereco);
     $contato = $conn->real_escape_string($contato);
     $email = $conn->real_escape_string($email);
-    $area_atuacao = $conn->real_escape_string($area_atuacao);
 
     // Verificar se uma nova senha foi fornecida e criptografá-la
     if (!empty($senha)) {
         $senha = password_hash($senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+        $sql = "UPDATE doadores SET nome='$nome', cpf_cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha' WHERE id_doador=$id";
     } else {
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+        $sql = "UPDATE doadores SET nome='$nome', cpf_cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email' WHERE id_doador=$id";
     }
 
     // Lidar com o upload da imagem
     if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] == 0) {
-        $target_dir = "img/ongs/";
+        $target_dir = "img/doadores/";
         $imageFileType = str_replace('image/', '', $_FILES['foto_perfil']['type']);
         $target_file = $target_dir . 'ong_' . $id . '.' . $imageFileType;
-        
+
         // Verificar se o arquivo é uma imagem
         $check = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
         if ($check !== false) {
@@ -50,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
                         if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
                             // Atualizar o caminho da imagem no banco de dados
-                            $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file' WHERE id_ong=$id";
+                            $sql = "UPDATE doadores SET nome='$nome', cpf_cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', foto_perfil='$target_file' WHERE id_doador=$id";
                         } else {
                             echo "Desculpe, houve um erro ao enviar sua imagem.";
                         }
@@ -76,5 +74,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 
-    header('Location: perfil_ong.php');
+    header('Location: perfil_doador.php');
 }

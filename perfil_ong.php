@@ -1,36 +1,8 @@
 <?php
 include('./cabecalho.php');
-include('departamento_model.php');
 include './banco.php';
-session_start();
+include('./perfil_ong_model.php');
 
-// Verificar se o usuário está logado e obter o ID e o tipo de usuário da sessão
-if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
-    $id = $_SESSION['user_id'];
-    $user_role = $_SESSION['user_role'];
-
-    // Determinar a tabela correta com base no tipo de usuário
-    if ($user_role == 'ong') {
-        $sql = "SELECT * FROM ongs WHERE id_ong = $id";
-    } elseif ($user_role == 'doador') {
-        $sql = "SELECT * FROM doadores WHERE id_doador = $id";
-    } else {
-        echo "Tipo de usuário inválido.";
-        exit;
-    }
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-    } else {
-        echo "Nenhum registro encontrado.";
-        exit;
-    }
-} else {
-    echo "Usuário não está logado.";
-    exit;
-}
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -41,7 +13,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">DADOS DO PERFIL</p>
                         <h1 class="display-5 mb-4">PERFIL</h1>
-                        <?php if (!empty($row['foto_perfil'])): ?>
+                        <?php if (!empty($row['foto_perfil'])) : ?>
                             <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" style="width: 150px; height: 150px; border-radius: 50%;">
                         <?php endif; ?>
                         <form action="atualizar_<?php echo $user_role; ?>.php" method="POST" enctype="multipart/form-data">
@@ -83,7 +55,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
                                     <label for="">SENHA</label>
                                     <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                 </div>
-                                <?php if ($user_role == 'ong'): ?>
+
                                 <div class="col-xl-6">
                                     <label for="">ÁREA DE ATUAÇÃO</label>
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>">
@@ -92,7 +64,6 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
                                     <label for="">FOTO DE PERFIL</label>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
                                 </div>
-                                <?php endif; ?>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
                                 </div>

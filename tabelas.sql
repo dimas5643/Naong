@@ -45,7 +45,7 @@ CREATE TABLE `departamentos` (
 );  
 
 CREATE TABLE `necessidades` (
-  `id_necessidade` int(11) NOT NULL,
+  `id_necessidade` int(11) NOT NULL AUTO_INCREMENT,
   `id_ong` int(11) DEFAULT NULL,
   `id_departamento` int(11) DEFAULT NULL,
   `descricao` text DEFAULT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE `necessidades` (
 ); 
 
 CREATE TABLE `registro_doacoes` (
-  `id_registro` int(11) NOT NULL,
+  `id_registro` int(11) NOT NULL AUTO_INCREMENT,
   `id_doador` int(11) DEFAULT NULL,
   `id_ong` int(11) DEFAULT NULL,
   `doacao` varchar(45) DEFAULT NULL,
@@ -72,3 +72,19 @@ CREATE TABLE `registro_doacoes` (
   CONSTRAINT `fk_registro_doador` FOREIGN KEY (`id_doador`) REFERENCES `doadores` (`id_doador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
+CREATE TABLE `naong`.`pontos_coleta` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `ong` INT NULL,
+  `nome` VARCHAR(45) NULL,
+  `rua` VARCHAR(45) NULL,
+  `cidade` VARCHAR(45) NULL,
+  `estado` varchar(45) DEFAULT NULL,
+  `pais` VARCHAR(45) NULL,
+  `cep` VARCHAR(45) NULL,
+  `numero_endereco` VARCHAR(45) NULL,
+  `telefone` VARCHAR(45) NULL,
+  `ativo` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `ong_coleta_idx` (`ong` ASC),
+  CONSTRAINT `ong_coleta`    FOREIGN KEY (`ong`)   REFERENCES `naong`.`ongs` (`id_ong`));

@@ -73,6 +73,14 @@ CREATE TABLE `registro_doacoes` (
   CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
+CREATE TABLE `banners` (
+  `id_banner` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `arquivo` VARCHAR(45) NOT NULL,
+  `dtinicial` DATETIME NOT NULL,
+  `dtfinal` DATETIME NOT NULL,
+  PRIMARY KEY (`id_banner`));
+
 CREATE TABLE `naong`.`pontos_coleta` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `ong` INT NULL,

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Configurações do banco de dados
+// Configurações do banco de dados 
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -68,8 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$ong', '$nome', '$rua',  '$estado', '$cidade', '$pais', '$cep', '$numero_endereco', '$telefone', '$ativo')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Cadastro realizado com sucesso!";
-        //DIRECIONAR PARA A PAGINA PRINCIPAL 
+        header("Location: consulta_coleta.php");
+        exit; 
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;
     }

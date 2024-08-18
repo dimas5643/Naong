@@ -1,0 +1,122 @@
+<?php
+include('./cabecalho.php');
+include('./cadastro_publicacao_model.php');
+include './banco.php';
+?>
+
+<div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
+    <div class="container py-12" style="margin-top: 50px; padding-bottom: 50px;">
+        <div class="row g-12 align-items-center">
+            <div class="col-lg-12">
+                <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
+                    <div class="appointment-form rounded p-5">
+                        <p class="fs-4 text-uppercase text-primary">DADOS DA PUBLICAÇÃO</p>
+                        <h1 class="display-5 mb-4">PUBLICAÇÕES</h1>
+                        <form action="cadastro_publicacao_model.php" method="POST" enctype="multipart/form-data">
+                            <div class="row gy-3 gx-4">
+                                <div class="col-xl-12">
+                                    <label for="">TITULO</label>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="titulo" placeholder="TITULO" value="<?php echo isset($row['titulo']) ? $row['titulo'] : ''; ?>">
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <label for="" class="form-label">DESCRIÇÃO</label>
+                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5"><?php echo isset($row['descricao']) ? $row['descricao'] : 'DESCRIÇÃO'; ?></textarea>
+                                </div>
+
+                                <div class="col-xl-12">
+                                    <label for="">FOTO</label>
+                                    <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto">
+                                </div>
+
+                                <div class="col-xl-11">
+                                    <label for="">PONTOS DE COLETA</label>
+                                    <select class="form-control py-3 border-primary bg-transparent" name="coleta">
+                                        <?php foreach ($list_pontos_coleta as $key => $pontos_coleta) { ?>
+                                            <option value="<?php echo  $pontos_coleta['id'] ?>"><?php echo $pontos_coleta['nome'] ?></option>
+                                        <?php } ?>
+                                    </select>
+
+                                </div>
+                                <div class="col-xl-1">
+                                    <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                    <button type="button" class="btn btn-success text-white py-3 px-4" id="buttonAddPontosColeta">+</button>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-xl-12">
+                                <label for="">PONTOS DE COLETA ADICIONADOS</label>
+                                <table class="table table-bordered" id="pontosColetaTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Ponto de Coleta</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Linhas dinâmicas serão adicionadas aqui -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<?php
+
+include('./rodape.php');
+
+?>
+
+<script>
+    document.getElementById('buttonAddPontosColeta').addEventListener('click', function() {
+        var selectColeta = document.querySelector('select[name="coleta"]');
+        var selectedOption = selectColeta.options[selectColeta.selectedIndex];
+        var tableBody = document.querySelector('#pontosColetaTable tbody');
+
+        if (selectedOption.value) {
+            var newRow = document.createElement('tr');
+            newRow.innerHTML = `
+            <td>
+                <input type="hidden" name="pontos_coleta[]" value="${selectedOption.value}">
+                ${selectedOption.text}
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
+            </td>
+        `;
+            tableBody.appendChild(newRow);
+
+            // Remover a opção do select após adicionar
+            selectColeta.remove(selectColeta.selectedIndex);
+        }
+    });
+
+    // Remover ponto de coleta da tabela
+    document.getElementById('pontosColetaTable').addEventListener('click', function(e) {
+        if (e.target && e.target.classList.contains('btnRemovePontoColeta')) {
+            var row = e.target.closest('tr');
+            var pontoColetaValue = row.querySelector('input[name="pontos_coleta[]"]').value;
+            var pontoColetaText = row.cells[0].textContent.trim();
+
+            // Adicionar a opção de volta ao select
+            var selectColeta = document.querySelector('select[name="coleta"]');
+            var option = document.createElement('option');
+            option.value = pontoColetaValue;
+            option.textContent = pontoColetaText;
+            selectColeta.appendChild(option);
+
+            // Remover a linha da tabela
+            row.remove();
+        }
+    });
+</script>
+<?php print_r($_SESSION) ?>

@@ -17,7 +17,7 @@ include ('./cadastro_banner_model.php');
                             <?php } ?>
                         </div>
 
-                        <form action="save_banner.php" method="POST" enctype="multipart/form-data">
+                        <form action="cadastro_banner_model.php" method="POST" enctype="multipart/form-data">
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-4">
                                     <label for="">NOME</label>

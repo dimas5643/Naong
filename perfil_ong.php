@@ -64,6 +64,7 @@ include('./perfil_ong_model.php');
                                     <label for="">FOTO DE PERFIL</label>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
                                 </div>
+                                <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
                                 </div>
@@ -78,3 +79,26 @@ include('./perfil_ong_model.php');
 <?php
 include('./rodape.php');
 ?>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&callback=initMap" async defer></script>
+<script>
+    function initMap() {
+        var geocoder = new google.maps.Geocoder();
+        var address = "<?php echo $row['endereco'] . ', ' . $row['cidade'] . ', ' . $row['estado'] . ', ' . $row['pais']; ?>";
+
+        geocoder.geocode({ 'address': address }, function(results, status) {
+            if (status === 'OK') {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: results[0].geometry.location
+                });
+                var marker = new google.maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map
+                });
+            } else {
+                alert('Geocoding falhou: ' + status);
+            }
+        });
+    }
+</script>

@@ -78,6 +78,7 @@ session_start();
                 <a href="index.php" class="nav-item nav-link">Home</a>
                 <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
                     <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
+                    <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
                     <?php if ($_SESSION['user_role'] == 'ong') { ?>
                         <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
                     <?php } ?>

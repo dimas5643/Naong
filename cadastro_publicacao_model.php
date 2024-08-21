@@ -1,8 +1,9 @@
 <?php
-session_start();
+
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    session_start();
     $titulo = $conn->real_escape_string($_POST['titulo']);
     $descricao = $conn->real_escape_string($_POST['descricao']);
     $dtpublicacao = new DateTime();
@@ -98,27 +99,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 
 
-// if (isset($_GET['id'])) {
-// Obtém o valor do ID
-$id_publicacao = 1;
-$user_id = $_SESSION['user_id'];
+if (isset($_GET['id_publicacao'])) {
+    // Obtém o valor do ID
+    $id_publicacao = $_GET['id_publicacao'];
+    $user_id = $_SESSION['user_id'];
 
-// //GET PUBLICAÇÃO
-// $sql = "SELECT * FROM publicacoes WHERE id_publicacoes = $id_publicacao";
-// $result_publicacao = $conn->query($sql);
+    //GET PUBLICAÇÃO
+    $sql = "SELECT * FROM publicacoes WHERE id_publicacoes = $id_publicacao";
+    $result_publicacao = $conn->query($sql);
 
-// if ($result_publicacao->num_rows > 0) {
-//     $row = $result_publicacao->fetch_assoc();
-// } else {
-//     echo "Nenhum registro encontrado.";
-//     exit;
-// }
+    if ($result_publicacao->num_rows > 0) {
+        $row = $result_publicacao->fetch_assoc();
+    }
+    
+    $sql_publicacao_pontos_coleta = "SELECT pc.id, pc.nome FROM publicacao_pontos_coleta ppc inner join pontos_coleta pc on ppc.id_pontos_coleta = pc.id WHERE ppc.id_publicacao = $id_publicacao";
+    $result_publicacao_pontos_coleta = $conn->query($sql_publicacao_pontos_coleta);
+    $list_publicacao_pontos_coleta = $result_publicacao_pontos_coleta->fetch_all(MYSQLI_ASSOC);
 
+}
 //LIST PONTOS DE COLETA SELECIIONADOS
 $sql_pontos_coleta = "SELECT * FROM pontos_coleta WHERE ong = $user_id and ativo = 'A'";
 $result_pontos_coleta = $conn->query($sql_pontos_coleta);
 
 
 $list_pontos_coleta = $result_pontos_coleta->fetch_all(MYSQLI_ASSOC);
-
-// }

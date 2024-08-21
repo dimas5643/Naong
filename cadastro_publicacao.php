@@ -21,21 +21,39 @@ include './banco.php';
 
                                 <div class="col-xl-12">
                                     <label for="" class="form-label">DESCRIÇÃO</label>
-                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5"><?php echo isset($row['descricao']) ? $row['descricao'] : 'DESCRIÇÃO'; ?></textarea>
+                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO"><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
                                 </div>
 
                                 <div class="col-xl-12">
                                     <label for="">FOTO</label>
+                                    <?php if (isset($row)) { ?>
+                                        <img src="./<?php echo $row['arquivo'] ?>" class="img-fluid" alt="Responsive image">
+                                    <?php } ?>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto">
                                 </div>
 
                                 <div class="col-xl-11">
                                     <label for="">PONTOS DE COLETA</label>
                                     <select class="form-control py-3 border-primary bg-transparent" name="coleta">
-                                        <?php foreach ($list_pontos_coleta as $key => $pontos_coleta) { ?>
-                                            <option value="<?php echo  $pontos_coleta['id'] ?>"><?php echo $pontos_coleta['nome'] ?></option>
+                                        <?php foreach ($list_pontos_coleta as $pontos_coleta) { ?>
+                                            <?php
+                                            // Verificar se o ponto de coleta já foi selecionado
+                                            $selected = false;
+                                            if (isset($list_publicacao_pontos_coleta)) {
+                                                foreach ($list_publicacao_pontos_coleta as $ponto) {
+                                                    if ($ponto['id'] == $pontos_coleta['id']) {
+                                                        $selected = true;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <?php if (!$selected) { ?>
+                                                <option value="<?php echo $pontos_coleta['id']; ?>"><?php echo $pontos_coleta['nome']; ?></option>
+                                            <?php } ?>
                                         <?php } ?>
                                     </select>
+
 
                                 </div>
                                 <div class="col-xl-1">
@@ -56,8 +74,21 @@ include './banco.php';
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Linhas dinâmicas serão adicionadas aqui -->
+                                        <?php if (isset($list_publicacao_pontos_coleta) && count($list_publicacao_pontos_coleta) > 0) { ?>
+                                            <?php foreach ($list_publicacao_pontos_coleta as $ponto) { ?>
+                                                <tr>
+                                                    <td>
+                                                        <input type="hidden" name="pontos_coleta[]" value="<?php echo $ponto['id']; ?>">
+                                                        <?php echo $ponto['nome']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+                                        <?php } ?>
                                     </tbody>
+
                                 </table>
                             </div>
                             <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
@@ -119,4 +150,3 @@ include('./rodape.php');
         }
     });
 </script>
-<?php print_r($_SESSION) ?>

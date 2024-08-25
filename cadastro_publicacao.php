@@ -13,6 +13,10 @@ include './banco.php';
                         <p class="fs-4 text-uppercase text-primary">DADOS DA PUBLICAÇÃO</p>
                         <h1 class="display-5 mb-4">PUBLICAÇÕES</h1>
                         <form action="cadastro_publicacao_model.php" method="POST" enctype="multipart/form-data">
+                            <?php if (isset($row['id_publicacoes'])) { ?>
+                                <input type="hidden" name="id_publicacoes" value="<?php echo $row['id_publicacoes'] ?>">
+                            <?php } ?>
+
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">TITULO</label>
@@ -70,7 +74,7 @@ include './banco.php';
                                     <thead>
                                         <tr>
                                             <th>Ponto de Coleta</th>
-                                            <th>Ação</th>
+                                            <th class="text-end">Ação</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -79,9 +83,9 @@ include './banco.php';
                                                 <tr>
                                                     <td>
                                                         <input type="hidden" name="pontos_coleta[]" value="<?php echo $ponto['id']; ?>">
-                                                        <?php echo $ponto['nome']; ?>
+                                                        <a href=""><?php echo $ponto['nome']; ?></a>
                                                     </td>
-                                                    <td>
+                                                    <td class="text-end">
                                                         <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
                                                     </td>
                                                 </tr>
@@ -91,7 +95,12 @@ include './banco.php';
 
                                 </table>
                             </div>
+
                             <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
+                            <?php if (isset($row)) { ?>
+                                <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                            <?php } ?>
+
                         </form>
                     </div>
                 </div>
@@ -120,7 +129,7 @@ include('./rodape.php');
                 <input type="hidden" name="pontos_coleta[]" value="${selectedOption.value}">
                 ${selectedOption.text}
             </td>
-            <td>
+            <td class="text-end">
                 <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
             </td>
         `;

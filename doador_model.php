@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Cadastro realizado com sucesso!";
+        header("Location: index.php");
         //DIRECIONAR PARA A PAGINA PRINCIPAL 
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;

@@ -66,25 +66,34 @@ session_start();
   <!-- Navbar & Hero Start -->
   <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
-        <a href="index.php" class="navbar-brand p-0">
-            <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>NaOng</h1>
-            <!-- <img src="img/logo.png" alt="Logo"> -->
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-            <span class="fa fa-bars"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
-                <a href="index.php" class="nav-item nav-link">Home</a>
-                <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
-                    <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
-                    <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
-                    <?php if ($_SESSION['user_role'] == 'ong') { ?>
-                        <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
-                    <?php } ?>
-                <?php } ?>
-                <a href="cadastro.php" class="nav-item nav-link">Login</a>
-                <a href="about.html" class="nav-item nav-link">About</a>
+      <a href="index.php" class="navbar-brand p-0">
+        <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>NaOng</h1>
+        <!-- <img src="img/logo.png" alt="Logo"> -->
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto py-0">
+          <a href="index.php" class="nav-item nav-link">Home</a>
+          <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
+            <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
+            <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
+            <?php if ($_SESSION['user_role'] == 'ong') { ?>
+              <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
+            <?php } ?>
+          <?php } ?>
+          <?php if ($_SESSION['user_role'] == 'doador') { ?>
+            <div class="nav-item dropdown">
+              <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Doações</a>
+              <div class="dropdown-menu m-0">
+                <a href="cadastro_registro_doacao.php" class="dropdown-item">Registrar</a>
+                <a href="lista_registro_doacao.php" class="dropdown-item">Listar</a>
+              </div>
+            </div>
+          <?php } ?>
+          <a href="cadastro.php" class="nav-item nav-link">Login</a>
+          <!-- <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -97,12 +106,12 @@ session_start();
                         <a href="404.html" class="dropdown-item">404 Page</a>
                     </div>
                 </div>
-                <a href="contact.html" class="nav-item nav-link">Contact Us</a>
-            </div>
-            <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Book
-                Appointment</a>
+                <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
         </div>
+        <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Book
+          Appointment</a>
+      </div>
     </nav>
-</div>
+  </div>
 
   <!-- Navbar End -->

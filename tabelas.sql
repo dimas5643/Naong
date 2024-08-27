@@ -98,7 +98,7 @@ CREATE TABLE `naong`.`pontos_coleta` (
   CONSTRAINT `ong_coleta`    FOREIGN KEY (`ong`)   REFERENCES `naong`.`ongs` (`id_ong`));
 
 
-  select * from registro_doacoesCREATE TABLE `publicacoes` (
+ CREATE TABLE `publicacoes` (
   `id_publicacoes` int(11) NOT NULL AUTO_INCREMENT,
   `id_ong` int(11) DEFAULT NULL,
   `titulo` varchar(45) DEFAULT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE `naong`.`pontos_coleta` (
   `dtpublicacao` datetime DEFAULT NULL,
   `arquivo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id_publicacoes`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);
 
 
 CREATE TABLE `registro_doacoes` (
@@ -121,4 +121,4 @@ CREATE TABLE `registro_doacoes` (
   KEY `fk_registro_ong_idx` (`id_ong`),
   CONSTRAINT `fk_registro_doador` FOREIGN KEY (`id_doador`) REFERENCES `doadores` (`id_doador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+);

@@ -76,6 +76,7 @@ session_start();
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
           <a href="index.php" class="nav-item nav-link">Home</a>
+          <a href="pesquisa_ongs.php" class="nav-item nav-link">Pesquisar Ongs</a>
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
             <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>

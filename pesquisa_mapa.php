@@ -1,6 +1,6 @@
 <?php
 include('./cabecalho.php');
-include('pesquisa_model.php');
+include('pesquisa_mapa_model.php');
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">

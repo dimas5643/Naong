@@ -15,6 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $valor = str_replace('.', '', $valor);
     $valor = str_replace(',', '.', $valor);
 
+    if (!$valor) {
+        $valor = 0;
+    }
+
 
     $user_id = $_SESSION['user_id'];
     $id_registro = $_POST['id_registro'] ?? null; // Recebe o ID do registro se estiver presente
@@ -73,7 +77,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $valor
                         );
                         ";
-    
         }
 
         if ($conn->query($sql) === TRUE) {
@@ -85,12 +88,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 
-    if($id){
+    if ($id) {
         header("Location: cadastro_registro_doacao.php?id_registro=$id");
-    }else{
+    } else {
         header("Location: cadastro_registro_doacao.php");
     }
-    
 }
 
 

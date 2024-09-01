@@ -80,11 +80,11 @@ session_start();
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
             <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
-            <?php if ($_SESSION['user_role'] == 'ong') { ?>
+            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'ong') { ?>
               <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
             <?php } ?>
           <?php } ?>
-          <?php if ($_SESSION['user_role'] == 'doador') { ?>
+          <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'doador') { ?>
             <div class="nav-item dropdown">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Doações</a>
               <div class="dropdown-menu m-0">

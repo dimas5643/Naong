@@ -7,28 +7,39 @@ function buscarEnderecos($termo = '') {
     $password = "";
     $dbname = "naong";
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    // Tenta estabelecer a conexão com o banco de dados
+    try {
+        $conn = new mysqli($servername, $username, $password, $dbname);
 
-    if ($conn->connect_error) {
-        die("Falha na conexão: " . $conn->connect_error);
+        if ($conn->connect_error) {
+            throw new Exception("Falha na conexão: " . $conn->connect_error);
+        }
+
+        $sql = "SELECT endereco FROM ongs WHERE cidade LIKE ? OR rua LIKE ? OR estado LIKE ?";
+        $stmt = $conn->prepare($sql);
+
+        if (!$stmt) {
+            throw new Exception("Falha na preparação da consulta: " . $conn->error);
+        }
+
+        $termoBusca = '%' . $termo . '%';
+        $stmt->bind_param("sss", $termoBusca, $termoBusca, $termoBusca);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $enderecos = [];
+        while ($row = $result->fetch_assoc()) {
+            $enderecos[] = $row['endereco'];
+        }
+
+        $stmt->close();
+        $conn->close();
+
+        return $enderecos;
+
+    } catch (Exception $e) {
+        return ['erro' => $e->getMessage()];
     }
-
-    $sql = "SELECT endereco FROM ongs WHERE cidade LIKE ? OR rua LIKE ? OR estado LIKE ?";
-    $stmt = $conn->prepare($sql);
-    $termoBusca = '%' . $termo . '%';
-    $stmt->bind_param("sss", $termoBusca, $termoBusca, $termoBusca);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    $enderecos = [];
-    while ($row = $result->fetch_assoc()) {
-        $enderecos[] = $row['endereco'];
-    }
-
-    $stmt->close();
-    $conn->close();
-
-    return $enderecos;
 }
 
 // Verifica se o formulário foi enviado

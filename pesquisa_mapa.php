@@ -1,6 +1,5 @@
 <?php
 include('./cabecalho.php');
-include('pesquisa_mapa_model.php');
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -12,15 +11,13 @@ include('pesquisa_mapa_model.php');
                         <p class="fs-4 text-uppercase text-primary">MAPA</p>
                         <h1 class="display-5 mb-4">PESQUISAR NO MAPA</h1>
                         <form id="search-form" method="POST">
-
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
                                     <label for="pesquisa">PESQUISAR</label>
                                     <input type="text"
                                         class="form-control py-3 border-primary bg-transparent text-white" id="pesquisa"
-                                        name="pesquisa" placeholder="PESQUISA">
+                                        name="pesquisa" placeholder="PESQUISAR">
                                 </div>
-
                                 <div class="col-12">
                                     <button type="submit"
                                         class="btn btn-primary text-white w-100 py-3 px-5">PESQUISAR</button>
@@ -28,6 +25,17 @@ include('pesquisa_mapa_model.php');
                             </div>
                         </form>
                         <div id="map" style="height: 500px; width: 100%; margin-top: 20px;"></div>
+                        <div id="ong-list" style="
+                            background-color: #f8f9fa; /* Cor de fundo clara */
+                            border: 1px solid #dee2e6; /* Borda cinza clara */
+                            border-radius: 8px; /* Bordas arredondadas */
+                            padding: 20px; /* Espaço interno */
+                            margin-top: 20px; /* Espaço acima */
+                            max-height: 400px; /* Altura máxima para rolagem */
+                            overflow-y: auto; /* Adiciona rolagem vertical se necessário */
+                        ">
+                            <!-- Lista de ONGs será exibida aqui -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -35,71 +43,79 @@ include('pesquisa_mapa_model.php');
     </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&callback=initMap" async
-    defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places&callback=initMap" async defer></script>
 <script>
-let map;
-
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        center: {
-            lat: -23.5505,
-            lng: -46.6333
-        }, // Coordenadas iniciais (São Paulo, por exemplo)
+    const map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: -28.681709540162558, lng: -49.37358875197284 },
         zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
     });
-}
 
-document.getElementById("search-form").addEventListener("submit", function(event) {
-    event.preventDefault();
-    const address = document.getElementById("pesquisa").value;
-    fetchAddresses(address);
-});
-
-function fetchAddresses(term) {
-    fetch('./pesquisa_model.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                'pesquisa': term
-            })
-        })
-        .then(response => response.json())
-        .then(enderecos => {
-            clearMarkers();
-            enderecos.forEach(endereco => {
-                geocodeAddress(endereco);
-            });
-        })
-        .catch(error => console.error('Erro:', error));
-}
-
-function geocodeAddress(address) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({
-        address: address
-    }, function(results, status) {
-        if (status === "OK") {
-            new google.maps.Marker({
-                map: map,
-                position: results[0].geometry.location,
+
+    // Buscar as ONGs e adicionar marcadores e lista
+    fetch('get_ongs.php')
+        .then(response => response.json())
+        .then(ongs => {
+            const ongListContainer = document.getElementById('ong-list');
+            ongListContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
+
+            ongs.forEach(ong => {
+                const position = { lat: parseFloat(ong.latitude), lng: parseFloat(ong.longitude) };
+                
+                // Adicionar marcador
+                const marker = new google.maps.Marker({
+                    position: position,
+                    map: map,
+                    title: ong.nome_fantasia,
+                    //icon: 'URL_DO_SEU_ICO'  // Substitua pela URL do seu ícone
+                });
+
+                // Adicionar infowindow com mais informações
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<h5>${ong.nome_fantasia}</h5><p>${ong.endereco}</p>`
+                });
+
+                marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
+
+                // Adicionar item à lista
+                const listItem = document.createElement('div');
+                listItem.className = 'ong-item';
+                listItem.innerHTML = `<h5 style="margin: 0; font-size: 1.2em; color: #007bff;">${ong.nome_fantasia}</h5><p style="margin: 5px 0 0; font-size: 1em; color: #495057;">${ong.endereco}</p>`;
+                listItem.style.backgroundColor = '#ffffff'; /* Cor de fundo branca para itens */
+                listItem.style.borderBottom = '1px solid #dee2e6'; /* Borda inferior para separar os itens */
+                listItem.style.padding = '15px'; /* Espaço interno dos itens */
+                listItem.style.marginBottom = '10px'; /* Espaço entre os itens */
+                listItem.style.borderRadius = '4px'; /* Bordas arredondadas dos itens */
+                ongListContainer.appendChild(listItem);
             });
+        })
+        .catch(error => console.error('Erro ao carregar ONGs:', error));
+}
+
+
+
+function geocodeAddress(address, map, marker) {
+    const geocoder = new google.maps.Geocoder();
+    geocoder.geocode({'address': address}, function(results, status) {
+        if (status === 'OK') {
+            if (results[0]) {
+                const latlng = results[0].geometry.location;
+                marker.setPosition(latlng);
+                map.setCenter(latlng);
+                map.setZoom(15);
+            } else {
+                alert('Não foi possível encontrar resultados para essa localização.');
+            }
         } else {
-            console.error("Geocode não foi bem-sucedido: " + status);
+            alert('Geocoding falhou: ' + status);
         }
     });
 }
-
-let markers = [];
-
-function clearMarkers() {
-    markers.forEach(marker => marker.setMap(null));
-    markers = [];
-}
 </script>
-
 
 <?php
 include('./rodape.php');

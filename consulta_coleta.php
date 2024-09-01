@@ -23,28 +23,24 @@ include('consulta_coleta_model.php'); // Inclua o model para obter os dados
                                     <th>Nome</th>
                                     <th>Rua</th>
                                     <th>Cidade</th>
-                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (!empty($pontos_coleta)) : ?>
                                     <?php foreach ($pontos_coleta as $ponto) : ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($ponto['nome']); ?></td>
-                                            <td><?php echo htmlspecialchars($ponto['rua']); ?></td>
-                                            <td><?php echo htmlspecialchars($ponto['cidade']); ?></td>
-                                            <td>
-                                                <a href="editar.php?id=<?php echo $ponto['id']; ?>" class="btn btn-warning btn-sm">Editar</a>
-                                                <a href="excluir.php?id=<?php echo $ponto['id']; ?>" class="btn btn-danger btn-sm">Excluir</a>
-                                            </td>
+                                        <tr onclick="window.location='coleta.php?id=<?php echo $ponto['id'] ?>';" style="cursor:pointer;">
+                                            <td><?php echo $ponto['nome']; ?></td>
+                                            <td><?php echo $ponto['rua']; ?></td>
+                                            <td><?php echo $ponto['cidade']; ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 <?php else : ?>
-                                    <tr><td colspan="4">Nenhum ponto de coleta encontrado.</td></tr>
+                                    <tr>
+                                        <td colspan="4">Nenhum ponto de coleta encontrado.</td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>

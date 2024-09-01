@@ -1,19 +1,6 @@
 <?php
 session_start();
-
-// Configurações do banco de dados
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "naong";
-
-// Criar a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verifique a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
+include './banco.php';
 
 // Obtenha o ID do usuário da sessão
 $user_id = $_SESSION['user_id'];

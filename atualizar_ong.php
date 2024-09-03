@@ -13,6 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $area_atuacao = $_POST['area_atuacao'];
+    $id_deparamento = $_POST['departamento'];
+    $descricao = $_POST['descricao'];
 
     // Proteção contra SQL Injection
     $nome = $conn->real_escape_string($nome);
@@ -24,13 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contato = $conn->real_escape_string($contato);
     $email = $conn->real_escape_string($email);
     $area_atuacao = $conn->real_escape_string($area_atuacao);
+    $id_deparamento = $conn->real_escape_string($id_deparamento);
+    $descricao = $conn->real_escape_string($descricao);
 
     // Verificar se uma nova senha foi fornecida e criptografá-la
     if (!empty($senha)) {
         $senha = password_hash($senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
     } else {
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao' WHERE id_ong=$id";
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
     }
 
     // Lidar com o upload da imagem
@@ -50,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
                         if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
                             // Atualizar o caminho da imagem no banco de dados
-                            $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file' WHERE id_ong=$id";
+                            $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
                         } else {
                             echo "Desculpe, houve um erro ao enviar sua imagem.";
                         }

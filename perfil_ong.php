@@ -61,20 +61,44 @@ include('./perfil_ong_model.php');
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>">
                                 </div>
                                 <div class="col-xl-6">
+                                    <label for="">DEPARTAMENTO DA NECESSIDADE</label>
+                                    <select class="form-control py-3 border-primary bg-transparent" name="departamento">
+                                        <option value=""></option>
+                                        <?php foreach ($list_departamentos as $departamentos) { ?>
+                                            <option value="<?php echo $departamentos['id_departamento']; ?>" <?php if (isset($row['id_departamento'])) {
+                                                                                                                    echo $row['id_departamento'] == $departamentos['id_departamento'] ? 'selected' : '';
+                                                                                                                } ?>><?php echo $departamentos['nome_departamento']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-xl-6">
                                     <label for="">FOTO DE PERFIL</label>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
                                 </div>
-                                <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+                                <div class="col-xl-12">
+                                    <label for="" class="form-label">DESCRIÇÃO DA NECESSIDADE</label>
+                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO DA NECESSIDADE"><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
+                                </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
                                 </div>
+
+
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 30px;">
+        <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 50px;">
+            <div class="sub-style">
+                <h4 class="sub-title px-3 mb-0">MAPA</h4>
+            </div>
+        </div>
+
+        <div id="map" style="height: 400px; width: 100%; margin-top: 20px;"></div>
+
+        <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s" style="margin-top: 50px;">
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0">ULTIMAS PUBLICAÇÕES</h4>
             </div>

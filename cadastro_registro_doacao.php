@@ -1,4 +1,5 @@
 <?php
+include('./valida_login.php');
 include('./cabecalho.php');
 include('./cadastro_registro_doacao_model.php');
 include './banco.php';

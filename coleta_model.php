@@ -1,5 +1,7 @@
 <?php
-session_start();
+  if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include './banco.php';
 
 // Verificar se o usuário está logado e obter o ID e o tipo de usuário da sessão

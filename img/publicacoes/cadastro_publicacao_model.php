@@ -3,7 +3,9 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $titulo = $conn->real_escape_string($_POST['titulo']);
     $descricao = $conn->real_escape_string($_POST['descricao']);
     $dtpublicacao = new DateTime();

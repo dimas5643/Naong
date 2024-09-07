@@ -1,5 +1,7 @@
 <?php
-session_start(); // Inicia a sessão
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} // Inicia a sessão
 session_destroy();
 
 header("Location: index.php");

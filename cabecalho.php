@@ -78,7 +78,6 @@ session_start();
           <a href="index.php" class="nav-item nav-link">Home</a>
           <a href="pesquisa_mapa.php" class="nav-item nav-link">Pesquisar Ongs</a>
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
-            <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="nav-item nav-link">Perfil</a>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
             <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'ong') { ?>
               <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
@@ -93,7 +92,12 @@ session_start();
               </div>
             </div>
           <?php } ?>
-          <a href="cadastro.php" class="nav-item nav-link">Login</a>
+
+          <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
+            <a href="logout.php" class="nav-item nav-link">Logout</a>
+          <?php } else { ?>
+            <a href="cadastro.php" class="nav-item nav-link">Cadastro</a>
+          <?php } ?>
           <!-- <a href="about.html" class="nav-item nav-link">About</a>
                 <a href="service.html" class="nav-item nav-link">Services</a>
                 <div class="nav-item dropdown">
@@ -109,8 +113,11 @@ session_start();
                 </div>
                 <a href="contact.html" class="nav-item nav-link">Contact Us</a> -->
         </div>
-        <a href="#" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Book
-          Appointment</a>
+        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
+          <a href="perfil_<?php echo $_SESSION['user_role'] ?>.php" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Perfil</a>
+        <?php } else { ?>
+          <a href="login.php" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">LOGIN</a>
+        <?php } ?>
       </div>
     </nav>
   </div>

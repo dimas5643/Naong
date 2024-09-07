@@ -5,30 +5,7 @@
         <div class="row g-12 align-items-center">
 
 
-            <div class="col-lg-6">
-                <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
-                    <div class="appointment-form rounded p-5">
-                        <p class="fs-4 text-uppercase text-primary">Faça o Login</p>
-                        <h1 class="display-5 mb-4">Login</h1>
-                        <form action="processa_login.php" method="POST">
-                            <div class="row gy-3 gx-4">
-                                <div class="col-xl-12">
-                                    <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL">
-                                </div>
-                                <div class="col-xl-12">
-                                    <label for="">SENHA</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">LOGIN</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6"  style="padding-top: 150px; padding-bottom: 50px;">
+            <div class="col-sm-12"  style="padding-top: 150px; padding-bottom: 50px;">
                 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link active" id="pills-doador-tab" data-bs-toggle="pill" data-bs-target="#pills-doador" type="button" role="tab" aria-controls="pills-doador" aria-selected="true">Doador</button>
@@ -171,24 +148,6 @@
         </div>
     </div>
 </div>
-<!-- Modal Video -->
-<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content rounded-0">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- 16:9 aspect ratio -->
-                <div class="ratio ratio-16x9">
-                    <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always" allow="autoplay"></iframe>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Book Appointment End -->
 
 
 

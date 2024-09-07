@@ -48,7 +48,7 @@ include('./cabecalho.php');
 function initMap() {
     const map = new google.maps.Map(document.getElementById('map'), {
         center: { lat: -28.681709540162558, lng: -49.37358875197284 },
-        zoom: 8,
+        zoom: 15,  // Aumente este valor para um zoom mais próximo
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -97,16 +97,17 @@ function initMap() {
 }
 
 
-
-function geocodeAddress(address, map, marker) {
+function geocodeAddress(address, map) {
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({'address': address}, function(results, status) {
+    geocoder.geocode({ 'address': address }, function(results, status) {
         if (status === 'OK') {
             if (results[0]) {
                 const latlng = results[0].geometry.location;
-                marker.setPosition(latlng);
                 map.setCenter(latlng);
-                map.setZoom(15);
+                map.setZoom(12);  // Zoom adequado para mostrar a cidade
+
+                // Filtrar ONGs próximas à localização centralizada
+                filterOngsNearby(latlng, map);
             } else {
                 alert('Não foi possível encontrar resultados para essa localização.');
             }
@@ -115,6 +116,54 @@ function geocodeAddress(address, map, marker) {
         }
     });
 }
+
+function filterOngsNearby(centerLatLng, map) {
+    fetch('get_ongs.php')
+        .then(response => response.json())
+        .then(ongs => {
+            const ongListContainer = document.getElementById('ong-list');
+            ongListContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
+
+            const radiusInKm = 10; // Raio de 10 km
+
+            ongs.forEach(ong => {
+                const position = new google.maps.LatLng(parseFloat(ong.latitude), parseFloat(ong.longitude));
+                const distance = google.maps.geometry.spherical.computeDistanceBetween(centerLatLng, position) / 1000;
+
+                if (distance <= radiusInKm) {
+                    // Adicionar marcador
+                    const marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: ong.nome_fantasia,
+                    });
+
+                    // Adicionar infowindow com mais informações
+                    const infowindow = new google.maps.InfoWindow({
+                        content: `<h5>${ong.nome_fantasia}</h5><p>${ong.endereco}</p>`
+                    });
+
+                    marker.addListener('click', function() {
+                        infowindow.open(map, marker);
+                    });
+
+                    // Adicionar item à lista
+                    const listItem = document.createElement('div');
+                    listItem.className = 'ong-item';
+                    listItem.innerHTML = `<h5 style="margin: 0; font-size: 1.2em; color: #007bff;">${ong.nome_fantasia}</h5><p style="margin: 5px 0 0; font-size: 1em; color: #495057;">${ong.endereco}</p>`;
+                    listItem.style.backgroundColor = '#ffffff'; /* Cor de fundo branca para itens */
+                    listItem.style.borderBottom = '1px solid #dee2e6'; /* Borda inferior para separar os itens */
+                    listItem.style.padding = '15px'; /* Espaço interno dos itens */
+                    listItem.style.marginBottom = '10px'; /* Espaço entre os itens */
+                    listItem.style.borderRadius = '4px'; /* Bordas arredondadas dos itens */
+                    ongListContainer.appendChild(listItem);
+                }
+            });
+        })
+        .catch(error => console.error('Erro ao carregar ONGs:', error));
+}
+
+
 </script>
 
 <?php

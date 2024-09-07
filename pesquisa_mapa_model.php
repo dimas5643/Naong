@@ -1,52 +1,31 @@
 <?php
 header('Content-Type: application/json');
 
-function buscarEnderecos($termo = '') {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "naong";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "naong";
 
-    // Tenta estabelecer a conexão com o banco de dados
-    try {
-        $conn = new mysqli($servername, $username, $password, $dbname);
+// Conexão com o banco de dados
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-        if ($conn->connect_error) {
-            throw new Exception("Falha na conexão: " . $conn->connect_error);
-        }
+// Verifica a conexão
+if ($conn->connect_error) {
+    die("Falha na conexão: " . $conn->connect_error);
+}
 
-        $sql = "SELECT endereco FROM ongs WHERE cidade LIKE ? OR rua LIKE ? OR estado LIKE ?";
-        $stmt = $conn->prepare($sql);
+// Consulta para buscar as ONGs
+$sql = "SELECT nome_fantasia, endereco, latitude, longitude FROM ongs WHERE latitude IS NOT NULL AND longitude IS NOT NULL";
+$result = $conn->query($sql);
 
-        if (!$stmt) {
-            throw new Exception("Falha na preparação da consulta: " . $conn->error);
-        }
-
-        $termoBusca = '%' . $termo . '%';
-        $stmt->bind_param("sss", $termoBusca, $termoBusca, $termoBusca);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        $enderecos = [];
-        while ($row = $result->fetch_assoc()) {
-            $enderecos[] = $row['endereco'];
-        }
-
-        $stmt->close();
-        $conn->close();
-
-        return $enderecos;
-
-    } catch (Exception $e) {
-        return ['erro' => $e->getMessage()];
+$ongs = [];
+if ($result->num_rows > 0) {
+    while($row = $result->fetch_assoc()) {
+        $ongs[] = $row;
     }
 }
 
-// Verifica se o formulário foi enviado
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $termo = isset($_POST['pesquisa']) ? $_POST['pesquisa'] : '';
-    $enderecos = buscarEnderecos($termo);
-    echo json_encode($enderecos);
-    exit;
-}
-?>
+$conn->close();
+
+// Retorna os dados em formato JSON
+echo json_encode($ongs);

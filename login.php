@@ -6,10 +6,12 @@
     <div class="container py-12">
         <div class="row g-12 align-items-center">
             <div class="col-lg-12" style="padding-top: 150px; padding-bottom: 50px;">
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Faça o login!</strong> para acessar a página.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <?php if (!$usuarioLogado) { ?>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Faça o login!</strong> para acessar a página.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                <?php } ?>
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">Faça o Login</p>

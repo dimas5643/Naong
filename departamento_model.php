@@ -1,4 +1,5 @@
 <?php
+include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

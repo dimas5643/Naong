@@ -1,5 +1,6 @@
 <?php
 include('./cabecalho.php');
+include('./valida_login.php');
 include('coleta_model.php');
 ?>
 

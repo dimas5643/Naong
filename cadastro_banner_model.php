@@ -1,7 +1,14 @@
 <?php
+include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Verifica se todos os campos estão preenchidos
+    if (empty($_POST['nome']) || empty($_POST['dtinicial']) || empty($_POST['dtfinal']) || empty($_FILES['banner']['name'])) {
+        header('Location: cadastro_banner.php?erro=1');
+        exit;
+    }
+
     $nome = $conn->real_escape_string($_POST['nome']);
     $dtinicial = $conn->real_escape_string($_POST['dtinicial']);
     $dtfinal = $conn->real_escape_string($_POST['dtfinal']);
@@ -19,9 +26,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $imageFileType = str_replace('image/', '', $_FILES['banner']['type']);
             $target_file = $target_dir . 'banner_' . $id . '.' . $imageFileType;
 
+            // Verifica se o arquivo é uma imagem válida
             $check = getimagesize($_FILES["banner"]["tmp_name"]);
             if ($check !== false) {
-                if ($_FILES["banner"]["size"] <= 25000000) { // 25MB máximo
+                // Verifica o tamanho da imagem (máximo 25MB)
+                if ($_FILES["banner"]["size"] <= 25000000) {
+                    // Verifica se o tipo de arquivo é permitido (JPG, JPEG, PNG)
                     if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
                         if (move_uploaded_file($_FILES["banner"]["tmp_name"], $target_file)) {
                             // Atualizar o caminho da imagem no banco de dados
@@ -30,25 +40,39 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     WHERE `id_banner` = $id";
 
                             if ($conn->query($sql) === TRUE) {
-                                echo "Arquivo enviado e caminho atualizado com sucesso!";
+                                header("Location: cadastro_banner.php?id=$id");
+                                exit;
                             } else {
-                                echo "Erro ao atualizar o caminho da imagem: " . $conn->error;
+                                header('Location: cadastro_banner.php?erro=2');
+                                exit;
                             }
                         } else {
-                            echo "Desculpe, houve um erro ao enviar sua imagem.";
+                            header('Location: cadastro_banner.php?erro=2');
+                            exit;
                         }
                     } else {
-                        echo "Desculpe, apenas arquivos JPG, JPEG e PNG são permitidos.";
+                        // Tipo de arquivo não permitido
+                        header('Location: cadastro_banner.php?erro=3');
+                        exit;
                     }
                 } else {
-                    echo "Desculpe, seu arquivo é muito grande.";
+                    // Arquivo muito grande
+                    header('Location: cadastro_banner.php?erro=4');
+                    exit;
                 }
             } else {
-                echo "O arquivo não é uma imagem.";
+                // Arquivo não é uma imagem
+                header('Location: cadastro_banner.php?erro=5');
+                exit;
             }
+        } else {
+            // Erro no upload
+            header('Location: cadastro_banner.php?erro=2');
+            exit;
         }
     } else {
-        echo "Erro ao inserir os dados: " . $conn->error;
+        header('Location: cadastro_banner.php?erro=6');
+        exit;
     }
 
     $conn->close();
@@ -68,7 +92,7 @@ if (isset($_GET['id'])) {
     if ($result_banner->num_rows > 0) {
         $row = $result_banner->fetch_assoc();
     } else {
-        echo "Nenhum registro encontrado.";
+        header('Location: cadastro_banner.php?erro=7');
         exit;
     }
 }

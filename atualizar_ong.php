@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $target_dir = "img/ongs/";
         $imageFileType = str_replace('image/', '', $_FILES['foto_perfil']['type']);
         $target_file = $target_dir . 'ong_' . $id . '.' . $imageFileType;
-        
+
         // Verificar se o arquivo é uma imagem
         $check = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
         if ($check !== false) {
@@ -79,6 +79,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $conn->close();
-
-    header('Location: perfil_ong.php');
 }
+
+header('Location: perfil_ong.php');

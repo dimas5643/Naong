@@ -1,5 +1,6 @@
 <?php
-  if (session_status() === PHP_SESSION_NONE) {
+include('./valida_login.php');
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include './banco.php';
@@ -28,4 +29,3 @@ while ($row = $result->fetch_assoc()) {
 }
 
 $conn->close();
-?>

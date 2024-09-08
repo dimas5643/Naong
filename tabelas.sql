@@ -15,10 +15,13 @@ CREATE TABLE `ongs` (
   `senha` varchar(200) DEFAULT NULL,
   `foto_perfil` varchar(255) DEFAULT NULL,
   `area_atuacao` varchar(255) DEFAULT NULL,
-  `latitude` varchar(255) DEFAULT NULL,
-  `longitude` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id_ong`,`cnpj`,`email`)
-);  
+  `id_departamento` int(11) DEFAULT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_ong`,`cnpj`,`email`),
+  KEY `fk_id_departamento_idx` (`id_departamento`),
+  CONSTRAINT `fk_id_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 CREATE TABLE `doadores` (
   `id_doador` int(11) NOT NULL AUTO_INCREMENT,

@@ -1,6 +1,6 @@
 <?php
-include('./cabecalho.php');
 include('./valida_login.php');
+include('./cabecalho.php');
 include('consulta_coleta_model.php'); // Inclua o model para obter os dados
 ?>
 

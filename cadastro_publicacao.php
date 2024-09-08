@@ -1,6 +1,6 @@
 <?php
-include('./cabecalho.php');
 include('./valida_login.php');
+include('./cabecalho.php');
 include('./cadastro_publicacao_model.php');
 include './banco.php';
 ?>

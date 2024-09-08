@@ -3,7 +3,9 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    session_start();
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
     $doacao = $conn->real_escape_string($_POST['doacao']);
 
     $data = $conn->real_escape_string($_POST['data']);

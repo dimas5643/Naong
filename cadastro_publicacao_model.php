@@ -145,6 +145,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: cadastro_publicacao.php?id_publicacao=$id");
 }
 
+header("Location: cadastro_publicacao.php");
 
 $user_id = $_SESSION['user_id'];
 if (isset($_GET['id_publicacao'])) {

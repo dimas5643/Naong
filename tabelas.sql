@@ -15,6 +15,8 @@ CREATE TABLE `ongs` (
   `senha` varchar(200) DEFAULT NULL,
   `foto_perfil` varchar(255) DEFAULT NULL,
   `area_atuacao` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `longitude `varchar(255) DEFAULT NULL
   `id_departamento` int(11) DEFAULT NULL,
   `descricao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_ong`,`cnpj`,`email`),

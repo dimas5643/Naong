@@ -1,8 +1,12 @@
 <?php
-
+include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['titulo']) || empty($_POST['descricao']) || empty($_FILES['foto'])) {
+        header('Location: cadastro_publicacao.php?erro=1');
+        exit;
+    }
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
@@ -32,11 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $sql = "DELETE FROM `naong`.`publicacoes` WHERE id_publicacoes = $id_publicacao and id_ong = $user_id";
             $conn->query($sql);
-
-            echo "Publicação excluída com sucesso!";
         } else {
-            echo "Você não tem permissão para excluir essa publicação.";
-            die;
+            header('Location: cadastro_publicacao.php?erro=2');
+            exit;
         }
     } else {
         if ($id_publicacao) {
@@ -53,8 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 WHERE `id_publicacoes` = $id_publicacao 
                   AND `id_ong` = $user_id";
             } else {
-                echo 'Você não tem essa permissão';
-                die;
+                header('Location: cadastro_publicacao.php?erro=3');
+                exit;
             }
         } else {
             // Inserir nova publicação
@@ -94,19 +96,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     WHERE `id_publicacoes` = $id";
 
                                 if ($conn->query($sql) !== TRUE) {
-                                    echo "Erro ao atualizar o caminho da imagem: " . $conn->error;
+                                    header('Location: cadastro_publicacao.php?erro=4');
+                                    exit;
                                 }
                             } else {
-                                echo "Desculpe, houve um erro ao enviar sua imagem.";
+                                header('Location: cadastro_publicacao.php?erro=4');
+                                exit;
                             }
                         } else {
-                            echo "Desculpe, apenas arquivos JPG, JPEG e PNG são permitidos.";
+                            header('Location: cadastro_publicacao.php?erro=5');
                         }
                     } else {
-                        echo "Desculpe, seu arquivo é muito grande.";
+                        header('Location: cadastro_publicacao.php?erro=6');
                     }
                 } else {
-                    echo "O arquivo não é uma imagem.";
+                    header('Location: cadastro_publicacao.php?erro=7');
                 }
             }
 
@@ -127,12 +131,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         );";
 
                     if ($conn->query($sql) !== TRUE) {
-                        echo "Erro ao inserir os dados: " . $conn->error;
+                        header('Location: cadastro_publicacao.php?erro=8');
                     }
                 }
             }
         } else {
-            echo "Erro ao inserir/atualizar os dados: " . $conn->error;
+            header('Location: cadastro_publicacao.php?erro=8');
         }
     }
 
@@ -154,6 +158,9 @@ if (isset($_GET['id_publicacao'])) {
 
     if ($result_publicacao->num_rows > 0) {
         $row = $result_publicacao->fetch_assoc();
+    } else {
+        header('Location: cadastro_banner.php?erro=9');
+        exit;
     }
 
     $sql_publicacao_pontos_coleta = "SELECT pc.id, pc.nome FROM publicacao_pontos_coleta ppc inner join pontos_coleta pc on ppc.id_pontos_coleta = pc.id WHERE ppc.id_publicacao = $id_publicacao";

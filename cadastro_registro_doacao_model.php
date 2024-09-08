@@ -1,10 +1,14 @@
 <?php
-
+include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
+    }
+    if (empty($_POST['doacao']) || empty($_POST['data']) || empty($_POST['ong'])) {
+        header('Location: cadastro_registro_doacao.php?erro=1');
+        exit;
     }
     $doacao = $conn->real_escape_string($_POST['doacao']);
 
@@ -35,11 +39,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Excluir
             $sql_delete = "DELETE FROM `naong`.`registro_doacoes` WHERE id_registro = $id_registro";
             $conn->query($sql_delete);
-
-            echo "Registro excluído com sucesso!";
         } else {
-            echo "Você não tem permissão para excluir essa registro.";
-            die;
+            header('Location: cadastro_registro_doacao.php?erro=2');
+            exit;
         }
     } else {
         if ($id_registro) {
@@ -57,8 +59,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         `valor` = $valor
                         WHERE `id_registro` = $id_registro";
             } else {
-                echo 'Você não tem essa permissão';
-                die;
+                header('Location: cadastro_registro_doacao.php?erro=2');
+                exit;
             }
         } else {
             // Inserir novo registro
@@ -84,7 +86,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->query($sql) === TRUE) {
             $id = $id_registro ? $id_registro : $conn->insert_id;
         } else {
-            echo "Erro ao inserir/atualizar os dados: " . $conn->error;
+            header('Location: cadastro_registro_doacao.php?erro=3');
+            exit;
         }
     }
 
@@ -110,6 +113,9 @@ if (isset($_GET['id_registro'])) {
 
     if ($result_registro->num_rows > 0) {
         $row = $result_registro->fetch_assoc();
+    }else{
+        header('Location: cadastro_banner.php?erro=4');
+        exit;
     }
 }
 

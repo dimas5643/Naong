@@ -73,6 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $conn->close();
-
-    header('Location: perfil_doador.php');
 }
+
+header('Location: perfil_doador.php');

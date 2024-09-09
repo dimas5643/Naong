@@ -115,3 +115,12 @@ CREATE TABLE `naong`.`pontos_coleta` (
   PRIMARY KEY (`id_publicacoes`)
 );
 
+CREATE TABLE `publicacao_pontos_coleta` (
+  `id_pontos_coleta` int(11) NOT NULL,
+  `id_publicacao` int(11) NOT NULL,
+  KEY `fk_pontos_coleta_idx` (`id_pontos_coleta`),
+  KEY `fk_publicacao_idx` (`id_publicacao`),
+  CONSTRAINT `fk_pontos_coleta` FOREIGN KEY (`id_pontos_coleta`) REFERENCES `pontos_coleta` (`id`),
+  CONSTRAINT `fk_publicacao` FOREIGN KEY (`id_publicacao`) REFERENCES `publicacoes` (`id_publicacoes`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+

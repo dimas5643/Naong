@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Consulta para buscar as ONGs
-$sql = "SELECT nome_fantasia, endereco, latitude, longitude FROM ongs WHERE latitude IS NOT NULL AND longitude IS NOT NULL";
+$sql = "SELECT nome_fantasia, endereco, latitude, longitude, id_ong FROM ongs WHERE latitude IS NOT NULL AND longitude IS NOT NULL";
 $result = $conn->query($sql);
 
 $ongs = [];

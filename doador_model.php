@@ -30,8 +30,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$email', '$celular', '$senha', '$data_nascimento', NOW(), 'A')";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Cadastro realizado com sucesso!";
-        header("Location: index.php");
+        
+        header("Location: login.php");
         //DIRECIONAR PARA A PAGINA PRINCIPAL 
     } else {
         echo "Erro: " . $sql . "<br>" . $conn->error;

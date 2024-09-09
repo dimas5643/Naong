@@ -17,52 +17,55 @@ include('./perfil_ong_model.php');
                             <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" style="width: 150px; height: 150px; border-radius: 50%;">
                         <?php endif; ?>
                         <form action="atualizar_<?php echo $user_role; ?>.php" method="POST" enctype="multipart/form-data">
-                            <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
+                            <?php if ($mostraCampo) { ?>
+                                <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
+                            <?php } ?>
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : $row['nome']; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : $row['nome']; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">DOCUMENTO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : $row['documento']; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : $row['cpf_cnpj']; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CEP</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP" value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP" value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ESTADO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO" value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO" value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CIDADE</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE" value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE" value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ENDEREÇO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO" value="<?php echo isset($row['endereco']) ? $row['endereco'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO" value="<?php echo isset($row['endereco']) ? $row['endereco'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CONTATO</label>
-                                    <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO" value="<?php echo isset($row['telefone']) ? $row['telefone'] : $row['contato']; ?>">
+                                    <input type="phone" class="form-control py-3 border-primary bg-transparent" name="contato" placeholder="CONTATO" value="<?php echo isset($row['telefone']) ? $row['telefone'] : $row['contato']; ?>" <?php echo $disabled ?>>
                                 </div>
-                                <div class="col-xl-6">
-                                    <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">SENHA</label>
-                                    <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
-                                </div>
-
+                                <?php if ($mostraCampo) { ?>
+                                    <div class="col-xl-6">
+                                        <label for="">EMAIL</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>" <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">SENHA</label>
+                                        <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
+                                    </div>
+                                <?php } ?>
                                 <div class="col-xl-6">
                                     <label for="">ÁREA DE ATUAÇÃO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">DEPARTAMENTO DA NECESSIDADE</label>
-                                    <select class="form-control py-3 border-primary bg-transparent" name="departamento">
+                                    <select class="form-control py-3 border-primary bg-transparent" name="departamento" <?php echo $disabled ?>>
                                         <option value=""></option>
                                         <?php foreach ($list_departamentos as $departamentos) { ?>
                                             <option value="<?php echo $departamentos['id_departamento']; ?>" <?php if (isset($row['id_departamento'])) {
@@ -71,16 +74,20 @@ include('./perfil_ong_model.php');
                                         <?php } ?>
                                     </select>
                                 </div>
-                                <div class="col-xl-6">
-                                    <label for="">FOTO DE PERFIL</label>
-                                    <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
-                                </div>
+                                <?php if ($mostraCampo) { ?>
+                                    <div class="col-xl-6">
+                                        <label for="">FOTO DE PERFIL</label>
+                                        <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto_perfil">
+                                    </div>
+                                <?php } ?>
                                 <div class="col-xl-12">
                                     <label for="" class="form-label">DESCRIÇÃO DA NECESSIDADE</label>
-                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO DA NECESSIDADE"><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
+                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO DA NECESSIDADE" <?php echo $disabled ?>><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
+                                    <?php if ($mostraCampo) { ?>
+                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
+                                    <?php } ?>
                                 </div>
 
 

@@ -2,8 +2,9 @@
 include './banco.php';
 
 // Função para obter as coordenadas
-function getCoordinates($endereco, $cidade, $estado) {
-    $apiKey = 'AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs'; 
+function getCoordinates($endereco, $cidade, $estado)
+{
+    $apiKey = 'AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs';
     $address = urlencode($endereco . ', ' . $cidade . ', ' . $estado);
     $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key={$apiKey}";
 
@@ -53,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$contato', '$email', '$senha', '$latitude', '$longitude', NOW(), 'A')";
 
         if ($conn->query($sql) === TRUE) {
-            echo "Cadastro realizado com sucesso!";
+            header("Location: login.php");
         } else {
             echo "Erro: " . $sql . "<br>" . $conn->error;
         }
@@ -63,4 +64,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 }
-?>

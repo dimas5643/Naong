@@ -29,6 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id_deparamento = $conn->real_escape_string($id_deparamento);
     $descricao = $conn->real_escape_string($descricao);
 
+    if (!$id_deparamento) {
+        $id_deparamento = 'NULL';
+    }
+
     // Verificar se uma nova senha foi fornecida e criptografá-la
     if (!empty($senha)) {
         $senha = password_hash($senha, PASSWORD_DEFAULT);

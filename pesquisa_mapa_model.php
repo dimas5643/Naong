@@ -18,7 +18,7 @@ if ($conn->connect_error) {
 $departamentos = isset($_GET['departamentos']) ? $_GET['departamentos'] : '';
 
 // Cria a consulta base para buscar ONGs
-$sql = "SELECT o.nome_fantasia, o.endereco, o.latitude, o.longitude
+$sql = "SELECT o.nome_fantasia, o.endereco, o.latitude, o.longitude, o.id_ong
         FROM ongs o
         JOIN ongs_departamentos od ON o.id = od.ong_id
         WHERE o.latitude IS NOT NULL AND o.longitude IS NOT NULL";

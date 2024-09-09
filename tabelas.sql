@@ -16,7 +16,7 @@ CREATE TABLE `ongs` (
   `foto_perfil` varchar(255) DEFAULT NULL,
   `area_atuacao` varchar(255) DEFAULT NULL,
   `latitude` varchar(255) DEFAULT NULL,
-  `longitude `varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
   `id_departamento` int(11) DEFAULT NULL,
   `descricao` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_ong`,`cnpj`,`email`),
@@ -115,17 +115,3 @@ CREATE TABLE `naong`.`pontos_coleta` (
   PRIMARY KEY (`id_publicacoes`)
 );
 
-
-CREATE TABLE `registro_doacoes` (
-  `id_registro` int(11) NOT NULL AUTO_INCREMENT,
-  `id_doador` int(11) DEFAULT NULL,
-  `id_ong` int(11) DEFAULT NULL,
-  `doacao` varchar(45) DEFAULT NULL,
-  `data_doacao` datetime DEFAULT NULL,
-  `valor` float DEFAULT NULL,
-  PRIMARY KEY (`id_registro`),
-  KEY `idx_registro_ong` (`id_doador`),
-  KEY `fk_registro_ong_idx` (`id_ong`),
-  CONSTRAINT `fk_registro_doador` FOREIGN KEY (`id_doador`) REFERENCES `doadores` (`id_doador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_registro_ong` FOREIGN KEY (`id_ong`) REFERENCES `ongs` (`id_ong`) ON DELETE NO ACTION ON UPDATE NO ACTION
-);

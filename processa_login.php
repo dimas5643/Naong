@@ -5,6 +5,10 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['email']) || empty($_POST['senha'])) {
+        header('Location: login.php?erro=1');
+        exit;
+    }
     $email = $_POST['email'];
     $senha = $_POST['senha'];
 
@@ -23,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Senha correta
             $_SESSION['user_role'] = 'doador';
             $_SESSION['user_id'] = $doador['id_doador'];
-            echo "Login realizado com sucesso como Doador!";
             // Aqui você pode redirecionar o usuário para uma página específica
             header('Location: index.php');
             exit();
@@ -41,7 +44,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Senha correta
             $_SESSION['user_role'] = 'ong';
             $_SESSION['user_id'] = $ong['id_ong'];
-            echo "Login realizado com sucesso como ONG!";
             // Aqui você pode redirecionar o usuário para uma página específica
             header('Location: index.php');
             exit();
@@ -49,8 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Se nenhum usuário for encontrado ou a senha estiver incorreta
-    echo "Email ou senha inválidos!";
+    header('Location: login.php?erro=2');
+    exit;
 }
 
 $conn->close();
-?>

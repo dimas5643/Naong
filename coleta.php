@@ -8,6 +8,41 @@ include('coleta_model.php');
     <div class="container py-12" style="margin-top: 50px; padding-bottom: 50px;">
         <div class="row g-12 align-items-center">
             <div class="col-lg-12">
+                <?php
+                if (isset($_GET['erro'])) {
+                    $mensagem = '';
+                    switch ($_GET['erro']) {
+                        case '1':
+                            $mensagem = 'Preencha todos os dados!';
+                            break;
+                        case '2':
+                            $mensagem = 'Esse ponto de coleta já está vinculado a uma publicação. Em vez de excluí-lo, inative-o para manter o histórico!';
+                            break;
+                        case '3':
+                            $mensagem = 'Você não tem permissão para excluir essa publicação!';
+                            break;
+                        case '4':
+                            $mensagem = 'Erro ao salvar!';
+                            break;
+                        case '5':
+                            $mensagem = 'Usuário inválido!';
+                            break;
+                        case '6':
+                            $mensagem = 'Nenhum registro encontrado!';
+                            break;
+                        default:
+                            $mensagem = 'Erro desconhecido!';
+                            break;
+                    }
+
+                    if ($mensagem) { ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><?php echo $mensagem; ?></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                <?php }
+                }
+                ?>
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">CADASTRO PONTO DE COLETA </p>
@@ -55,7 +90,7 @@ include('coleta_model.php');
                                     <label for="">NUMERO ENDEREÇO</label>
                                     <input type="text"
                                         class="form-control py-3 border-primary bg-transparent text-white"
-                                        name="numero_endereco" placeholder="NUMERO ENDEREÇO" value="<?php echo isset($row_pontos_coleta['nume_endereco']) ? $row_pontos_coleta['nume_endereco'] : '' ?>">
+                                        name="numero_endereco" placeholder="NUMERO ENDEREÇO" value="<?php echo isset($row_pontos_coleta['numero_endereco']) ? $row_pontos_coleta['numero_endereco'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">TELEFONE</label>
@@ -72,9 +107,10 @@ include('coleta_model.php');
 
 
                                 <div class="col-12">
-                                    <button type="submit"
-                                        class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
-                                    <?php if (isset($row_pontos_coleta)) { ?>
+                                    <?php if (!isset($row_pontos_coleta)) { ?>
+                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                    <?php } else  if (isset($row_pontos_coleta)) { ?>
+                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
                                         <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
                                     <?php } ?>
                                 </div>

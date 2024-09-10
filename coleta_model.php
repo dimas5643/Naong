@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
     } elseif ($user_role == 'doador') {
         $sql = "SELECT * FROM doadores WHERE id_doador = $id";
     } else {
-        echo "Tipo de usuário inválido.";
+        header('Location: coleta.php?erro=5');
         exit;
     }
 
@@ -25,16 +25,17 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
     } else {
-        echo "Nenhum registro encontrado.";
+        header('Location: coleta.php?erro=6');
         exit;
     }
-} else {
-    echo "Usuário não está logado.";
-    exit;
 }
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['nome']) || empty($_POST['rua']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['pais']) || empty($_POST['cep']) || empty($_POST['numero_endereco']) || empty($_POST['telefone'])) {
+        header('Location: coleta.php?erro=1');
+        exit;
+    }
     $nome = $_POST['nome'];
     $rua = $_POST['rua'];
     $estado = $_POST['estado'];
@@ -58,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ativo = isset($_POST['ATIVO']) ? 'I' : 'A';
 
     $id_pontos_coleta = $_POST['id_pontos_coleta'] ?? null; // Recebe o ID do registro se estiver presente
-    if (isset($_POST['acao']) && $_POST['acao'] === 'excluir' && isset($id_pontos_coleta)) {
+    if (isset($_POST['acao']) && $_POST['acao'] === 'excluir' && $id_pontos_coleta) {
         // Excluir registro
         $sql_verificacao = "SELECT * FROM `naong`.`pontos_coleta` WHERE id = $id_pontos_coleta and ong = $ong";
         $result_verificacao = $conn->query($sql_verificacao);
@@ -69,27 +70,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $result_verificacao_publicacao = $conn->query($sql_verificacao_publicacao);
 
             if ($result_verificacao_publicacao->num_rows > 0) {
-                echo "Esse ponto de coleta já está vinculado a uma publicação. Em vez de excluí-lo, inative-o para manter o histórico!";
+                header('Location: coleta.php?erro=2');
+                exit;
             } else {
                 // Excluir
                 $sql_delete = "DELETE FROM `naong`.`pontos_coleta` WHERE id = $id_pontos_coleta";
                 $conn->query($sql_delete);
 
-                echo "Registro excluído com sucesso!";
+                header("Location: consulta_coleta.php");
+                exit;
             }
         } else {
-            echo "Você não tem permissão para excluir essa registro.";
-            die;
+            header('Location: coleta.php?erro=3');
+            exit;
         }
     } else {
-        $sql = "INSERT INTO `naong`.`pontos_coleta` (`ong`, `nome`, `rua`, `estado`, `cidade`, `pais`, `cep`, `numero_endereco`, `telefone`, `ativo`)  
+        if ($id_pontos_coleta) {
+            $sql = "UPDATE `naong`.`pontos_coleta`
+                    SET
+                    `ong` = '$ong',
+                    `nome` = '$nome',
+                    `rua` = '$rua',
+                    `cidade` = '$cidade',
+                    `estado` = '$estado',
+                    `pais` = '$pais',
+                    `cep` = '$cep',
+                    `numero_endereco` = '$numero_endereco',
+                    `telefone` = '$telefone',
+                    `ativo` = '$ativo'
+                    WHERE `id` = $id_pontos_coleta;";
+        } else {
+            $sql = "INSERT INTO `naong`.`pontos_coleta` (`ong`, `nome`, `rua`, `estado`, `cidade`, `pais`, `cep`, `numero_endereco`, `telefone`, `ativo`)  
             VALUES ('$ong', '$nome', '$rua',  '$estado', '$cidade', '$pais', '$cep', '$numero_endereco', '$telefone', '$ativo')";
+        }
+
 
         if ($conn->query($sql) === TRUE) {
             header("Location: consulta_coleta.php");
             exit;
         } else {
-            echo "Erro: " . $sql . "<br>" . $conn->error;
+            header('Location: coleta.php?erro=4');
+            exit;
         }
     }
 
@@ -107,5 +128,8 @@ if (isset($_GET['id'])) {
 
     if ($result_registro->num_rows > 0) {
         $row_pontos_coleta = $result_registro->fetch_assoc();
+    } else {
+        header('Location: coleta.php?erro=6');
+        exit;
     }
 }

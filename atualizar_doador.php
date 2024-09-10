@@ -2,6 +2,10 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['email'])) {
+        header('Location: perfil_doador.php?erro=1');
+        exit;
+    }
     $id = $_POST['id'];
     $nome = $_POST['nome'];
     $documento = $_POST['documento'];
@@ -40,36 +44,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verificar se o arquivo é uma imagem
         $check = getimagesize($_FILES["foto_perfil"]["tmp_name"]);
         if ($check !== false) {
-            // Verificar se o arquivo já existe
-            if (!file_exists($target_file)) {
-                // Verificar o tamanho do arquivo
-                if ($_FILES["foto_perfil"]["size"] <= 5000000) { // 5MB máximo
-                    // Permitir apenas certos formatos de arquivo
-                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
-                        if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
-                            // Atualizar o caminho da imagem no banco de dados
-                            $sql = "UPDATE doadores SET nome='$nome', cpf_cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', foto_perfil='$target_file' WHERE id_doador=$id";
-                        } else {
-                            echo "Desculpe, houve um erro ao enviar sua imagem.";
-                        }
+            // Verificar o tamanho do arquivo
+            if ($_FILES["foto_perfil"]["size"] <= 5000000) { // 5MB máximo
+                // Permitir apenas certos formatos de arquivo
+                if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
+                    if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
+                        // Atualizar o caminho da imagem no banco de dados
+                        $sql = "UPDATE doadores SET nome='$nome', cpf_cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', foto_perfil='$target_file' WHERE id_doador=$id";
                     } else {
-                        echo "Desculpe, apenas arquivos JPG, JPEG, PNG e GIF são permitidos.";
+                        header("Location: perfil_doador.php?erro=2");
+                        exit;
                     }
                 } else {
-                    echo "Desculpe, seu arquivo é muito grande.";
+                    header("Location: perfil_doador.php?erro=3");
+                    exit;
                 }
             } else {
-                echo "Desculpe, o arquivo já existe.";
+                header("Location: perfil_doador.php?erro=4");
+                exit;
             }
         } else {
-            echo "O arquivo não é uma imagem.";
+            header("Location: perfil_doador.php?erro=5");
+            exit;
         }
     }
 
     if ($conn->query($sql) === TRUE) {
-        echo "Atualização realizada com sucesso!";
+        header("Location: perfil_doador.php");
+        exit;
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        header("Location: perfil_doador.php?erro=6");
+        exit;
     }
 
     $conn->close();

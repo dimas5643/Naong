@@ -1,5 +1,5 @@
 <?php
-  if (session_status() === PHP_SESSION_NONE) {
+if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
@@ -14,7 +14,7 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
     } elseif ($user_role == 'doador') {
         $sql = "SELECT * FROM doadores WHERE id_doador = $id";
     } else {
-        echo "Tipo de usuário inválido.";
+        header("Location: perfil_doador.php?erro=8");
         exit;
     }
 
@@ -23,10 +23,8 @@ if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
     } else {
-        echo "Nenhum registro encontrado.";
+        header("Location: perfil_doador.php?erro=7");
+
         exit;
     }
-} else {
-    echo "Usuário não está logado.";
-    exit;
 }

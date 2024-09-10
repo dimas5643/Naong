@@ -158,20 +158,21 @@ include('./perfil_ong_model.php');
                 // Formatar a data para 'd-m-Y' ou outro formato desejado
                 $dataFormatada = $dataPublicacao ? $dataPublicacao->format('d-m-Y') : '';
             ?>
-
-                <div class="card text-center">
-                    <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
-                        <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>
-                            <p class="card-text"><?php echo $publicacoes['descricao'] ?></p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary d-flex justify-content-between">
-                                <span class="text-left"><?php echo $row['nome_fantasia'] ?></span>
-                                <span class="text-right"><?php echo $dataFormatada ?></span></small>
-                        </div>
-                    </a>
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card text-center">
+                        <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
+                            <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>
+                                <p class="card-text"><?php echo $publicacoes['descricao'] ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary d-flex justify-content-between">
+                                    <span class="text-left"><?php echo $row['nome_fantasia'] ?></span>
+                                    <span class="text-right"><?php echo $dataFormatada ?></span></small>
+                            </div>
+                        </a>
+                    </div>
                 </div>
 
             <?php } ?>

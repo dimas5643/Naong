@@ -8,6 +8,32 @@ include('departamento_model.php');
     <div class="container py-12" style="margin-top: 50px; padding-bottom: 50px;">
         <div class="row g-12 align-items-center">
             <div class="col-lg-12">
+                <?php
+                if (isset($_GET['erro'])) {
+                    $mensagem = '';
+                    switch ($_GET['erro']) {
+                        case '1':
+                            $mensagem = 'Preencha todos os dados!';
+                            break;
+                        case '2':
+                            $mensagem = 'Erro ao salvar!';
+                            break;
+                        case '3':
+                            $mensagem = 'Nenhum registro encontrado!';
+                            break;
+                        default:
+                            $mensagem = 'Erro desconhecido!';
+                            break;
+                    }
+
+                    if ($mensagem) { ?>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><?php echo $mensagem; ?></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                <?php }
+                }
+                ?>
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">CADASTRO </p>

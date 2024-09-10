@@ -3,6 +3,10 @@ include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['nome']) || empty($_POST['icon'])) {
+        header('Location: departamento.php?erro=1');
+        exit;
+    }
     $id_departamento =  strtoupper($_POST['id_departamento']);
     $nome =  strtoupper($_POST['nome']);
     $ativo = 'I';
@@ -27,9 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($conn->query($sql) === TRUE) {
-        include './lista_departamento.php';
+        header('Location: lista_departamento.php');
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        header('Location: cadastro_banner.php?erro=2');
+        exit;
     }
 
     $conn->close();
@@ -45,6 +50,7 @@ if (isset($_GET['id'])) {
     if ($result_departamento) {
         $getDepartamento = $result_departamento->fetch_all(MYSQLI_ASSOC);
     } else {
-        echo "Erro: " . $conn->error;
+        header('Location: cadastro_banner.php?erro=3');
+        exit;
     }
 }

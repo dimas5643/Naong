@@ -21,6 +21,10 @@ function getCoordinates($endereco, $cidade, $estado)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email']) || empty($_POST['senha'])) {
+        header('Location: cadastro.php?erro=1');
+        exit;
+    }
     $nome = $_POST['nome'];
     $documento = $_POST['documento'];
     $cep = $_POST['cep'];
@@ -56,10 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->query($sql) === TRUE) {
             header("Location: login.php");
         } else {
-            echo "Erro: " . $sql . "<br>" . $conn->error;
+            header('Location: cadastro.php?erro=2');
+            exit;
         }
     } else {
-        echo "Erro ao obter as coordenadas do endereço.";
+        header('Location: cadastro.php?erro=3');
+        exit;
     }
 
     $conn->close();

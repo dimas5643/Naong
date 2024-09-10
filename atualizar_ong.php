@@ -2,7 +2,7 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['email'])) {
+    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email'])) {
         header('Location: perfil_ong.php?erro=1');
         exit;
     }

@@ -2,6 +2,10 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['email']) || empty($_POST['senha']) || empty($_POST['data_nascimento'])) {
+        header('Location: cadastro.php?erro=1');
+        exit;
+    }
     $nome = $_POST['nome'];
     $documento = $_POST['documento'];
     $cep = $_POST['cep'];
@@ -30,13 +34,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$email', '$celular', '$senha', '$data_nascimento', NOW(), 'A')";
 
     if ($conn->query($sql) === TRUE) {
-        
+
         header("Location: login.php");
         //DIRECIONAR PARA A PAGINA PRINCIPAL 
     } else {
-        echo "Erro: " . $sql . "<br>" . $conn->error;
+        header('Location: cadastro.php?erro=2');
+        exit;
     }
 
     $conn->close();
 }
-?>

@@ -105,6 +105,19 @@ include('./perfil_ong_model.php');
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
+                                    <label for="">SITE</label>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="site" placeholder="SITE" value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>" <?php echo $disabled ?>>
+                                </div>
+                                <div class="col-xl-6">
+                                    <label for="">INSTAGRAM</label>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="instagram" placeholder="INSTAGRAM" value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>" <?php echo $disabled ?>>
+                                </div>
+                                <div class="col-xl-6">
+                                    <label for="">FACEBOOK</label>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="facebook" placeholder="FACEBOOK" value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>" <?php echo $disabled ?>>
+                                </div>
+
+                                <div class="col-xl-6">
                                     <label for="">DEPARTAMENTO DA NECESSIDADE</label>
                                     <select class="form-control py-3 border-primary bg-transparent" name="departamento" <?php echo $disabled ?>>
                                         <option value=""></option>

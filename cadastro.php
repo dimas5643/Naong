@@ -17,7 +17,12 @@
                         case '3':
                             $mensagem = 'Erro ao salvar o endereço, tente novamente!';
                             break;
-
+                        case '4':
+                            $mensagem = 'Email ja em uso, tente novamente!';
+                            break;
+                        case '5':
+                            $mensagem = 'CPF/CNPJ ja em uso, tente novamente!';
+                            break;
                         default:
                             $mensagem = 'Erro desconhecido!';
                             break;

@@ -2,7 +2,7 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email'])) {
+    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email']) || empty($_POST['site'])|| empty($_POST['instagram'])|| empty($_POST['facebook']) ) {
         header('Location: perfil_ong.php?erro=1');
         exit;
     }
@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $area_atuacao = $_POST['area_atuacao'];
     $id_deparamento = $_POST['departamento'];
     $descricao = $_POST['descricao'];
+    $site = $_POST['site'];
+    $instagram = $_POST['instagram'];
+    $facebook = $_POST['facebook'];
 
     // Proteção contra SQL Injection
     $nome = $conn->real_escape_string($nome);
@@ -33,6 +36,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $area_atuacao = $conn->real_escape_string($area_atuacao);
     $id_deparamento = $conn->real_escape_string($id_deparamento);
     $descricao = $conn->real_escape_string($descricao);
+    $site = $conn->real_escape_string($site);
+    $instagram = $conn->real_escape_string($instagram);
+    $facebook = $conn->real_escape_string($facebook);
 
     if (!$id_deparamento) {
         $id_deparamento = 'NULL';
@@ -41,9 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verificar se uma nova senha foi fornecida e criptografá-la
     if (!empty($senha)) {
         $senha = password_hash($senha, PASSWORD_DEFAULT);
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', senha='$senha', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao', site='$site', instagram='$instagram', facebook='$facebook' WHERE id_ong=$id";
     } else {
-        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
+        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', id_departamento=$id_deparamento, descricao='$descricao', site='$site', instagram='$instagram', facebook='$facebook' WHERE id_ong=$id";
     }
 
     // Lidar com o upload da imagem
@@ -61,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
                     if (move_uploaded_file($_FILES["foto_perfil"]["tmp_name"], $target_file)) {
                         // Atualizar o caminho da imagem no banco de dados
-                        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file', id_departamento=$id_deparamento, descricao='$descricao' WHERE id_ong=$id";
+                        $sql = "UPDATE ongs SET nome_fantasia='$nome', cnpj='$documento', cep='$cep', estado='$estado', cidade='$cidade', endereco='$endereco', telefone='$contato', email='$email', area_atuacao='$area_atuacao', foto_perfil='$target_file', id_departamento=$id_deparamento, descricao='$descricao', site='$site', instagram='$instagram', facebook='$facebook' WHERE id_ong=$id";
                     } else {
                         header("Location: perfil_ong.php?erro=2&id_ong=$id");
                         exit;

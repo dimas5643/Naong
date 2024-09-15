@@ -1,5 +1,6 @@
 <?php
 include('./valida_login.php');
+include('./valida_acesso_tela.php');
 include('./cabecalho.php');
 include('departamento_model.php');
 ?>

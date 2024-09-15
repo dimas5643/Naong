@@ -30,6 +30,9 @@
                         case '2':
                             $mensagem = 'Email ou senha inválidos!';
                             break;
+                        case '3':
+                            $mensagem = 'Você não pode acessar essa página!';
+                            break;
                         default:
                             $mensagem = 'Erro desconhecido!';
                             break;

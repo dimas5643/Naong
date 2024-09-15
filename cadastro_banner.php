@@ -1,5 +1,6 @@
 <?php
 include('./valida_login.php');
+include('./valida_acesso_tela.php');
 include('./cabecalho.php');
 include './banco.php';
 include('./cadastro_banner_model.php');

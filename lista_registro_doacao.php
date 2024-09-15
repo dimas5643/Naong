@@ -1,4 +1,6 @@
 <?php
+include('./valida_login.php');
+include('./valida_acesso_tela.php');
 include('./cabecalho.php');
 include('./lista_registro_doacao_model.php');
 ?>

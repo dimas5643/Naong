@@ -163,6 +163,9 @@ CREATE TABLE `ongs` (
   `descricao` varchar(255) DEFAULT NULL,
   `latitude` varchar(255) DEFAULT NULL,
   `longitude` varchar(255) DEFAULT NULL,
+  `site` varchar(60) DEFAULT NULL,
+  `instagram` varchar(45) DEFAULT NULL,
+  `facebook` varchar(45) NOT NULL,
   PRIMARY KEY (`id_ong`,`cnpj`,`email`),
   KEY `fk_id_departamento_idx` (`id_departamento`),
   CONSTRAINT `fk_id_departamento` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`)

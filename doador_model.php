@@ -6,37 +6,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Location: cadastro.php?erro=1');
         exit;
     }
-    $nome = $_POST['nome'];
-    $documento = $_POST['documento'];
-    $cep = $_POST['cep'];
-    $estado = $_POST['estado'];
-    $cidade = $_POST['cidade'];
-    $endereco = $_POST['endereco'];
-    $email = $_POST['email'];
-    $celular = $_POST['celular'];
-    $senha = $_POST['senha'];
-    $data_nascimento = $_POST['data_nascimento'];
 
-    // Proteção contra SQL Injection
-    $nome = $conn->real_escape_string($nome);
-    $documento = $conn->real_escape_string($documento);
-    $cep = $conn->real_escape_string($cep);
-    $estado = $conn->real_escape_string($estado);
-    $cidade = $conn->real_escape_string($cidade);
-    $endereco = $conn->real_escape_string($endereco);
-    $email = $conn->real_escape_string($email);
-    $celular = $conn->real_escape_string($celular);
-    $senha = password_hash($senha, PASSWORD_DEFAULT); // Criptografa a senha
+    $nome = $conn->real_escape_string($_POST['nome']);
+    $documento = $conn->real_escape_string($_POST['documento']);
+    $cep = $conn->real_escape_string($_POST['cep']);
+    $estado = $conn->real_escape_string($_POST['estado']);
+    $cidade = $conn->real_escape_string($_POST['cidade']);
+    $endereco = $conn->real_escape_string($_POST['endereco']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $celular = $conn->real_escape_string($_POST['celular']);
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+    $data_nascimento = $conn->real_escape_string($_POST['data_nascimento']);
 
-    $data_nascimento = $conn->real_escape_string($data_nascimento);
+    // Verificar se o CPF/CNPJ já existe na tabela doadores
+    $sql_verifica_cpf = "SELECT cpf_cnpj FROM doadores WHERE cpf_cnpj = '$documento'
+                        UNION
+                        SELECT cnpj FROM Ongs WHERE cnpj = '$documento'";
+    $resultado_cpf = $conn->query($sql_verifica_cpf);
 
+    if ($resultado_cpf->num_rows > 0) {
+        // CPF já está em uso
+        header('Location: cadastro.php?erro=5'); // Erro 3 para CPF em uso
+        exit;
+    }
+
+    // Verificar se o email já existe na tabela doadores ou Ongs
+    $sql_verifica_email = "SELECT email FROM doadores WHERE email = '$email'
+                           UNION
+                           SELECT email FROM Ongs WHERE email = '$email'";
+    $resultado_email = $conn->query($sql_verifica_email);
+
+    if ($resultado_email->num_rows > 0) {
+        // Email já está em uso
+        header('Location: cadastro.php?erro=4'); // Erro 4 para email em uso
+        exit;
+    }
+
+    // Verificar se o email já existe na tabela administradores
+    $sql_verifica_email = "SELECT email FROM administradores WHERE email = '$email'";
+    $resultado_email = $conn->query($sql_verifica_email);
+    if ($resultado_email->num_rows > 0) {
+        // Email já está em uso
+        header('Location: cadastro.php?erro=4'); // Erro 4 para email em uso
+        exit;
+    }
+
+    // Se o email e o CPF não estiverem em uso, prossegue com o cadastro
     $sql = "INSERT INTO doadores (nome, cpf_cnpj, cep, estado, cidade, endereco, email, telefone, senha, nascimento, cadastro, ativo)
             VALUES ('$nome', '$documento', '$cep', '$estado', '$cidade', '$endereco', '$email', '$celular', '$senha', '$data_nascimento', NOW(), 'A')";
 
     if ($conn->query($sql) === TRUE) {
-
         header("Location: login.php");
-        //DIRECIONAR PARA A PAGINA PRINCIPAL 
     } else {
         header('Location: cadastro.php?erro=2');
         exit;

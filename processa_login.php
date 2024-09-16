@@ -50,6 +50,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
+    // Verificar credenciais na tabela adm
+    $sql = "SELECT * FROM administradores WHERE email = '$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Usuário encontrado na tabela adm
+        $adm = $result->fetch_assoc();
+
+        if (password_verify($senha, $adm['senha'])) {
+            // Senha correta
+            $_SESSION['user_role'] = 'adm';
+            $_SESSION['user_id'] = $adm['id_administradores'];
+            // Aqui você pode redirecionar o usuário para uma página específica
+            header('Location: index.php');
+            exit();
+        }
+    }
+
     // Se nenhum usuário for encontrado ou a senha estiver incorreta
     header('Location: login.php?erro=2');
     exit;

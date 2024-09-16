@@ -47,15 +47,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $senha = password_hash($senha, PASSWORD_DEFAULT); // Criptografa a senha
 
     // Verificar se o CPF/CNPJ já existe na tabela doadores
-    $sql_verifica_cpf ="SELECT cpf_cnpj FROM doadores WHERE cpf_cnpj = '$documento'
+    $sql_verifica_cpf = "SELECT cpf_cnpj FROM doadores WHERE cpf_cnpj = '$documento'
     UNION
-    SELECT cnpj FROM Ongs WHERE cnpj = '$documento'";    
+    SELECT cnpj FROM Ongs WHERE cnpj = '$documento'";
     $resultado_cpf = $conn->query($sql_verifica_cpf);
 
     if ($resultado_cpf->num_rows > 0) {
-    // CPF já está em uso
-    header('Location: cadastro.php?erro=5'); // Erro 3 para CPF em uso
-    exit;
+        // CPF já está em uso
+        header('Location: cadastro.php?erro=5'); // Erro 3 para CPF em uso
+        exit;
     }
 
     // Verificar se o email já existe na tabela doadores ou Ongs
@@ -65,11 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resultado_email = $conn->query($sql_verifica_email);
 
     if ($resultado_email->num_rows > 0) {
-    // Email já está em uso
-    header('Location: cadastro.php?erro=4'); // Erro 4 para email em uso
-    exit;
+        // Email já está em uso
+        header('Location: cadastro.php?erro=4'); // Erro 4 para email em uso
+        exit;
     }
-
+    // Verificar se o email já existe na tabela administradores
+    $sql_verifica_email = "SELECT email FROM administradores WHERE email = '$email'";
+    $resultado_email = $conn->query($sql_verifica_email);
+    if ($resultado_email->num_rows > 0) {
+        // Email já está em uso
+        header('Location: cadastro.php?erro=4'); // Erro 4 para email em uso
+        exit;
+    }
 
     // Obtém as coordenadas
     $coordenadas = getCoordinates($endereco, $cidade, $estado);

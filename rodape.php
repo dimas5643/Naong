@@ -43,8 +43,8 @@
                     <h4 class="mb-4 text-white">Contatos</h4>
                     <!-- <a href=""><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a> -->
                     <!-- <a href=""><i class="fas fa-envelope me-2"></i> info@example.com</a> -->
-                    <a href=""><i class="fas fa-envelope me-2"></i> naong@naong.com</a>
-                    <a href=""><i class="fas fa-phone me-2"></i> +55 (48) 99608-3890 </a>
+                    <a href=""><i class="fa fa-envelope me-2"></i> naong@naong.com</a>
+                    <a href=""><i class="fa fa-phone me-2"></i> +55 (48) 99608-3890 </a>
                     <a href=""><i class="fa fa-globe me-2"></i> www.naong.com </a>
                 </div>
             </div>

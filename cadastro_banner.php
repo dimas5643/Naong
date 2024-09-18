@@ -77,6 +77,14 @@ include('./cadastro_banner_model.php');
                                     <label for="">FOTO DE PERFIL</label>
                                     <input type="file" class="form-control py-3 border-primary bg-transparent" name="banner">
                                 </div>
+                                <div class="col-xl-12 form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?php
+                                                                                                                if (isset($getDepartamento[0]['ativo']) && $getDepartamento[0]['ativo'] == 'A') {
+                                                                                                                    echo 'checked';
+                                                                                                                }
+                                                                                                                ?> name="padrao">
+                                    <label class="form-check-label" for="flexSwitchCheckDefault">PADRÃO</label>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
 

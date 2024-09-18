@@ -15,8 +15,10 @@ CREATE TABLE `banners` (
   `arquivo` varchar(45) NOT NULL,
   `dtinicial` datetime NOT NULL,
   `dtfinal` datetime NOT NULL,
+  `padrao` char(1) DEFAULT NULL,
   PRIMARY KEY (`id_banner`)
 );
+
 
 CREATE TABLE `departamentos` (
   `id_departamento` int(11) NOT NULL AUTO_INCREMENT,

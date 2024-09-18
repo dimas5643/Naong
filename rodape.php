@@ -1,8 +1,8 @@
 <!-- Footer Start -->
 <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
     <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-md-6 col-lg-6 col-xl-3">
+        <div class="row g-5 text-center">
+            <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="text-white mb-4"><i class="fas fa-star-of-life me-3"></i>NaOng</h4>
                     <p>Contribua para transformar vidas! Todas as doações realizadas por meio deste site são destinadas diretamente às ONGs, ajudando a promover ações sociais e ambientais. Juntos, podemos construir um futuro melhor. Sua solidariedade faz a diferença!
@@ -16,18 +16,18 @@
                     </div> -->
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-xl-3">
+            <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white">Links Rápidos</h4>
-                    <a href="index.php"><i class="fas fa-angle-right me-2"></i> Home </a>
-                    <a href="login.php"><i class="fas fa-angle-right me-2"></i> Login </a>
-                    <a href="cadastro.php"><i class="fas fa-angle-right me-2"></i> Cadastro </a>
-                    <a href="pesquisa_mapa.php"><i class="fas fa-angle-right me-2"></i> Pesquisa Ongs</a>
-                    <a href="lista_publicacao.php"><i class="fas fa-angle-right me-2"></i> Publicações</a>
+                    <a href="index.php"> Home </a>
+                    <a href="login.php"> Login </a>
+                    <a href="cadastro.php"> Cadastro </a>
+                    <a href="pesquisa_mapa.php">Pesquisa Ongs</a>
+                    <a href="lista_publicacao.php">Publicações</a>
                 </div>
             </div>
 
-            <div class="col-md-6 col-lg-6 col-xl-3">
+            <!-- <div class="col-md-6 col-lg-6 col-xl-3">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white">Terapia Services</h4>
                     <a href=""><i class="fas fa-angle-right me-2"></i> All Services</a>
@@ -37,8 +37,8 @@
                     <a href=""><i class="fas fa-angle-right me-2"></i> Massage Therapy</a>
                     <a href=""><i class="fas fa-angle-right me-2"></i> Rehabilitation</a>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-xl-3">
+            </div> -->
+            <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item d-flex flex-column">
                     <h4 class="mb-4 text-white">Contatos</h4>
                     <!-- <a href=""><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a> -->

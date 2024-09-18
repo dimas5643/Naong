@@ -53,10 +53,39 @@ include('./perfil_ong_model.php');
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
                     <div class="appointment-form rounded p-5">
                         <p class="fs-4 text-uppercase text-primary">DADOS DO PERFIL</p>
-                        <h1 class="display-5 mb-4">PERFIL</h1>
-                        <?php if (!empty($row['foto_perfil'])) : ?>
-                            <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" style="width: 150px; height: 150px; border-radius: 50%;">
-                        <?php endif; ?>
+                        <h1 class=" mb-4">PERFIL</h1>
+                        <div class="col-lg-12 d-flex justify-content-around align-items-center" style="font-size: 14pt;">
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <img src="<?php echo $row['foto_perfil']; ?>" alt="Foto de Perfil" class="img-fluid rounded-circle" style=" border-radius: 50%;">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <h2 class="mt-3">Informações Pessoais</h2>
+                                    <p><strong>Nome:</strong> <?php echo $row['nome_fantasia']; ?></p>
+                                    <p><strong>Email:</strong> <?php echo $row['email']; ?></p>
+                                    <p><strong>Area:</strong> <?php echo $row['area_atuacao']; ?></p>
+                                    <p><strong>Necessidade:</strong> <i class="<?php echo $row['icon']; ?>"></i> <?php echo $row['nome_departamento']; ?></p>
+
+
+                                </div>
+                                <div class="col-md-3">
+                                    <h2 class="mt-3">Redes Sociais</h2>
+                                    <?php if (isset($row['facebook'])) { ?>
+                                        <p><i class="fa fa-facebook"></i> <?php echo $row['facebook'] ?></p>
+                                    <?php } ?>
+                                    <?php if (isset($row['instagram'])) { ?>
+                                        <p><i class="fa fa-instagram"></i> <?php echo $row['instagram'] ?></p>
+                                    <?php } ?>
+                                    <?php if (isset($row['site'])) { ?>
+                                        <p><i class="fa fa-globe"></i> <?php echo $row['site'] ?> </p>
+                                    <?php } ?>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <form action="atualizar_<?php echo $user_role; ?>.php" method="POST" enctype="multipart/form-data">
                             <?php if ($mostraCampo) { ?>
                                 <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
@@ -99,23 +128,24 @@ include('./perfil_ong_model.php');
                                         <label for="">SENHA</label>
                                         <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                     </div>
+                                    <div class="col-xl-6">
+                                        <label for="">SITE</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="site" placeholder="SITE" value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>" <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">INSTAGRAM</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="instagram" placeholder="INSTAGRAM" value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>" <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">FACEBOOK</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="facebook" placeholder="FACEBOOK" value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>" <?php echo $disabled ?>>
+                                    </div>
                                 <?php } ?>
                                 <div class="col-xl-6">
                                     <label for="">ÁREA DE ATUAÇÃO</label>
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="area_atuacao" placeholder="ÁREA DE ATUAÇÃO" value="<?php echo isset($row['area_atuacao']) ? $row['area_atuacao'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
-                                <div class="col-xl-6">
-                                    <label for="">SITE</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="site" placeholder="SITE" value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>" <?php echo $disabled ?>>
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">INSTAGRAM</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="instagram" placeholder="INSTAGRAM" value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>" <?php echo $disabled ?>>
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">FACEBOOK</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="facebook" placeholder="FACEBOOK" value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>" <?php echo $disabled ?>>
-                                </div>
+
 
                                 <div class="col-xl-6">
                                     <label for="">DEPARTAMENTO DA NECESSIDADE</label>

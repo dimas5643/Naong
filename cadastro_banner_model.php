@@ -4,7 +4,7 @@ include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Verifica se todos os campos estão preenchidos
-    if (empty($_POST['nome']) || empty($_POST['dtinicial']) || empty($_POST['dtfinal']) || empty($_FILES['banner']['name'])) {
+    if (empty($_POST['nome']) || empty($_FILES['banner']['name']) || ((empty($_POST['dtinicial']) || empty($_POST['dtfinal'])) && !isset($_POST['padrao']))) {
         header('Location: cadastro_banner.php?erro=1');
         exit;
     }
@@ -13,9 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $dtinicial = $conn->real_escape_string($_POST['dtinicial']);
     $dtfinal = $conn->real_escape_string($_POST['dtfinal']);
 
+    $padrao = NULL;
+    if (isset($_POST['padrao'])) {
+        $padrao = 'S';
+    }
+
     // Insere os dados no banco sem o caminho da imagem
-    $sql = "INSERT INTO `naong`.`banners` (`nome`, `dtinicial`, `dtfinal`)
-            VALUES ('$nome', '$dtinicial', '$dtfinal')";
+    $sql = "INSERT INTO `naong`.`banners` (`nome`, `dtinicial`, `dtfinal`, `padrao`)
+            VALUES ('$nome', '$dtinicial', '$dtfinal', '$padrao')";
 
     if ($conn->query($sql) === TRUE) {
         $id = $conn->insert_id; // Obtém o ID gerado
@@ -32,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Verifica o tamanho da imagem (máximo 25MB)
                 if ($_FILES["banner"]["size"] <= 25000000) {
                     // Verifica se o tipo de arquivo é permitido (JPG, JPEG, PNG)
-                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg") {
+                    if ($imageFileType == "jpg" || $imageFileType == "png" || $imageFileType == "jpeg" || $imageFileType == "gif") {
                         if (move_uploaded_file($_FILES["banner"]["tmp_name"], $target_file)) {
                             // Atualizar o caminho da imagem no banco de dados
                             $sql = "UPDATE `naong`.`banners` 

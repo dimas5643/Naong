@@ -27,8 +27,7 @@ $acesso_telas_doador = [
     'pesquisa_ongs.php'
 ];
 
-<<<<<<< HEAD
-=======
+
 $acesso_telas_adm = [
     'informativo.php', 
     'cadastro_banner.php',
@@ -47,7 +46,6 @@ $acesso_telas_adm = [
     'consulta_coleta.php',
     'departamento.php'      
 ];
->>>>>>> 08759b08d1b51cfd364427ef06e7e6356f68185a
 
 $paginaAtual = basename($_SERVER['PHP_SELF']);
 

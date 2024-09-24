@@ -83,11 +83,8 @@ if (session_status() === PHP_SESSION_NONE) {
 
           <a href="index.php" class="nav-item nav-link">Home</a>
           <a href="pesquisa_mapa.php" class="nav-item nav-link">Pesquisar Ongs</a>
-<<<<<<< HEAD
           <a href="como_doar.php" class="nav-item nav-link">Como doar</a>
-=======
           <a href="informativo.php" class="nav-item nav-link">O que Doar?</a>
->>>>>>> 08759b08d1b51cfd364427ef06e7e6356f68185a
 
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>

@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Usuário encontrado na tabela adm
         $adm = $result->fetch_assoc();
 
-        if (password_verify($senha, $adm['senha'])) {
+        if ($senha === $adm['senha']) {
             // Senha correta
             $_SESSION['user_role'] = 'adm';
             $_SESSION['user_id'] = $adm['id_administradores'];

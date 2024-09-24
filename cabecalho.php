@@ -82,6 +82,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
           <a href="index.php" class="nav-item nav-link">Home</a>
           <a href="pesquisa_mapa.php" class="nav-item nav-link">Pesquisar Ongs</a>
+          <a href="informativo.php" class="nav-item nav-link">O que Doar?</a>
 
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
@@ -101,10 +102,15 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php } ?>
 
             <?php if ($_SESSION['user_role'] == 'adm') { ?>
-              <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>
+              <a href="departamento.php" class="nav-item nav-link">Departamento</a>
               <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
-              <a href="cadastro_registro_doacao.php" class="nav-item nav-link">Registrar Doação</a>
-              <a href="lista_registro_doacao.php" class="nav-item nav-link">Listar Doações</a>
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Doações</a>
+                <div class="dropdown-menu m-0">
+                  <a href="cadastro_registro_doacao.php" class="dropdown-item">Registrar</a>
+                  <a href="lista_registro_doacao.php" class="dropdown-item">Listar</a>
+                </div>
+              </div>
               <a href="cadastro_banner.php" class="nav-item nav-link">Cadastrar Banner</a>
             <?php } ?>
           <?php } ?>

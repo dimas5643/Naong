@@ -1,14 +1,4 @@
 
-
-CREATE TABLE `banners` (
-  `id_banner` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) NOT NULL,
-  `arquivo` varchar(45) NOT NULL,
-  `dtinicial` datetime NOT NULL,
-  `dtfinal` datetime NOT NULL,
-  PRIMARY KEY (`id_banner`)
-);
-
 CREATE TABLE `banners` (
   `id_banner` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,

@@ -25,22 +25,6 @@ $acesso_telas_doador = [
     'pesquisa_ongs.php'
 ];
 
-$acesso_telas_adm = [
-   'cadastro_banner.php',
-    'cadastro_registro_doacao.php',
-    'cadastro.php',
-    'lista_publicacao.php',
-    'lista_registro_doacao.php',
-    'login.php',
-    'logout.php',
-    'perfil_doador.php',
-    'perfil_ong.php',
-    'pesquisa_mapa',
-    'pesquisa_ongs.php',
-    'cadastro_publicacao.php',
-    'coleta.php',
-    'consulta_coleta.php'    
-];
 
 $paginaAtual = basename($_SERVER['PHP_SELF']);
 
@@ -55,8 +39,4 @@ if ($tipoUsuario == 'ong' && !in_array($paginaAtual, $acesso_telas_ongs)) {
     header("Location: login.php?erro=3");
     exit();
 }
- elseif ($tipoUsuario == 'adm' && !in_array($paginaAtual, $acesso_telas_adm)) {
-    // Se for adm e não tiver permissão para acessar a página, redireciona
-    header("Location: login.php?erro=3");
-    exit();
-}
+

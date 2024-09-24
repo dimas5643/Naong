@@ -4,7 +4,7 @@
         <div class="row g-5 text-center">
             <div class="col-md-6 col-lg-6 col-xl-4">
                 <div class="footer-item d-flex flex-column">
-                    <h4 class="text-white mb-4"><i class="fas fa-star-of-life me-3"></i>NaOng</h4>
+                    <h4 class="text-white mb-4"><i class="fa fa-star-of-life me-3"></i>NaOng</h4>
                     <p>Contribua para transformar vidas! Todas as doações realizadas por meio deste site são destinadas diretamente às ONGs, ajudando a promover ações sociais e ambientais. Juntos, podemos construir um futuro melhor. Sua solidariedade faz a diferença!
                     </p>
                     <!-- <div class="d-flex align-items-center">
@@ -23,6 +23,7 @@
                     <a href="login.php"> Login </a>
                     <a href="cadastro.php"> Cadastro </a>
                     <a href="pesquisa_mapa.php">Pesquisa Ongs</a>
+                    <a href="como_doar.php">Como doar</a>
                     <a href="lista_publicacao.php">Publicações</a>
                 </div>
             </div>
@@ -58,7 +59,7 @@
     <div class="container">
         <div class="row g-4 align-items-center">
             <div class="col-md-6 text-center text-md-start mb-md-0">
-                <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>NaOng</a>, Todos os direitos reservados</span>
+                <span class="text-white"><a href="#"><i class="fa fa-copyright text-light me-2"></i>NaOng</a>, Todos os direitos reservados</span>
             </div>
             <div class="col-md-6 text-center text-md-end text-white">
                 <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->

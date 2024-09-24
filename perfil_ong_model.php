@@ -10,7 +10,7 @@ if (isset($_GET['id_ong'])) {
     $id_ong = $_GET['id_ong'];
     $user_role = $_SESSION['user_role'];
 
-    $sql_ong = "SELECT * FROM ongs WHERE id_ong = ?";
+    $sql_ong = "SELECT ongs.*, departamentos.nome_departamento, departamentos.icon FROM ongs  left join departamentos on ongs.id_departamento = departamentos.id_departamento WHERE id_ong = ?";
     $sql_list_publicacoes = "SELECT * FROM publicacoes WHERE id_ong = ? ORDER BY id_publicacoes DESC LIMIT 3";
     $sql_list_departamentos = "SELECT * FROM departamentos WHERE ativo = 'A'";
 

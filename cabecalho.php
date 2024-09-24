@@ -8,6 +8,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <head>
   <meta charset="utf-8" />
+  <link rel="icon" href="img/icon.png" type="image/x-icon">
   <title>NaOng</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <meta content="" name="keywords" />
@@ -71,7 +72,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <div class="container-fluid position-relative p-0">
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
       <a href="index.php" class="navbar-brand p-0">
-        <h1 class="text-primary m-0"><i class="fas fa-star-of-life me-3"></i>NaOng</h1>
+        <h1 class="text-primary m-0"><i class="fa fa-star-of-life me-3"></i>NaOng</h1>
         <!-- <img src="img/logo.png" alt="Logo"> -->
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -82,6 +83,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
           <a href="index.php" class="nav-item nav-link">Home</a>
           <a href="pesquisa_mapa.php" class="nav-item nav-link">Pesquisar Ongs</a>
+          <a href="como_doar.php" class="nav-item nav-link">Como doar</a>
 
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
             <a href="cadastro_publicacao.php" class="nav-item nav-link">Publicação</a>

@@ -64,7 +64,7 @@ include('./perfil_ong_model.php');
                                 <div class="col-md-4">
                                     <h2 class="mt-3">Informações Pessoais</h2>
                                     <p><strong>Nome:</strong> <?php echo $row['nome_fantasia']; ?></p>
-                                    <p><strong>Email:</strong> <?php echo $row['email']; ?></p>
+                                    <p><strong>Email:</strong> <a href="mailto:<?php echo $row['email']; ?>"><?php echo $row['email']; ?></a></p>
                                     <p><strong>Area:</strong> <?php echo $row['area_atuacao']; ?></p>
                                     <p><strong>Necessidade:</strong> <i class="<?php echo $row['icon']; ?>"></i> <?php echo $row['nome_departamento']; ?></p>
 
@@ -73,15 +73,23 @@ include('./perfil_ong_model.php');
                                 <div class="col-md-3">
                                     <h2 class="mt-3">Redes Sociais</h2>
                                     <?php if (isset($row['facebook'])) { ?>
-                                        <p><i class="fa fa-facebook"></i> <?php echo $row['facebook'] ?></p>
+                                        <p>
+                                            <i class="fa fa-facebook"></i>
+                                            <a href="https://facebook.com/<?php echo $row['facebook']; ?>" target="_blank"><?php echo $row['facebook']; ?></a>
+                                        </p>
                                     <?php } ?>
                                     <?php if (isset($row['instagram'])) { ?>
-                                        <p><i class="fa fa-instagram"></i> <?php echo $row['instagram'] ?></p>
+                                        <p>
+                                            <i class="fa fa-instagram"></i>
+                                            <a href="https://instagram.com/<?php echo $row['instagram']; ?>" target="_blank"><?php echo $row['instagram']; ?></a>
+                                        </p>
                                     <?php } ?>
                                     <?php if (isset($row['site'])) { ?>
-                                        <p><i class="fa fa-globe"></i> <?php echo $row['site'] ?> </p>
+                                        <p>
+                                            <i class="fa fa-globe"></i>
+                                            <a href="<?php echo (strpos($row['site'], 'http') === 0 ? '' : 'https://') . $row['site']; ?>" target="_blank"><?php echo $row['site']; ?></a>
+                                        </p>
                                     <?php } ?>
-
                                 </div>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 <?php
 $acesso_telas_ongs = [
+    'informativo.php',
     'cadastro_publicacao.php',
     'cadastro.php',
     'coleta.php',
@@ -13,6 +14,7 @@ $acesso_telas_ongs = [
 ];
 
 $acesso_telas_doador = [
+    'informativo.php',
     'cadastro_registro_doacao.php',
     'cadastro.php',
     'lista_publicacao.php',
@@ -25,6 +27,27 @@ $acesso_telas_doador = [
     'pesquisa_ongs.php'
 ];
 
+<<<<<<< HEAD
+=======
+$acesso_telas_adm = [
+    'informativo.php', 
+    'cadastro_banner.php',
+    'cadastro_registro_doacao.php',
+    'cadastro.php',
+    'lista_publicacao.php',
+    'lista_registro_doacao.php',
+    'login.php',
+    'logout.php',
+    'perfil_doador.php',
+    'perfil_ong.php',
+    'pesquisa_mapa',
+    'pesquisa_ongs.php',
+    'cadastro_publicacao.php',
+    'coleta.php',
+    'consulta_coleta.php',
+    'departamento.php'      
+];
+>>>>>>> 08759b08d1b51cfd364427ef06e7e6356f68185a
 
 $paginaAtual = basename($_SERVER['PHP_SELF']);
 

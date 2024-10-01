@@ -13,26 +13,37 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
+echo "<br>";
+echo "<br>";
+echo "<br>";
 
 // Captura o filtro de departamentos, se fornecido
 $departamentos = isset($_GET['departamentos']) ? $_GET['departamentos'] : '';
 
-// Cria a consulta base para buscar ONGs
-$sql = "SELECT o.nome_fantasia, o.endereco, o.latitude, o.longitude, o.id_ong
-        FROM ongs o
-        JOIN ongs_departamentos od ON o.id = od.ong_id
-        WHERE o.latitude IS NOT NULL AND o.longitude IS NOT NULL";
+function getDepartamentos() {
+    global $conn; // Certifique-se de que a variável de conexão está disponível
 
-
-$ongs = [];
-if ($result->num_rows > 0) {
-    while($row = $result->fetch_assoc()) {
-        $ongs[] = $row;
+    // Teste se a conexão está funcionando
+    if (!$conn) {
+        die("Erro na conexão com o banco de dados: " . mysqli_connect_error());
     }
+
+    // Verificar se a consulta SQL está funcionando corretamente
+    $query = "SELECT id_departamento, nome_departamento FROM departamentos";
+    $result = mysqli_query($conn, $query);
+
+    if (!$result) {
+        die("Erro ao executar a query: " . mysqli_error($conn));
+    }
+
+    $departamentos = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $departamentos[] = $row;
+    }
+
+    return $departamentos;
 }
 
-$conn->close();
+//$conn->close();
 
-// Retorna os dados em formato JSON
-echo json_encode($ongs);
 ?>

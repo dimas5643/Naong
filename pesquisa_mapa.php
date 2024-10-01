@@ -1,5 +1,8 @@
 <?php
 include('./cabecalho.php');
+include('./pesquisa_mapa_model.php');
+
+$departamentos = getDepartamentos();
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -12,24 +15,29 @@ include('./cabecalho.php');
                         <h1 class="display-5 mb-4">PESQUISAR NO MAPA</h1>
 
                         <!-- Input de pesquisa e botão -->
-                        <div id="map-controls">
-                            <input id="search-box" type="text" placeholder="Pesquisar local..." class="form-control py-2" style="margin-bottom: 10px;" />
-                            <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5" style="margin-bottom: 20px;">Atualizar Mapa</button>
+                        <div id="map-controls" class="mb-4">
+                            <input id="search-box" type="text" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />
+                            <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5 mb-4">Atualizar Mapa</button>
+                        </div>
+
+                        <!-- Filtro de Departamento -->
+                        <div class="form-group mb-4">
+                            <label for="departamento" class="form-label">Selecione o Departamento</label>
+                            <select id="departamento" class="form-control">
+                                <option value="">Todos os Departamentos</option>
+                                <?php foreach ($departamentos as $departamento) { ?>
+                                    <option value="<?php echo $departamento['id_departamento']; ?>">
+                                        <?php echo $departamento['nome_departamento']; ?>
+                                    </option>
+                                <?php } ?>
+                            </select>
                         </div>
 
                         <!-- Mapa -->
                         <div id="map" style="height: 500px; width: 100%; margin-top: 20px;"></div>
 
                         <!-- Lista de ONGs -->
-                        <div id="ong-list" style="
-                            background-color: #f8f9fa; /* Cor de fundo clara */
-                            border: 1px solid #dee2e6; /* Borda cinza clara */
-                            border-radius: 8px; /* Bordas arredondadas */
-                            padding: 20px; /* Espaço interno */
-                            margin-top: 20px; /* Espaço acima */
-                            max-height: 400px; /* Altura máxima para rolagem */
-                            overflow-y: auto; /* Adiciona rolagem vertical se necessário */
-                        ">
+                        <div id="ong-list" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 8px; padding: 20px; margin-top: 20px; max-height: 400px; overflow-y: auto;">
                             <!-- Lista de ONGs será exibida aqui -->
                         </div>
                     </div>
@@ -70,6 +78,7 @@ include('./cabecalho.php');
         // Evento para atualizar o mapa ao clicar no botão de pesquisa
         searchBtn.addEventListener('click', () => {
             const places = searchBox.getPlaces();
+            const departamentoId = document.getElementById('departamento').value; // Captura o ID do departamento
             if (!places || places.length === 0) {
                 alert('Nenhum lugar encontrado.');
                 return;
@@ -83,14 +92,14 @@ include('./cabecalho.php');
                 map.setZoom(14);
 
                 // Buscar as ONGs e adicionar marcadores e lista filtrada
-                fetch('get_ongs.php')
+                fetch('get_ongs.php') // Captura todas as ONGs
                     .then(response => response.json())
                     .then(ongs => {
                         const ongListContainer = document.getElementById('ong-list');
                         ongListContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
                         const markers = [];
 
-                        // Filtrar ONGs mais próximas (dentro de 10 km)
+                        // Filtrar ONGs por departamento e proximidade (dentro de 10 km)
                         const nearbyOngs = ongs.filter(ong => {
                             const distance = calculateDistance(
                                 place.geometry.location.lat(),
@@ -98,7 +107,10 @@ include('./cabecalho.php');
                                 parseFloat(ong.latitude),
                                 parseFloat(ong.longitude)
                             );
-                            return distance <= 10; // ONGs dentro de um raio de 10 km
+
+                            const isInDepartment = departamentoId === "" || ong.id_departamento == departamentoId; // Verifica se está no departamento selecionado
+
+                            return distance <= 10 && isInDepartment; // ONGs dentro de um raio de 10 km e do departamento selecionado
                         });
 
                         nearbyOngs.forEach(ong => {
@@ -128,7 +140,6 @@ include('./cabecalho.php');
                             // Adicionar item à lista e adicionar um link para o perfil da ONG
                             const listItem = document.createElement('div');
                             listItem.className = 'ong-item';
-                            console.log(ong);
                             listItem.innerHTML = `
                             <a href="perfil_ong.php?id_ong=${ong.id_ong}" style="text-decoration: none; color: inherit;">
                                 <h5 style="margin: 0; font-size: 1.2em; color: #007bff;">${ong.nome_fantasia}</h5>
@@ -143,7 +154,7 @@ include('./cabecalho.php');
                         });
 
                         if (nearbyOngs.length === 0) {
-                            ongListContainer.innerHTML = '<p>Nenhuma ONG encontrada próxima a esse local.</p>';
+                            ongListContainer.innerHTML = '<p>Nenhuma ONG encontrada próxima a esse local e com o departamento selecionado.</p>';
                         }
                     })
                     .catch(error => console.error('Erro ao carregar ONGs:', error));

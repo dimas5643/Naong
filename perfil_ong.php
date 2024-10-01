@@ -51,9 +51,35 @@ include('./perfil_ong_model.php');
                 }
                 ?>
                 <div class="col-lg-12 wow fadeInRight" data-wow-delay="0.4s">
+
                     <div class="appointment-form rounded p-5">
-                        <p class="fs-4 text-uppercase text-primary">DADOS DO PERFIL</p>
-                        <h1 class=" mb-4">PERFIL</h1>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <!-- Texto "DADOS DO PERFIL" -->
+                            <p class="fs-4 text-uppercase text-primary mb-0">DADOS DO PERFIL</p>
+
+                            <!-- Botão com os três risquinhos (dropdown) no canto direito -->
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-bars"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                    <li>
+                                        <?php
+                                        $mensagemCompartilhamento = urlencode(
+                                            "Conheça o incrível trabalho da ONG " . $row['nome_fantasia'] . "! 🌟 
+A organização está fazendo a diferença com suas iniciativas e projetos impactantes. 
+Acesse o perfil completo e descubra como eles estão transformando vidas: http://localhost/tcc/Naong/perfil_ong.php?id_ong=" . $row['id_ong']
+                                        );
+                                        ?>
+                                        <a class="dropdown-item" href="https://api.whatsapp.com/send?text=<?php echo $mensagemCompartilhamento; ?>" target="_blank">
+                                            <i class="fa fa-whatsapp" aria-hidden="true"></i> Compartilhar no WhatsApp
+                                        </a>
+
+                                    </li>
+                                    <!-- Outros itens -->
+                                </ul>
+                            </div>
+                        </div>
                         <div class="col-lg-12 d-flex justify-content-around align-items-center" style="font-size: 14pt;">
 
                             <div class="row">

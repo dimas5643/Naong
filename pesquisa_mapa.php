@@ -59,9 +59,20 @@ $departamentos = getDepartamentos();
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
+        // Array para armazenar os marcadores
+        let markers = [];
+
         // Configurar SearchBox e botão de pesquisa
         const searchBox = new google.maps.places.SearchBox(document.getElementById('search-box'));
         const searchBtn = document.getElementById('search-btn');
+
+        // Função para remover todos os marcadores do mapa
+        function clearMarkers() {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(null); // Remove o marcador do mapa
+            }
+            markers = []; // Limpa o array de marcadores
+        }
 
         // Função para calcular a distância entre dois pontos (em km)
         function calculateDistance(lat1, lng1, lat2, lng2) {
@@ -77,6 +88,7 @@ $departamentos = getDepartamentos();
 
         // Evento para atualizar o mapa ao clicar no botão de pesquisa
         searchBtn.addEventListener('click', () => {
+            console.log("entrou");
             const places = searchBox.getPlaces();
             const departamentoId = document.getElementById('departamento').value; // Captura o ID do departamento
             if (!places || places.length === 0) {
@@ -91,13 +103,15 @@ $departamentos = getDepartamentos();
                 map.setCenter(place.geometry.location);
                 map.setZoom(14);
 
+                // Limpar os marcadores existentes
+                clearMarkers();
+
                 // Buscar as ONGs e adicionar marcadores e lista filtrada
                 fetch('get_ongs.php') // Captura todas as ONGs
                     .then(response => response.json())
                     .then(ongs => {
                         const ongListContainer = document.getElementById('ong-list');
                         ongListContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
-                        const markers = [];
 
                         // Filtrar ONGs por departamento e proximidade (dentro de 10 km)
                         const nearbyOngs = ongs.filter(ong => {
@@ -135,6 +149,7 @@ $departamentos = getDepartamentos();
                                 infowindow.open(map, marker);
                             });
 
+                            // Armazenar o marcador no array
                             markers.push(marker);
 
                             // Adicionar item à lista e adicionar um link para o perfil da ONG
@@ -162,6 +177,7 @@ $departamentos = getDepartamentos();
         });
     }
 </script>
+
 
 <?php
 include('./rodape.php');

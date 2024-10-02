@@ -13,9 +13,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Falha na conexão: " . $conn->connect_error);
 }
-echo "<br>";
-echo "<br>";
-echo "<br>";
 
 // Captura o filtro de departamentos, se fornecido
 $departamentos = isset($_GET['departamentos']) ? $_GET['departamentos'] : '';

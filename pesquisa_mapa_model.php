@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // Captura o filtro de departamentos, se fornecido
-$departamentos = isset($_GET['departamentos']) ? $_GET['departamentos'] : '';
+$get_departamento = isset($_GET['id_departamento']) ? $_GET['id_departamento'] : '';
 
 function getDepartamentos() {
     global $conn; // Certifique-se de que a variável de conexão está disponível

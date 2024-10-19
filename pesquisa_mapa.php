@@ -3,6 +3,9 @@ include('./cabecalho.php');
 include('./pesquisa_mapa_model.php');
 
 $departamentos = getDepartamentos();
+
+// Verifica se a localização está disponível na sessão
+$user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] : null;
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -16,8 +19,8 @@ $departamentos = getDepartamentos();
 
                         <!-- Input de pesquisa e botão -->
                         <div id="map-controls" class="mb-4">
+                            <label class="form-label">Digite o local</label>
                             <input id="search-box" type="text" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />
-                            <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5 mb-4">Atualizar Mapa</button>
                         </div>
 
                         <!-- Filtro de Departamento -->
@@ -26,12 +29,14 @@ $departamentos = getDepartamentos();
                             <select id="departamento" class="form-control">
                                 <option value="">Todos os Departamentos</option>
                                 <?php foreach ($departamentos as $departamento) { ?>
-                                    <option value="<?php echo $departamento['id_departamento']; ?>">
+                                    <option value="<?php echo $departamento['id_departamento']; ?>" <?php echo $get_departamento ==  $departamento['id_departamento'] ? 'selected' : '' ?>>
                                         <?php echo $departamento['nome_departamento']; ?>
                                     </option>
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5 mb-4">Atualizar Mapa</button>
 
                         <!-- Mapa -->
                         <div id="map" style="height: 500px; width: 100%; margin-top: 20px;"></div>
@@ -47,24 +52,28 @@ $departamentos = getDepartamentos();
     </div>
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places&callback=initMap" async defer></script>
+<?php include('./rodape.php'); ?>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places&callback=initMap" async defer></script> -->
+
 <script>
     function initMap() {
+        // showSpinner();
+
+        const defaultLocation = {
+            lat: -28.681709540162558,
+            lng: -49.37358875197284
+        };
+        const userLocation = <?php echo $user_location ? json_encode($user_location) : 'null'; ?>;
+        const mapCenter = userLocation || defaultLocation;
+
         const map = new google.maps.Map(document.getElementById('map'), {
-            center: {
-                lat: -28.681709540162558,
-                lng: -49.37358875197284
-            },
-            zoom: 8,
+            center: mapCenter,
+            zoom: userLocation ? 12 : 8,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
-        // Array para armazenar os marcadores
         let markers = [];
-
-        // Configurar SearchBox e botão de pesquisa
         const searchBox = new google.maps.places.SearchBox(document.getElementById('search-box'));
-        const searchBtn = document.getElementById('search-btn');
 
         // Função para remover todos os marcadores do mapa
         function clearMarkers() {
@@ -74,9 +83,164 @@ $departamentos = getDepartamentos();
             markers = []; // Limpa o array de marcadores
         }
 
+        // Geolocalização - captura a localização do usuário
+        // if (navigator.geolocation) {
+        //     navigator.geolocation.getCurrentPosition((position) => {
+        //         const userLocation = {
+        //             lat: position.coords.latitude,
+        //             lng: position.coords.longitude
+        //         };
+
+        //         // Atualiza o mapa para o local do usuário
+        //         map.setCenter(userLocation);
+        //         map.setZoom(12);
+
+        //         const geocoder = new google.maps.Geocoder();
+        //         geocoder.geocode({
+        //             location: userLocation
+        //         }, (results, status) => {
+        //             if (status === 'OK' && results[0]) {
+        //                 let city = '';
+        //                 let state = '';
+        //                 let country = '';
+
+        //                 results[0].address_components.forEach(component => {
+        //                     const types = component.types;
+        //                     if (types.includes('locality') || types.includes('sublocality') || types.includes('administrative_area_level_2')) {
+        //                         city = component.long_name;
+        //                     }
+        //                     if (types.includes('administrative_area_level_1')) {
+        //                         state = component.short_name;
+        //                     }
+        //                     if (types.includes('country')) {
+        //                         country = component.long_name;
+        //                     }
+        //                 });
+
+        //                 if (!city) {
+        //                     city = 'Cidade não encontrada';
+        //                 }
+
+        //                 document.getElementById('search-box').value = `${city}, ${state}, ${country}`;
+
+        //                 carregaMakers(userLocation.lat, userLocation.lng);
+
+        //             } else {
+        //                 alert('Não foi possível determinar sua localização.');
+        //             }
+
+        //             hideSpinner(); // Esconder o spinner depois da resposta da geolocalização
+
+        //         });
+
+        //     }, () => {
+        //         alert('Erro: Não foi possível obter sua localização.');
+        //         hideSpinner(); // Esconder o spinner em caso de erro
+        //     });
+        // } else {
+        //     alert('Erro: Seu navegador não suporta geolocalização.');
+        //     hideSpinner(); // Esconder o spinner se geolocalização não for suportada
+        // }
+
+
+        searchBox.addListener('places_changed', function() {
+            const places = searchBox.getPlaces();
+
+            if (places.length === 0) {
+                alert('Nenhum lugar encontrado.');
+                return;
+            }
+
+            const place = places[0];
+
+            if (!place.geometry) {
+                alert('O local selecionado não tem geometria.');
+                return;
+            }
+
+            map.setCenter(place.geometry.location);
+            map.setZoom(14);
+
+            carregaMakers(place.geometry.location.lat(), place.geometry.location.lng());
+        });
+
+        // Função para carregar os marcadores de ONGs
+        function carregaMakers(lat, lng) {
+            const departamentoId = document.getElementById('departamento').value;
+
+            clearMarkers();
+
+            fetch('get_ongs.php')
+                .then(response => response.json())
+                .then(ongs => {
+                    const ongListContainer = document.getElementById('ong-list');
+                    ongListContainer.innerHTML = '';
+
+                    const nearbyOngs = ongs.filter(ong => {
+                        const distance = calculateDistance(
+                            lat, lng,
+                            parseFloat(ong.latitude),
+                            parseFloat(ong.longitude)
+                        );
+
+                        const isInDepartment = departamentoId === "" || ong.id_departamento == departamentoId;
+
+                        return distance <= 10 && isInDepartment;
+                    });
+
+                    nearbyOngs.forEach(ong => {
+                        const position = {
+                            lat: parseFloat(ong.latitude),
+                            lng: parseFloat(ong.longitude)
+                        };
+
+                        const marker = new google.maps.Marker({
+                            position: position,
+                            map: map,
+                            title: ong.nome_fantasia,
+                        });
+
+                        const infowindow = new google.maps.InfoWindow({
+                            content: `<h5>${ong.nome_fantasia}</h5><p>${ong.endereco}</p>`
+                        });
+
+                        marker.addListener('click', function() {
+                            infowindow.open(map, marker);
+                        });
+
+                        markers.push(marker);
+
+                        const listItem = document.createElement('div');
+                        listItem.className = 'ong-item';
+                        listItem.innerHTML = `
+                        <a href="perfil_ong.php?id_ong=${ong.id_ong}" style="text-decoration: none; color: inherit;">
+                            <h5 style="margin: 0; font-size: 1.2em; color: #007bff;">${ong.nome_fantasia}</h5>
+                            <p style="margin: 5px 0 0; font-size: 1em; color: #495057;">${ong.endereco}</p>
+                        </a>`;
+                        listItem.style.backgroundColor = '#ffffff';
+                        listItem.style.borderBottom = '1px solid #dee2e6';
+                        listItem.style.padding = '15px';
+                        listItem.style.marginBottom = '10px';
+                        listItem.style.borderRadius = '4px';
+                        ongListContainer.appendChild(listItem);
+                    });
+
+                    if (nearbyOngs.length === 0) {
+                        ongListContainer.innerHTML = '<p>Nenhuma ONG encontrada próxima a esse local e com o departamento selecionado.</p>';
+                    }
+
+                    // Esconde o spinner quando terminar de carregar
+                    hideSpinner();
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar ONGs:', error);
+                    hideSpinner();
+                });
+        }
+
         // Função para calcular a distância entre dois pontos (em km)
         function calculateDistance(lat1, lng1, lat2, lng2) {
-            const R = 6371; // Raio da Terra em km
+            const R = 6371;
             const dLat = (lat2 - lat1) * Math.PI / 180;
             const dLng = (lng2 - lng1) * Math.PI / 180;
             const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
@@ -85,100 +249,5 @@ $departamentos = getDepartamentos();
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             return R * c;
         }
-
-        // Evento para atualizar o mapa ao clicar no botão de pesquisa
-        searchBtn.addEventListener('click', () => {
-            console.log("entrou");
-            const places = searchBox.getPlaces();
-            const departamentoId = document.getElementById('departamento').value; // Captura o ID do departamento
-            if (!places || places.length === 0) {
-                alert('Nenhum lugar encontrado.');
-                return;
-            }
-
-            const bounds = new google.maps.LatLngBounds();
-            const place = places[0];
-
-            if (place.geometry) {
-                map.setCenter(place.geometry.location);
-                map.setZoom(14);
-
-                // Limpar os marcadores existentes
-                clearMarkers();
-
-                // Buscar as ONGs e adicionar marcadores e lista filtrada
-                fetch('get_ongs.php') // Captura todas as ONGs
-                    .then(response => response.json())
-                    .then(ongs => {
-                        const ongListContainer = document.getElementById('ong-list');
-                        ongListContainer.innerHTML = ''; // Limpa qualquer conteúdo existente
-
-                        // Filtrar ONGs por departamento e proximidade (dentro de 10 km)
-                        const nearbyOngs = ongs.filter(ong => {
-                            const distance = calculateDistance(
-                                place.geometry.location.lat(),
-                                place.geometry.location.lng(),
-                                parseFloat(ong.latitude),
-                                parseFloat(ong.longitude)
-                            );
-
-                            const isInDepartment = departamentoId === "" || ong.id_departamento == departamentoId; // Verifica se está no departamento selecionado
-
-                            return distance <= 10 && isInDepartment; // ONGs dentro de um raio de 10 km e do departamento selecionado
-                        });
-
-                        nearbyOngs.forEach(ong => {
-                            const position = {
-                                lat: parseFloat(ong.latitude),
-                                lng: parseFloat(ong.longitude)
-                            };
-
-                            // Adicionar marcador
-                            const marker = new google.maps.Marker({
-                                position: position,
-                                map: map,
-                                title: ong.nome_fantasia,
-                            });
-
-                            // Adicionar infowindow com mais informações
-                            const infowindow = new google.maps.InfoWindow({
-                                content: `<h5>${ong.nome_fantasia}</h5><p>${ong.endereco}</p>`
-                            });
-
-                            marker.addListener('click', function() {
-                                infowindow.open(map, marker);
-                            });
-
-                            // Armazenar o marcador no array
-                            markers.push(marker);
-
-                            // Adicionar item à lista e adicionar um link para o perfil da ONG
-                            const listItem = document.createElement('div');
-                            listItem.className = 'ong-item';
-                            listItem.innerHTML = `
-                            <a href="perfil_ong.php?id_ong=${ong.id_ong}" style="text-decoration: none; color: inherit;">
-                                <h5 style="margin: 0; font-size: 1.2em; color: #007bff;">${ong.nome_fantasia}</h5>
-                                <p style="margin: 5px 0 0; font-size: 1em; color: #495057;">${ong.endereco}</p>
-                            </a>`;
-                            listItem.style.backgroundColor = '#ffffff'; /* Cor de fundo branca para itens */
-                            listItem.style.borderBottom = '1px solid #dee2e6'; /* Borda inferior para separar os itens */
-                            listItem.style.padding = '15px'; /* Espaço interno dos itens */
-                            listItem.style.marginBottom = '10px'; /* Espaço entre os itens */
-                            listItem.style.borderRadius = '4px'; /* Bordas arredondadas dos itens */
-                            ongListContainer.appendChild(listItem);
-                        });
-
-                        if (nearbyOngs.length === 0) {
-                            ongListContainer.innerHTML = '<p>Nenhuma ONG encontrada próxima a esse local e com o departamento selecionado.</p>';
-                        }
-                    })
-                    .catch(error => console.error('Erro ao carregar ONGs:', error));
-            }
-        });
     }
 </script>
-
-
-<?php
-include('./rodape.php');
-?>

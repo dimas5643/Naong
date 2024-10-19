@@ -1,15 +1,121 @@
 (function ($) {
     "use strict";
 
-    // Spinner
-    var spinner = function () {
-        setTimeout(function () {
-            if ($('#spinner').length > 0) {
-                $('#spinner').removeClass('show');
+    // Mostrar o spinner
+    function showSpinner() {
+        $('#spinner').addClass('show');
+    }
+
+    // Esconder o spinner
+    function hideSpinner() {
+        $('#spinner').removeClass('show');
+    }
+
+    // Função para salvar localização no backend
+    function saveLocationToSession(locationData) {
+        fetch('./save_location.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },  
+            body: JSON.stringify(locationData)
+        }).then(response => response.json())
+          .then(data => {
+              console.log('Localização salva na sessão:', data);
+          }).catch(error => {
+              console.error('Erro ao salvar localização:', error);
+          });
+    }
+
+    // Função para obter cidade, estado e país
+    function geocodeLatLng(lat, lng) {
+        const geocoder = new google.maps.Geocoder();
+        const latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+
+        geocoder.geocode({ location: latlng }, (results, status) => {
+            if (status === 'OK') {
+                if (results[0]) {
+                    let city = '';
+                    let state = '';
+                    let country = '';
+
+                    results[0].address_components.forEach(component => {
+                        const types = component.types;
+                        if (types.includes('locality') || types.includes('sublocality') || types.includes('administrative_area_level_2')) {
+                            city = component.long_name;
+                        }
+                        if (types.includes('administrative_area_level_1')) {
+                            state = component.short_name;
+                        }
+                        if (types.includes('country')) {
+                            country = component.long_name;
+                        }
+                    });
+
+                    // Salva na sessão os dados de localização
+                    saveLocationToSession({
+                        city: city,
+                        state: state,
+                        country: country,
+                        latitude: lat,
+                        longitude: lng
+                    });
+                } else {
+                    console.log('Nenhum resultado encontrado');
+                }
+            } else {
+                console.log('Geocoder falhou: ' + status);
             }
-        }, 1);
-    };
-    spinner(0);
+        });
+    }
+
+    // Função para capturar a localização do usuário
+    function captureUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+                // Geocode para obter cidade, estado e país
+                geocodeLatLng(userLocation.lat, userLocation.lng);
+
+            }, () => {
+                console.log('Erro: Não foi possível obter sua localização.');
+            });
+        } else {
+            console.log('Erro: Seu navegador não suporta geolocalização.');
+        }
+    }
+
+    // Chamar a função ao carregar a página
+    $(document).ready(function () {
+        captureUserLocation();
+    });
+    
+
+
+
+    
+    // Expor as funções de spinner globalmente para outros scripts
+    window.showSpinner = showSpinner;
+    window.hideSpinner = hideSpinner;
+
+        // Executar a lógica quando a página estiver pronta
+        $(document).ready(function () {
+            setTimeout(function () {
+                if ($('#spinner').length > 0) {
+                    // Verifica se estamos na página de pesquisa_mapa.php
+                    // if (window.location.pathname.includes('pesquisa_mapa.php')) {
+                        // Não esconder o spinner nesta página
+                        // return; 
+                    // }
+                    hideSpinner(); // Só oculta manualmente quando for necessário
+                }
+            }, 1000);
+        });
+        
     
     
     // Initiate the wowjs
@@ -124,6 +230,7 @@
         return false;
     });
 
+    
+
 
 })(jQuery);
-

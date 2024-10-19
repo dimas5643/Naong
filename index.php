@@ -22,34 +22,34 @@
 
     <!-- Services Start -->
     <div class="container-fluid service py-5">
-    <div class="container py-5">
-        <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="sub-style">
-                <h4 class="sub-title px-3 mb-0">ONGS</h4>
+        <div class="container py-5">
+            <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.2s">
+                <div class="sub-style">
+                    <h4 class="sub-title px-3 mb-0">ONGS</h4>
+                </div>
             </div>
-        </div>
-        <div class="row g-4 justify-content-center">
-            <?php
-            foreach ($listOngs as $ong) {
-            ?>
-                <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item rounded">
-                        <div class="service-img rounded-top">
-                            <img src="img/service-1.jpg" class="img-fluid rounded-top w-100" alt="">
-                        </div>
-                        <div class="service-content rounded-bottom bg-light p-4">
-                            <div class="service-content-inner">
-                                <h5 class="mb-4"><?php echo $ong['nome_fantasia']; ?></h5>
-                                <p class="mb-4"><?php echo $ong['endereco']; ?></p>
-                                <a href="perfil_ong.php?id_ong=<?php echo $ong['id_ong']; ?>" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Leia Mais</a>
+            <div class="row g-4 justify-content-center">
+                <?php
+                foreach ($listOngs as $ong) {
+                ?>
+                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
+                        <div class="service-item rounded">
+                            <div class="service-img rounded-top">
+                                <img src="img/service-1.jpg" class="img-fluid rounded-top w-100" alt="">
+                            </div>
+                            <div class="service-content rounded-bottom bg-light p-4">
+                                <div class="service-content-inner">
+                                    <h5 class="mb-4"><?php echo $ong['nome_fantasia']; ?></h5>
+                                    <p class="mb-4"><?php echo $ong['endereco']; ?></p>
+                                    <a href="perfil_ong.php?id_ong=<?php echo $ong['id_ong']; ?>" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Leia Mais</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
+                <?php } ?>
+            </div>
         </div>
     </div>
-</div>
 
     <!-- Services End -->
 
@@ -102,22 +102,26 @@
                 foreach ($listDepartamentoAtivos as $departamento) {
 
                 ?>
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row-cols-1 feature-item p-4">
-                            <div class="col-12 text-center">
-                                <div class="feature-icon mb-4">
-                                    <div class="p-3 d-inline-flex bg-white rounded">
-                                        <img width="50" height="50" src="<?php echo $departamento['icon'] ?>" alt="shirt" />
 
+                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
+                        <a href="pesquisa_mapa.php?id_departamento=<?php echo $departamento['id_departamento'] ?>">
+                            <div class="row-cols-1 feature-item p-4">
+                                <div class="col-12 text-center">
+                                    <div class="feature-icon mb-4">
+                                        <div class="p-3 d-inline-flex bg-white rounded">
+                                            <img width="50" height="50" src="<?php echo $departamento['icon'] ?>" alt="shirt" />
+
+                                        </div>
+                                    </div>
+                                    <div class="feature-content d-flex flex-column text-center">
+                                        <h5 class="mb-4"><?php echo $departamento['nome_departamento'] ?></h5>
+                                        <!-- <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p> -->
                                     </div>
                                 </div>
-                                <div class="feature-content d-flex flex-column text-center">
-                                    <h5 class="mb-4"><?php echo $departamento['nome_departamento'] ?></h5>
-                                    <!-- <p class="mb-0">Dolor, sit amet consectetur adipisicing elit. Soluta inventore cum accusamus,</p> -->
-                                </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
+
                 <?php } ?>
             </div>
         </div>

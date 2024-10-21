@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 // Verifica se as coordenadas estão armazenadas na sessão
 if (isset($_SESSION['latitude']) && isset($_SESSION['longitude'])) {

@@ -1,7 +1,7 @@
 <?php
 include 'banco.php';
 
-session_start();
+
 if (isset($_SESSION['latitude']) && isset($_SESSION['longitude'])) {
     $latitude = $_SESSION['latitude'];
     $longitude = $_SESSION['longitude'];

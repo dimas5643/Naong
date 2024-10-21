@@ -4,8 +4,10 @@ include('./pesquisa_mapa_model.php');
 
 $departamentos = getDepartamentos();
 
-// Verifica se a localização está disponível na sessão
-$user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] : null;
+$userLocation = '';
+if (isset($_SESSION['location'])) {
+    $userLocation = $_SESSION['location']['city'] . ', ' . $_SESSION['location']['state'] . ', ' . $_SESSION['location']['country'];
+}
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -20,8 +22,7 @@ $user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] 
                         <!-- Input de pesquisa e botão -->
                         <div id="map-controls" class="mb-4">
                             <label class="form-label">Digite o local</label>
-                            <input id="search-box" type="text" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />
-                        </div>
+                            <input id="search-box" type="text" value="<?php echo htmlspecialchars($userLocation); ?>" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />                        </div>
 
                         <!-- Filtro de Departamento -->
                         <div class="form-group mb-4">
@@ -56,91 +57,42 @@ $user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] 
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places&callback=initMap" async defer></script> -->
 
 <script>
-    function initMap() {
-        // showSpinner();
+    $(document).ready(function() {
+        initMap();
+    });
 
-        const defaultLocation = {
-            lat: -28.681709540162558,
-            lng: -49.37358875197284
-        };
-        const userLocation = <?php echo $user_location ? json_encode($user_location) : 'null'; ?>;
-        const mapCenter = userLocation || defaultLocation;
+    function initMap() {
+        console.log('initamp')
+
+        <?php if (isset($_SESSION['location'])) { ?>
+            userLatitude = <?php echo (float)$_SESSION['location']['latitude']; ?>;
+            userLongitude = <?php echo (float)$_SESSION['location']['longitude']; ?>;
+        <?php } else { ?>
+            userLatitude = -28.681709540162558;
+            userLongitude = -49.37358875197284;
+        <?php } ?>
 
         const map = new google.maps.Map(document.getElementById('map'), {
-            center: mapCenter,
-            zoom: userLocation ? 12 : 8,
+            center: {
+                lat: userLatitude,
+                lng: userLongitude
+            },
+            zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
         let markers = [];
         const searchBox = new google.maps.places.SearchBox(document.getElementById('search-box'));
+        
 
         // Função para remover todos os marcadores do mapa
         function clearMarkers() {
+            console.log('cleanmaker')
             for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null); // Remove o marcador do mapa
             }
             markers = []; // Limpa o array de marcadores
         }
-
-        // Geolocalização - captura a localização do usuário
-        // if (navigator.geolocation) {
-        //     navigator.geolocation.getCurrentPosition((position) => {
-        //         const userLocation = {
-        //             lat: position.coords.latitude,
-        //             lng: position.coords.longitude
-        //         };
-
-        //         // Atualiza o mapa para o local do usuário
-        //         map.setCenter(userLocation);
-        //         map.setZoom(12);
-
-        //         const geocoder = new google.maps.Geocoder();
-        //         geocoder.geocode({
-        //             location: userLocation
-        //         }, (results, status) => {
-        //             if (status === 'OK' && results[0]) {
-        //                 let city = '';
-        //                 let state = '';
-        //                 let country = '';
-
-        //                 results[0].address_components.forEach(component => {
-        //                     const types = component.types;
-        //                     if (types.includes('locality') || types.includes('sublocality') || types.includes('administrative_area_level_2')) {
-        //                         city = component.long_name;
-        //                     }
-        //                     if (types.includes('administrative_area_level_1')) {
-        //                         state = component.short_name;
-        //                     }
-        //                     if (types.includes('country')) {
-        //                         country = component.long_name;
-        //                     }
-        //                 });
-
-        //                 if (!city) {
-        //                     city = 'Cidade não encontrada';
-        //                 }
-
-        //                 document.getElementById('search-box').value = `${city}, ${state}, ${country}`;
-
-        //                 carregaMakers(userLocation.lat, userLocation.lng);
-
-        //             } else {
-        //                 alert('Não foi possível determinar sua localização.');
-        //             }
-
-        //             hideSpinner(); // Esconder o spinner depois da resposta da geolocalização
-
-        //         });
-
-        //     }, () => {
-        //         alert('Erro: Não foi possível obter sua localização.');
-        //         hideSpinner(); // Esconder o spinner em caso de erro
-        //     });
-        // } else {
-        //     alert('Erro: Seu navegador não suporta geolocalização.');
-        //     hideSpinner(); // Esconder o spinner se geolocalização não for suportada
-        // }
 
 
         searchBox.addListener('places_changed', function() {
@@ -166,6 +118,7 @@ $user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] 
 
         // Função para carregar os marcadores de ONGs
         function carregaMakers(lat, lng) {
+            console.log('carregamakers')
             const departamentoId = document.getElementById('departamento').value;
 
             clearMarkers();
@@ -210,6 +163,7 @@ $user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] 
 
                         markers.push(marker);
 
+                        console.log('lista')
                         const listItem = document.createElement('div');
                         listItem.className = 'ong-item';
                         listItem.innerHTML = `
@@ -237,6 +191,8 @@ $user_location = isset($_SESSION['user_location']) ? $_SESSION['user_location'] 
                     hideSpinner();
                 });
         }
+
+        carregaMakers(userLatitude, userLongitude);
 
         // Função para calcular a distância entre dois pontos (em km)
         function calculateDistance(lat1, lng1, lat2, lng2) {

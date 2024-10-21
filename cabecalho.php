@@ -34,8 +34,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
   <!-- Template Stylesheet -->
   <link href="css/style.css" rel="stylesheet" />
-  
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places" async defer></script>
+  <?php
+  // if (!defined('GOOGLE_MAPS_LOADED')) {
+  //   define('GOOGLE_MAPS_LOADED', true);
+  ?>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places"></script>
+
+  <?php
+ // }
+  ?>
 </head>
 
 <body>

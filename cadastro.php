@@ -79,10 +79,37 @@ if ($resultado->num_rows > 0) {
                                                 name="nome" placeholder="NOME">
                                         </div>
                                         <div class="col-xl-6">
-                                            <label for="">DOCUMENTO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent "
-                                                name="documento" placeholder="CPF/CNPJ">
+                                            <label for="documento">DOCUMENTO</label>
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                                name="documento" id="documento" placeholder="CPF/CNPJ" maxlength="18">
                                         </div>
+
+                                        <script>
+                                        document.getElementById('documento').addEventListener('input', function(e) {
+                                            let value = e.target.value.replace(/\D/g,
+                                                ''); // Remove caracteres não numéricos
+
+                                            // Verifica o tamanho do valor e aplica a máscara adequada
+                                            if (value.length <= 11) {
+                                                // Máscara para CPF: 000.000.000-00
+                                                e.target.value = value.replace(/(\d{3})(\d)/, '$1.$2')
+                                                    .replace(/(\d{3})(\d)/, '$1.$2')
+                                                    .replace(/(\d{3})(\d{2})$/, '$1-$2');
+                                            } else {
+                                                // Máscara para CNPJ: 00.000.000/0000-00
+                                                e.target.value = value.replace(/^(\d{2})(\d)/,
+                                                        '$1.$2') // Adiciona o primeiro ponto
+                                                    .replace(/^(\d{2}\.\d{3})(\d)/,
+                                                        '$1.$2') // Adiciona o segundo ponto
+                                                    .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
+                                                        '$1/$2') // Adiciona a barra
+                                                    .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
+                                                        '$1-$2'); // Adiciona o hífen
+                                            }
+                                        });
+                                        </script>
+
+
                                         <div class="col-xl-6">
                                             <label for="">ESTADO</label>
                                             <select class="form-control py-3 border-primary bg-transparent"
@@ -102,10 +129,23 @@ if ($resultado->num_rows > 0) {
                                             </select>
                                         </div>
                                         <div class="col-xl-6">
-                                            <label for="">CEP</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent "
-                                                name="cep" placeholder="CEP">
+                                            <label for="cep">CEP</label>
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                                name="cep" id="cep" placeholder="CEP">
                                         </div>
+
+                                        <script>
+                                        document.getElementById('cep').addEventListener('input', function(e) {
+                                            let value = e.target.value.replace(/\D/g,
+                                                ''); // Remove caracteres não numéricos
+                                            if (value.length > 5) {
+                                                value = value.slice(0, 5) + '-' + value.slice(5,
+                                                    8); // Adiciona o hífen
+                                            }
+                                            e.target.value = value; // Atualiza o campo com a máscara
+                                        });
+                                        </script>
+
                                         <div class="col-xl-6">
                                             <label for="">ENDEREÇO</label>
                                             <input type="text" class="form-control py-3 border-primary bg-transparent "
@@ -153,10 +193,25 @@ if ($resultado->num_rows > 0) {
                                                 name="nome" placeholder="NOME">
                                         </div>
                                         <div class="col-xl-6">
-                                            <label for="">DOCUMENTO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent "
-                                                name="documento" placeholder="DOCUMENTO">
+                                            <label for="documento">DOCUMENTO</label>
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                                name="documento" id="documento" placeholder="CPF/CNPJ" maxlength="18">
                                         </div>
+
+                                        <script>
+                                        document.getElementById('documento').addEventListener('input', function(e) {
+                                            // Máscara para CNPJ: 00.000.000/0000-00
+                                            e.target.value = value.replace(/^(\d{2})(\d)/,
+                                                    '$1.$2') // Adiciona o primeiro ponto
+                                                .replace(/^(\d{2}\.\d{3})(\d)/,
+                                                    '$1.$2') // Adiciona o segundo ponto
+                                                .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
+                                                    '$1/$2') // Adiciona a barra
+                                                .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
+                                                    '$1-$2'
+                                                    ); // Adiciona o hífen                                            
+                                        });
+                                        </script>
                                         <div class="col-xl-6">
                                             <label for="">ESTADO</label>
                                             <select class="form-control py-3 border-primary bg-transparent"
@@ -170,16 +225,31 @@ if ($resultado->num_rows > 0) {
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CIDADE</label>
-                                            <select id="cidade-ong" class="form-control py-3 border-primary bg-transparent"
-                                                name="cidade" disabled>
+                                            <select id="cidade-ong"
+                                                class="form-control py-3 border-primary bg-transparent" name="cidade"
+                                                disabled>
                                                 <option value="">Selecione a Cidade</option>
                                             </select>
                                         </div>
+
                                         <div class="col-xl-6">
-                                            <label for="">CEP</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent "
-                                                name="cep" placeholder="CEP">
+                                            <label for="cep">CEP</label>
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                                name="cep" id="cep2" placeholder="CEP">
                                         </div>
+
+                                        <script>
+                                        document.getElementById('cep2').addEventListener('input', function(e) {
+                                            let value = e.target.value.replace(/\D/g,
+                                                ''); // Remove caracteres não numéricos
+                                            if (value.length > 5) {
+                                                value = value.slice(0, 5) + '-' + value.slice(5,
+                                                    8); // Adiciona o hífen
+                                            }
+                                            e.target.value = value; // Atualiza o campo com a máscara
+                                        });
+                                        </script>
+                                        
                                         <div class="col-xl-6">
                                             <label for="">ENDEREÇO</label>
                                             <input type="text" class="form-control py-3 border-primary bg-transparent "

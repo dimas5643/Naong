@@ -96,10 +96,10 @@ if (session_status() === PHP_SESSION_NONE) {
           <a href="como_doar.php" class="nav-item nav-link">Como doar</a>
           <a href="lista_publicacao.php" class="nav-item nav-link">Publicações</a>
           <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) { ?>
-            <a href="cadastro_publicacao.php" class="nav-item nav-link">Nova Publicação</a>
-
+            
             <?php if ($_SESSION['user_role'] == 'ong') { ?>
               <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
+              <a href="cadastro_publicacao.php" class="nav-item nav-link">Nova Publicação</a>
             <?php } ?>
 
             <?php if ($_SESSION['user_role'] == 'doador') { ?>

@@ -1,9 +1,14 @@
 <?php
-include('./valida_login.php');
-include('./valida_acesso_tela.php');
 include('./cabecalho.php');
 include('./cadastro_publicacao_model.php');
 include './banco.php';
+
+$hidden = '';
+$disabled = '';
+if (!isset($_SESSION['user_id']) || ($row && $_SESSION['user_id'] != $row['id_ong'])) {
+    $hidden = 'hidden';
+    $disabled = 'disabled';
+}
 ?>
 
 <div class="container-fluid appointment py-12" style="padding-top: 100px; padding-bottom: 50px;">
@@ -66,61 +71,66 @@ include './banco.php';
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">TITULO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="titulo" placeholder="TITULO" value="<?php echo isset($row['titulo']) ? $row['titulo'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="titulo" placeholder="TITULO" value="<?php echo isset($row['titulo']) ? $row['titulo'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
 
                                 <div class="col-xl-12">
                                     <label for="" class="form-label">DESCRIÇÃO</label>
-                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO"><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
+                                    <textarea class="form-control py-3 border-primary bg-transparent" name="descricao" rows="5" placeholder="DESCRIÇÃO" <?php echo $disabled ?>><?php echo isset($row['descricao']) ? $row['descricao'] : ''; ?></textarea>
                                 </div>
+
 
                                 <div class="col-xl-12">
                                     <label for="">FOTO</label>
                                     <?php if (isset($row)) { ?>
                                         <img src="./<?php echo $row['arquivo'] ?>" class="img-fluid" alt="Responsive image">
                                     <?php } ?>
-                                    <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto">
+                                    <?php if ($hidden != 'hidden') {  ?>
+                                        <input type="file" class="form-control py-3 border-primary bg-transparent" name="foto">
+                                    <?php } ?>
                                 </div>
 
-                                <div class="col-xl-11">
-                                    <label for="">PONTOS DE COLETA</label>
-                                    <select class="form-control py-3 border-primary bg-transparent" name="coleta">
-                                        <?php foreach ($list_pontos_coleta as $pontos_coleta) { ?>
-                                            <?php
-                                            // Verificar se o ponto de coleta já foi selecionado
-                                            $selected = false;
-                                            if (isset($list_publicacao_pontos_coleta)) {
-                                                foreach ($list_publicacao_pontos_coleta as $ponto) {
-                                                    if ($ponto['id'] == $pontos_coleta['id']) {
-                                                        $selected = true;
-                                                        break;
+                                <?php if ($hidden != 'hidden') {  ?>
+                                    <div class="col-xl-11">
+                                        <label for="">PONTOS DE COLETA</label>
+                                        <select class="form-control py-3 border-primary bg-transparent" name="coleta">
+                                            <?php foreach ($list_pontos_coleta as $pontos_coleta) { ?>
+                                                <?php
+                                                // Verificar se o ponto de coleta já foi selecionado
+                                                $selected = false;
+                                                if (isset($list_publicacao_pontos_coleta)) {
+                                                    foreach ($list_publicacao_pontos_coleta as $ponto) {
+                                                        if ($ponto['id'] == $pontos_coleta['id']) {
+                                                            $selected = true;
+                                                            break;
+                                                        }
                                                     }
                                                 }
-                                            }
-                                            ?>
-                                            <?php if (!$selected) { ?>
-                                                <option value="<?php echo $pontos_coleta['id']; ?>"><?php echo $pontos_coleta['nome']; ?></option>
+                                                ?>
+                                                <?php if (!$selected) { ?>
+                                                    <option value="<?php echo $pontos_coleta['id']; ?>"><?php echo $pontos_coleta['nome']; ?></option>
+                                                <?php } ?>
                                             <?php } ?>
-                                        <?php } ?>
-                                    </select>
+                                        </select>
+                                    </div>
 
+                                    <div class="col-xl-1">
+                                        <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                        <button type="button" class="btn btn-success text-white py-3 px-4" id="buttonAddPontosColeta">+</button>
+                                    </div>
 
-                                </div>
-                                <div class="col-xl-1">
-                                    <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                    <button type="button" class="btn btn-success text-white py-3 px-4" id="buttonAddPontosColeta">+</button>
-                                </div>
-
-
+                                <?php } ?>
                             </div>
 
-                            <div class="col-xl-12">
+                            <div class="col-xl-12" style="margin-top: 30px;">
                                 <label for="">PONTOS DE COLETA ADICIONADOS</label>
                                 <table class="table table-bordered" id="pontosColetaTable">
                                     <thead>
                                         <tr>
                                             <th>Ponto de Coleta</th>
-                                            <th class="text-end">Ação</th>
+                                            <?php if ($hidden != 'hidden') {  ?>
+                                                <th class="text-end">Ação</th>
+                                            <?php } ?>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -129,11 +139,13 @@ include './banco.php';
                                                 <tr>
                                                     <td>
                                                         <input type="hidden" name="pontos_coleta[]" value="<?php echo $ponto['id']; ?>">
-                                                        <a href=""><?php echo $ponto['nome']; ?></a>
+                                                        <?php echo $ponto['nome']; ?>
                                                     </td>
-                                                    <td class="text-end">
-                                                        <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
-                                                    </td>
+                                                    <?php if ($hidden != 'hidden') {  ?>
+                                                        <td class="text-end">
+                                                            <button type="button" class="btn btn-danger btnRemovePontoColeta">Remover</button>
+                                                        </td>
+                                                    <?php } ?>
                                                 </tr>
                                             <?php } ?>
                                         <?php } ?>
@@ -142,9 +154,11 @@ include './banco.php';
                                 </table>
                             </div>
 
-                            <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
-                            <?php if (isset($row)) { ?>
-                                <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                            <?php if ($hidden != 'hidden') { ?>
+                                <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
+                                <?php if (isset($row)) { ?>
+                                    <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                                <?php } ?>
                             <?php } ?>
 
                         </form>

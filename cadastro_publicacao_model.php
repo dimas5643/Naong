@@ -1,5 +1,4 @@
 <?php
-include('./valida_login.php');
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -145,9 +144,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: cadastro_publicacao.php?id_publicacao=$id");
 }
 
-header("Location: cadastro_publicacao.php");
+// header("Location: cadastro_publicacao.php");
 
-$user_id = $_SESSION['user_id'];
+
 if (isset($_GET['id_publicacao'])) {
     // Obtém o valor do ID
     $id_publicacao = $_GET['id_publicacao'];
@@ -169,8 +168,14 @@ if (isset($_GET['id_publicacao'])) {
     $list_publicacao_pontos_coleta = $result_publicacao_pontos_coleta->fetch_all(MYSQLI_ASSOC);
 }
 
+if (isset($row) && $row) {
+    $ong_id = $row['id_ong'];
+} else if (isset($_SESSION['user_id'])) {
+    $ong_id = $_SESSION['user_id'];
+}
+
 //LIST PONTOS DE COLETA SELECIIONADOS
-$sql_pontos_coleta = "SELECT * FROM pontos_coleta WHERE ong = $user_id and ativo = 'A'";
+$sql_pontos_coleta = "SELECT * FROM pontos_coleta WHERE ong = $ong_id and ativo = 'A'";
 $result_pontos_coleta = $conn->query($sql_pontos_coleta);
 
 

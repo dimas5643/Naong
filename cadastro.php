@@ -321,5 +321,39 @@ document.getElementById('estado').addEventListener('change', function() {
         cidadeSelect.disabled = true;
     }
 });
+document.getElementById('estado-ong').addEventListener('change', function() {
+    var id_estado = this.value;
+    var cidadeSelect = document.getElementById('cidade-ong');
+
+    // Limpa as opções anteriores de cidade
+    cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+    // Verifica se um estado foi selecionado
+    if (id_estado !== "") {
+        // Ativa o campo de cidade
+        cidadeSelect.disabled = false;
+
+        // Faz a requisição AJAX para obter as cidades do estado selecionado
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
+        xhr.onload = function() {
+            if (this.status == 200) {
+                var cidades = JSON.parse(this.responseText);
+
+                // Adiciona as cidades ao dropdown
+                cidades.forEach(function(cidade) {
+                    var option = document.createElement('option');
+                    option.value = cidade.id; // ID da cidade
+                    option.textContent = cidade.nome; // Nome da cidade
+                    cidadeSelect.appendChild(option);
+                });
+            }
+        };
+        xhr.send();
+    } else {
+        // Desativa o campo de cidade se nenhum estado foi selecionado
+        cidadeSelect.disabled = true;
+    }
+});
 </script>
 <?php include('./rodape.php') ?>

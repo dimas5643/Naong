@@ -2,9 +2,9 @@
 
 
 // Verifica se as coordenadas estão armazenadas na sessão
-if (isset($_SESSION['latitude']) && isset($_SESSION['longitude'])) {
-    $latitude = $_SESSION['latitude'];
-    $longitude = $_SESSION['longitude'];
+if (isset($_SESSION['location']['latitude']) && isset($_SESSION['location']['longitude'])) {
+    $latitude = $_SESSION['location']['latitude'];
+    $longitude = $_SESSION['location']['longitude'];
 } else {
     // Faz uma requisição à API do ipinfo.io para obter a localização
     $ip_info = file_get_contents("http://ipinfo.io/json");
@@ -23,8 +23,8 @@ if (isset($_SESSION['latitude']) && isset($_SESSION['longitude'])) {
     $longitude = $location[1];
 
     // Armazena na sessão
-    $_SESSION['latitude'] = $latitude;
-    $_SESSION['longitude'] = $longitude;
+    $_SESSION['location']['latitude'] = $latitude;
+    $_SESSION['location']['longitude'] = $longitude;
 }
 
 // Conexão com o banco de dados (certifique-se de ter a variável $conn definida)
@@ -38,9 +38,7 @@ $sql_list_publicacoes = "SELECT
                             ongs 
                             ON 
                             publicacoes.id_ong = ongs.id_ong 
-                        HAVING 
-                            distance < 50   
-                        ORDER BY id_publicacoes DESC LIMIT 3";
+                        ORDER BY distance DESC LIMIT 3";
 
 // Executa a consulta
 $result_lits_publicacoes = $conn->query($sql_list_publicacoes);

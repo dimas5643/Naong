@@ -33,8 +33,6 @@ $stmt = $conn->prepare("
         ( 6371 * acos( cos( radians(?) ) * cos( radians(latitude) ) * cos( radians(longitude) - radians(?) ) + sin( radians(?) ) * sin( radians(latitude) ) ) ) AS distance
     FROM 
         ongs
-    HAVING 
-        distance < 50   
     ORDER BY 
         distance ASC
     LIMIT 8;

@@ -8,7 +8,11 @@ $disabled = 'disabled';
 if (isset($_GET['id_ong'])) {
 
     $id_ong = $_GET['id_ong'];
-    $user_role = $_SESSION['user_role'];
+    $user_role = '';
+    if (isset($_SESSION['user_role'])) {
+        $user_role = $_SESSION['user_role'];
+    }
+
 
     $sql_ong = "SELECT ongs.*, departamentos.nome_departamento, departamentos.icon FROM ongs  left join departamentos on ongs.id_departamento = departamentos.id_departamento WHERE id_ong = ?";
     $sql_list_publicacoes = "SELECT * FROM publicacoes WHERE id_ong = ? ORDER BY id_publicacoes DESC LIMIT 3";
@@ -34,7 +38,7 @@ if (isset($_GET['id_ong'])) {
                 }
 
 
-                if ($_SESSION['user_role'] == 'ong' && $_SESSION['user_id'] == $row['id_ong']) {
+                if ($user_role == 'ong' && $_SESSION['user_id'] == $row['id_ong']) {
                     $mostraCampo = true;
                     $disabled = '';
                 }
@@ -75,7 +79,7 @@ if (isset($_GET['id_ong'])) {
             if ($result_ong->num_rows > 0) {
                 $row = $result_ong->fetch_assoc();
 
-                if ($_SESSION['user_role'] == 'ong' && $_SESSION['user_id'] == $row['id_ong']) {
+                if ($user_role == 'ong' && $_SESSION['user_id'] == $row['id_ong']) {
                     $mostraCampo = true;
                     $disabled = '';
                 }

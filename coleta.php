@@ -55,42 +55,42 @@ include('coleta_model.php');
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row_pontos_coleta['nome']) ? $row_pontos_coleta['nome'] : '' ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="nome" placeholder="NOME" value="<?php echo isset($row_pontos_coleta['nome']) ? $row_pontos_coleta['nome'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">RUA</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="rua"
+                                        class="form-control py-3 border-primary bg-transparent " name="rua"
                                         placeholder="RUA" value="<?php echo isset($row_pontos_coleta['rua']) ? $row_pontos_coleta['rua'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CIDADE</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="cidade"
+                                        class="form-control py-3 border-primary bg-transparent " name="cidade"
                                         placeholder="CIDADE" value="<?php echo isset($row_pontos_coleta['cidade']) ? $row_pontos_coleta['cidade'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ESTADO</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="estado"
+                                        class="form-control py-3 border-primary bg-transparent " name="estado"
                                         placeholder="ESTADO" value="<?php echo isset($row_pontos_coleta['estado']) ? $row_pontos_coleta['estado'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CEP</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="cep"
+                                        class="form-control py-3 border-primary bg-transparent " name="cep"
                                         placeholder="CEP" value="<?php echo isset($row_pontos_coleta['cep']) ? $row_pontos_coleta['cep'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">PAIS</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="pais"
+                                        class="form-control py-3 border-primary bg-transparent " name="pais"
                                         placeholder="PAIS" value="<?php echo isset($row_pontos_coleta['pais']) ? $row_pontos_coleta['pais'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">NUMERO ENDEREÇO</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white"
+                                        class="form-control py-3 border-primary bg-transparent "
                                         name="numero_endereco" placeholder="NUMERO ENDEREÇO" value="<?php echo isset($row_pontos_coleta['numero_endereco']) ? $row_pontos_coleta['numero_endereco'] : '' ?>">
                                 </div>
                                 <div class="col-xl-6">
@@ -109,10 +109,10 @@ include('coleta_model.php');
 
                                 <div class="col-12">
                                     <?php if (!isset($row_pontos_coleta)) { ?>
-                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                        <button type="submit" class="btn btn-primary  w-100 py-3 px-5">CADASTRAR</button>
                                     <?php } else  if (isset($row_pontos_coleta)) { ?>
-                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
-                                        <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                                        <button type="submit" class="btn btn-primary  w-100 py-3 px-5">ATUALIZAR</button>
+                                        <button type="submit" name="acao" value="excluir" class="btn btn-danger  w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
                                     <?php } ?>
                                 </div>
                             </div>

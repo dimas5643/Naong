@@ -62,7 +62,7 @@ include('./cadastro_banner_model.php');
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-4">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome']) ? $row['nome'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="nome" placeholder="NOME" value="<?php echo isset($row['nome']) ? $row['nome'] : ''; ?>">
                                 </div>
                                 <div class="col-xl-4">
                                     <label for="">DATA INICIAL</label>
@@ -86,7 +86,7 @@ include('./cadastro_banner_model.php');
                                     <label class="form-check-label" for="flexSwitchCheckDefault">PADRÃO</label>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                <button type="submit" class="btn btn-primary  w-100 py-3 px-5">CADASTRAR</button>
 
                             </div>
                         </form>

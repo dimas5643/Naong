@@ -51,17 +51,17 @@ include './banco.php';
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">DESCRIÇÃO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="doacao" placeholder="DESCRIÇÃO" value="<?php echo isset($row['doacao']) ? $row['doacao'] : ''; ?>">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="doacao" placeholder="DESCRIÇÃO" value="<?php echo isset($row['doacao']) ? $row['doacao'] : ''; ?>">
                                 </div>
 
                                 <div class="col-xl-12">
                                     <label for="">DATA</label>
-                                    <input type="datetime-local" class="form-control py-3 border-primary bg-transparent text-white" name="data" placeholder="data" value="<?php echo isset($row['data_doacao']) ? $row['data_doacao'] : ''; ?>">
+                                    <input type="datetime-local" class="form-control py-3 border-primary bg-transparent " name="data" placeholder="data" value="<?php echo isset($row['data_doacao']) ? $row['data_doacao'] : ''; ?>">
                                 </div>
 
                                 <div class="col-xl-12">
                                     <label for="">VALOR DOADO (R$)</label>
-                                    <input type="text" id="valor" class="form-control py-3 border-primary bg-transparent text-white" name="valor" placeholder="0,00" value="<?php echo isset($row['valor']) ? number_format($row['valor'], 2, ',', '.') : ''; ?>">
+                                    <input type="text" id="valor" class="form-control py-3 border-primary bg-transparent " name="valor" placeholder="0,00" value="<?php echo isset($row['valor']) ? number_format($row['valor'], 2, ',', '.') : ''; ?>">
                                 </div>
 
                                 <div class="col-xl-12">
@@ -77,9 +77,9 @@ include './banco.php';
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5" style="margin-top: 15px;">SALVAR</button>
+                            <button type="submit" class="btn btn-primary  w-100 py-3 px-5" style="margin-top: 15px;">SALVAR</button>
                             <?php if (isset($row)) { ?>
-                                <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                                <button type="submit" name="acao" value="excluir" class="btn btn-danger  w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
                             <?php } ?>
 
                         </form>

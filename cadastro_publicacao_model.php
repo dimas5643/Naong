@@ -2,7 +2,7 @@
 include './banco.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['titulo']) || empty($_POST['descricao']) || empty($_FILES['foto'])) {
+    if (empty($_POST['titulo']) || empty($_POST['descricao']) || empty($_FILES['foto']['name'])) {
         header('Location: cadastro_publicacao.php?erro=1');
         exit;
     }

@@ -54,14 +54,14 @@
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="email" placeholder="EMAIL">
                                 </div>
                                 <div class="col-xl-12">
                                     <label for="">SENHA</label>
                                     <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">LOGIN</button>
+                                    <button type="submit" class="btn btn-primary  w-100 py-3 px-5">LOGIN</button>
                                 </div>
                             </div>
                         </form>

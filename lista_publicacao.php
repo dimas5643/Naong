@@ -2,8 +2,53 @@
 include('./cabecalho.php');
 include('./lista_publicacao_model.php');
 ?>
+
+
 <div class="container-fluid feature py-5">
+
     <div class="container py-5">
+        <div class="container py-3">
+            <form method="GET" action="lista_publicacao.php">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <label for="estado">ESTADO</label>
+                        <select class="form-control" name="estado" id="estado" data-id="estado">
+                            <option value="">Selecione o Estado</option>
+                            <?php foreach ($estados as $estado): ?>
+                                <option value="<?php echo $estado['Id']; ?>">
+                                    <?php echo $estado['nome']; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for="cidade">CIDADE</label>
+                        <select id="cidade" class="form-control" name="cidade">
+                            <option value="">Selecione a Cidade</option>
+                        </select>
+                    </div>
+                    <!-- Filtro de data da publicação -->
+                    <div class="col-md-3">
+                        <label for="data_publicacao" class="form-label">Data de Publicação</label>
+                        <input type="date" name="data_publicacao" id="data_publicacao" class="form-control">
+                    </div>
+                    <!-- Filtro de ONG -->
+                    <div class="col-md-3">
+                        <label for="id_ong" class="form-label">ONG</label>
+                        <select name="id_ong" id="id_ong" class="form-control">
+                            <option value="">Selecione uma ONG</option>
+                            <?php
+                            $ongs = getOngs(); // Função para buscar todas as ONGs
+                            foreach ($ongs as $ong) {
+                                echo "<option value='{$ong['id_ong']}'>{$ong['nome_fantasia']}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Filtrar</button>
+            </form>
+        </div>
+        
         <div class="section-title mb-5 wow fadeInUp" data-wow-delay="0.1s">
             <div class="sub-style">
                 <h4 class="sub-title px-3 mb-0">PUBLICAÇÕES</h4>
@@ -56,5 +101,41 @@ include('./lista_publicacao_model.php');
         <?php } ?>
     </div>
 </div>
+<script>
+    document.getElementById('estado').addEventListener('change', function() {
+        var id_estado = this.value;
+        var cidadeSelect = document.getElementById('cidade');
+
+        // Limpa as opções anteriores de cidade
+        cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+        // Verifica se um estado foi selecionado
+        if (id_estado !== "") {
+            // Ativa o campo de cidade
+            cidadeSelect.disabled = false;
+
+            // Faz a requisição AJAX para obter as cidades do estado selecionado
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    var cidades = JSON.parse(this.responseText);
+
+                    // Adiciona as cidades ao dropdown
+                    cidades.forEach(function(cidade) {
+                        var option = document.createElement('option');
+                        option.value = cidade.id; // ID da cidade
+                        option.textContent = cidade.nome; // Nome da cidade
+                        cidadeSelect.appendChild(option);
+                    });
+                }
+            };
+            xhr.send();
+        } else {
+            // Desativa o campo de cidade se nenhum estado foi selecionado
+            cidadeSelect.disabled = true;
+        }
+    });
+</script>
 
 <?php include('./rodape.php') ?>

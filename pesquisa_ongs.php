@@ -16,31 +16,31 @@ include('pesquisa_ongs_model.php'); // Inclua o model para obter os resultados d
                                 <div class="col-xl-3">
                                     <label for="nome">NOME DA ONG</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white"
+                                        class="form-control py-3 border-primary bg-transparent "
                                         name="nome_fantasia" placeholder="NOME DA ONG"
                                         value="<?= htmlspecialchars($nome_fantasia) ?>">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="cidade">CIDADE</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="cidade"
+                                        class="form-control py-3 border-primary bg-transparent " name="cidade"
                                         placeholder="CIDADE" value="<?= htmlspecialchars($cidade) ?>">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="estado">ESTADO</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="estado"
+                                        class="form-control py-3 border-primary bg-transparent " name="estado"
                                         placeholder="ESTADO" value="<?= htmlspecialchars($estado) ?>">
                                 </div>
                                 <div class="col-xl-3">
                                     <label for="cep">CEP</label>
                                     <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent text-white" name="cep"
+                                        class="form-control py-3 border-primary bg-transparent " name="cep"
                                         placeholder="CEP" value="<?= htmlspecialchars($cep) ?>">
                                 </div>
                                 <div class="col-12">
                                     <button type="submit"
-                                        class="btn btn-primary text-white w-100 py-3 px-5">PESQUISAR</button>
+                                        class="btn btn-primary  w-100 py-3 px-5">PESQUISAR</button>
                                 </div>
                             </div>
                         </form>
@@ -49,8 +49,8 @@ include('pesquisa_ongs_model.php'); // Inclua o model para obter os resultados d
                         <div class="row">
                             <div class="col-12">
                                 <?php if (mysqli_num_rows($result) > 0): ?>
-                                <table class="table table-bordered table-hover bg-transparent text-white">
-                                    <thead class="bg-primary text-white">
+                                <table class="table table-bordered table-hover bg-transparent ">
+                                    <thead class="bg-primary ">
                                         <tr>
                                             <th scope="col">Foto</th>
                                             <th scope="col">Nome da ONG</th>

@@ -2,7 +2,7 @@
 include('./cabecalho.php');
 include('./pesquisa_mapa_model.php');
 
-$departamentos = getDepartamentos();
+$departamentos = getDepartamentos();    
 
 $userLocation = '';
 if (isset($_SESSION['location'])) {

@@ -71,7 +71,7 @@ if (!isset($_SESSION['user_id']) || ($row && $_SESSION['user_id'] != $row['id_on
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">TITULO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="titulo" placeholder="TITULO" value="<?php echo isset($row['titulo']) ? $row['titulo'] : ''; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="titulo" placeholder="TITULO" value="<?php echo isset($row['titulo']) ? $row['titulo'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
 
                                 <div class="col-xl-12">
@@ -116,7 +116,7 @@ if (!isset($_SESSION['user_id']) || ($row && $_SESSION['user_id'] != $row['id_on
 
                                     <div class="col-xl-1">
                                         <label for="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                                        <button type="button" class="btn btn-success text-white py-3 px-4" id="buttonAddPontosColeta">+</button>
+                                        <button type="button" class="btn btn-success  py-3 px-4" id="buttonAddPontosColeta">+</button>
                                     </div>
 
                                 <?php } ?>
@@ -155,9 +155,9 @@ if (!isset($_SESSION['user_id']) || ($row && $_SESSION['user_id'] != $row['id_on
                             </div>
 
                             <?php if ($hidden != 'hidden') { ?>
-                                <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">PUBLICAR</button>
+                                <button type="submit" class="btn btn-primary  w-100 py-3 px-5">PUBLICAR</button>
                                 <?php if (isset($row)) { ?>
-                                    <button type="submit" name="acao" value="excluir" class="btn btn-danger text-white w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
+                                    <button type="submit" name="acao" value="excluir" class="btn btn-danger  w-100 py-3 px-5" style="margin-top: 15px;">EXCLUIR</button>
                                 <?php } ?>
                             <?php } ?>
 

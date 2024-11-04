@@ -127,27 +127,27 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : $row['nome']; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="nome" placeholder="NOME" value="<?php echo isset($row['nome_fantasia']) ? $row['nome_fantasia'] : $row['nome']; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">DOCUMENTO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : $row['cpf_cnpj']; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="documento" placeholder="DOCUMENTO" value="<?php echo isset($row['cnpj']) ? $row['cnpj'] : $row['cpf_cnpj']; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CEP</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cep" placeholder="CEP" value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="cep" placeholder="CEP" value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ESTADO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="estado" placeholder="ESTADO" value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="estado" placeholder="ESTADO" value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CIDADE</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="cidade" placeholder="CIDADE" value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="cidade" placeholder="CIDADE" value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ENDEREÇO</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="endereco" placeholder="ENDEREÇO" value="<?php echo isset($row['endereco']) ? $row['endereco'] : ''; ?>" <?php echo $disabled ?>>
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="endereco" placeholder="ENDEREÇO" value="<?php echo isset($row['endereco']) ? $row['endereco'] : ''; ?>" <?php echo $disabled ?>>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">CONTATO</label>
@@ -156,7 +156,7 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                 <?php if ($mostraCampo) { ?>
                                     <div class="col-xl-6">
                                         <label for="">EMAIL</label>
-                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="email" placeholder="EMAIL" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>" <?php echo $disabled ?>>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent" name="email" placeholder="EMAIL" value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>" <?php echo $disabled ?>>
                                     </div>
                                     <div class="col-xl-6">
                                         <label for="">SENHA</label>
@@ -164,15 +164,15 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                     </div>
                                     <div class="col-xl-6">
                                         <label for="">SITE</label>
-                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="site" placeholder="SITE" value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>" <?php echo $disabled ?>>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent" name="site" placeholder="SITE" value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>" <?php echo $disabled ?>>
                                     </div>
                                     <div class="col-xl-6">
                                         <label for="">INSTAGRAM</label>
-                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="instagram" placeholder="INSTAGRAM" value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>" <?php echo $disabled ?>>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent" name="instagram" placeholder="INSTAGRAM" value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>" <?php echo $disabled ?>>
                                     </div>
                                     <div class="col-xl-6">
                                         <label for="">FACEBOOK</label>
-                                        <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="facebook" placeholder="FACEBOOK" value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>" <?php echo $disabled ?>>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent" name="facebook" placeholder="FACEBOOK" value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>" <?php echo $disabled ?>>
                                     </div>
                                 <?php } ?>
                                 <div class="col-xl-6">
@@ -204,7 +204,7 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                 </div>
                                 <div class="col-12">
                                     <?php if ($mostraCampo) { ?>
-                                        <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">ATUALIZAR</button>
+                                        <button type="submit" class="btn btn-primary w-100 py-3 px-5">ATUALIZAR</button>
                                     <?php } ?>
                                 </div>
 

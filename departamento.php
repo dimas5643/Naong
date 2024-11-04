@@ -44,11 +44,11 @@ include('departamento_model.php');
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-12">
                                     <label for="">NOME</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="nome" value="<?php echo isset($getDepartamento) ? $getDepartamento[0]['nome_departamento'] : '' ?>" placeholder="NOME">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="nome" value="<?php echo isset($getDepartamento) ? $getDepartamento[0]['nome_departamento'] : '' ?>" placeholder="NOME">
                                 </div>
                                 <div class="col-xl-12">
                                     <label for="">URL DO ICON</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent text-white" name="icon" value="<?php echo isset($getDepartamento) ? $getDepartamento[0]['icon'] : '' ?>" placeholder="URL">
+                                    <input type="text" class="form-control py-3 border-primary bg-transparent " name="icon" value="<?php echo isset($getDepartamento) ? $getDepartamento[0]['icon'] : '' ?>" placeholder="URL">
                                 </div>
                                 <div class="col-xl-12 form-check form-switch">
                                     <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" <?php
@@ -59,7 +59,7 @@ include('departamento_model.php');
                                     <label class="form-check-label" for="flexSwitchCheckDefault">ATIVO</label>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary text-white w-100 py-3 px-5">CADASTRAR</button>
+                                    <button type="submit" class="btn btn-primary  w-100 py-3 px-5">CADASTRAR</button>
                                 </div>
                             </div>
                         </form>

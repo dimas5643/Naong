@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="col-xl-12">
                                     <label for="">SENHA</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
+                                    <input type="password" class="form-control py-3 border-primary bg-transparent" name="senha" placeholder="SENHA">
                                 </div>
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary  w-100 py-3 px-5">LOGIN</button>

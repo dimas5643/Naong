@@ -46,10 +46,10 @@ if ($resultado->num_rows > 0) {
                     }
 
                     if ($mensagem) { ?>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong><?php echo $mensagem; ?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><?php echo $mensagem; ?></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                 <?php }
                 }
                 ?>
@@ -85,28 +85,28 @@ if ($resultado->num_rows > 0) {
                                         </div>
 
                                         <script>
-                                        document.getElementById('documento').addEventListener('input', function(e) {
-                                            let value = e.target.value.replace(/\D/g,
-                                                ''); // Remove caracteres não numéricos
+                                            document.getElementById('documento').addEventListener('input', function(e) {
+                                                let value = e.target.value.replace(/\D/g,
+                                                    ''); // Remove caracteres não numéricos
 
-                                            // Verifica o tamanho do valor e aplica a máscara adequada
-                                            if (value.length <= 11) {
-                                                // Máscara para CPF: 000.000.000-00
-                                                e.target.value = value.replace(/(\d{3})(\d)/, '$1.$2')
-                                                    .replace(/(\d{3})(\d)/, '$1.$2')
-                                                    .replace(/(\d{3})(\d{2})$/, '$1-$2');
-                                            } else {
-                                                // Máscara para CNPJ: 00.000.000/0000-00
-                                                e.target.value = value.replace(/^(\d{2})(\d)/,
-                                                        '$1.$2') // Adiciona o primeiro ponto
-                                                    .replace(/^(\d{2}\.\d{3})(\d)/,
-                                                        '$1.$2') // Adiciona o segundo ponto
-                                                    .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
-                                                        '$1/$2') // Adiciona a barra
-                                                    .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
-                                                        '$1-$2'); // Adiciona o hífen
-                                            }
-                                        });
+                                                // Verifica o tamanho do valor e aplica a máscara adequada
+                                                if (value.length <= 11) {
+                                                    // Máscara para CPF: 000.000.000-00
+                                                    e.target.value = value.replace(/(\d{3})(\d)/, '$1.$2')
+                                                        .replace(/(\d{3})(\d)/, '$1.$2')
+                                                        .replace(/(\d{3})(\d{2})$/, '$1-$2');
+                                                } else {
+                                                    // Máscara para CNPJ: 00.000.000/0000-00
+                                                    e.target.value = value.replace(/^(\d{2})(\d)/,
+                                                            '$1.$2') // Adiciona o primeiro ponto
+                                                        .replace(/^(\d{2}\.\d{3})(\d)/,
+                                                            '$1.$2') // Adiciona o segundo ponto
+                                                        .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
+                                                            '$1/$2') // Adiciona a barra
+                                                        .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
+                                                            '$1-$2'); // Adiciona o hífen
+                                                }
+                                            });
                                         </script>
 
 
@@ -116,8 +116,8 @@ if ($resultado->num_rows > 0) {
                                                 name="estado" id="estado" data-id="estado">
                                                 <option value="">Selecione o Estado</option>
                                                 <?php foreach ($estados as $estado): ?>
-                                                <option value="<?php echo $estado['Id']; ?>">
-                                                    <?php echo $estado['nome']; ?></option>
+                                                    <option value="<?php echo $estado['Id']; ?>">
+                                                        <?php echo $estado['nome']; ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -135,15 +135,15 @@ if ($resultado->num_rows > 0) {
                                         </div>
 
                                         <script>
-                                        document.getElementById('cep').addEventListener('input', function(e) {
-                                            let value = e.target.value.replace(/\D/g,
-                                                ''); // Remove caracteres não numéricos
-                                            if (value.length > 5) {
-                                                value = value.slice(0, 5) + '-' + value.slice(5,
-                                                    8); // Adiciona o hífen
-                                            }
-                                            e.target.value = value; // Atualiza o campo com a máscara
-                                        });
+                                            document.getElementById('cep').addEventListener('input', function(e) {
+                                                let value = e.target.value.replace(/\D/g,
+                                                    ''); // Remove caracteres não numéricos
+                                                if (value.length > 5) {
+                                                    value = value.slice(0, 5) + '-' + value.slice(5,
+                                                        8); // Adiciona o hífen
+                                                }
+                                                e.target.value = value; // Atualiza o campo com a máscara
+                                            });
                                         </script>
 
                                         <div class="col-xl-6">
@@ -153,8 +153,8 @@ if ($resultado->num_rows > 0) {
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CONTATO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                                name="celular" placeholder="CONTATO">
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent contato"
+                                                name="celular" class="" placeholder="CONTATO">
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">EMAIL</label>
@@ -163,7 +163,7 @@ if ($resultado->num_rows > 0) {
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">SENHA</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            <input type="password" class="form-control py-3 border-primary bg-transparent"
                                                 name="senha" placeholder="SENHA">
                                         </div>
                                         <div class="col-xl-6">
@@ -195,22 +195,27 @@ if ($resultado->num_rows > 0) {
                                         <div class="col-xl-6">
                                             <label for="documento">DOCUMENTO</label>
                                             <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                                name="documento" id="documento" placeholder="CPF/CNPJ" maxlength="18">
+                                                name="documento-ong" id="documento-ong" placeholder="CPF/CNPJ" maxlength="18">
                                         </div>
 
                                         <script>
-                                        document.getElementById('documento').addEventListener('input', function(e) {
-                                            // Máscara para CNPJ: 00.000.000/0000-00
-                                            e.target.value = value.replace(/^(\d{2})(\d)/,
-                                                    '$1.$2') // Adiciona o primeiro ponto
-                                                .replace(/^(\d{2}\.\d{3})(\d)/,
-                                                    '$1.$2') // Adiciona o segundo ponto
-                                                .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
-                                                    '$1/$2') // Adiciona a barra
-                                                .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
-                                                    '$1-$2'
-                                                    ); // Adiciona o hífen                                            
-                                        });
+                                            document.getElementById('documento-ong').addEventListener('input', function(e) {
+                                                let value = e.target.value.replace(/\D/g,
+                                                    ''); // Remove caracteres não numéricos
+
+                                                // Verifica o tamanho do valor e aplica a máscara adequada
+                                                if (value.length >= 11) {
+                                                    // Máscara para CNPJ: 00.000.000/0000-00
+                                                    e.target.value = value.replace(/^(\d{2})(\d)/,
+                                                            '$1.$2') // Adiciona o primeiro ponto
+                                                        .replace(/^(\d{2}\.\d{3})(\d)/,
+                                                            '$1.$2') // Adiciona o segundo ponto
+                                                        .replace(/^(\d{2}\.\d{3}\.\d{3})(\d)/,
+                                                            '$1/$2') // Adiciona a barra
+                                                        .replace(/^(\d{2}\.\d{3}\.\d{3}\/\d{4})(\d)/,
+                                                            '$1-$2'); // Adiciona o hífen
+                                                }
+                                            });
                                         </script>
                                         <div class="col-xl-6">
                                             <label for="">ESTADO</label>
@@ -218,8 +223,8 @@ if ($resultado->num_rows > 0) {
                                                 name="estado" id="estado-ong" data-id="estado-ong">
                                                 <option value="">Selecione o Estado</option>
                                                 <?php foreach ($estados as $estado): ?>
-                                                <option value="<?php echo $estado['Id']; ?>">
-                                                    <?php echo $estado['nome']; ?></option>
+                                                    <option value="<?php echo $estado['Id']; ?>">
+                                                        <?php echo $estado['nome']; ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -239,17 +244,17 @@ if ($resultado->num_rows > 0) {
                                         </div>
 
                                         <script>
-                                        document.getElementById('cep2').addEventListener('input', function(e) {
-                                            let value = e.target.value.replace(/\D/g,
-                                                ''); // Remove caracteres não numéricos
-                                            if (value.length > 5) {
-                                                value = value.slice(0, 5) + '-' + value.slice(5,
-                                                    8); // Adiciona o hífen
-                                            }
-                                            e.target.value = value; // Atualiza o campo com a máscara
-                                        });
+                                            document.getElementById('cep2').addEventListener('input', function(e) {
+                                                let value = e.target.value.replace(/\D/g,
+                                                    ''); // Remove caracteres não numéricos
+                                                if (value.length > 5) {
+                                                    value = value.slice(0, 5) + '-' + value.slice(5,
+                                                        8); // Adiciona o hífen
+                                                }
+                                                e.target.value = value; // Atualiza o campo com a máscara
+                                            });
                                         </script>
-                                        
+
                                         <div class="col-xl-6">
                                             <label for="">ENDEREÇO</label>
                                             <input type="text" class="form-control py-3 border-primary bg-transparent "
@@ -257,7 +262,7 @@ if ($resultado->num_rows > 0) {
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">CONTATO</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            <input type="text" class="form-control py-3 border-primary bg-transparent contato"
                                                 name="contato" placeholder="CONTATO">
                                         </div>
                                         <div class="col-xl-6">
@@ -267,7 +272,7 @@ if ($resultado->num_rows > 0) {
                                         </div>
                                         <div class="col-xl-6">
                                             <label for="">SENHA</label>
-                                            <input type="text" class="form-control py-3 border-primary bg-transparent "
+                                            <input type="password" class="form-control py-3 border-primary bg-transparent "
                                                 name="senha" placeholder="SENHA">
                                         </div>
                                         <div class="col-12">
@@ -286,74 +291,106 @@ if ($resultado->num_rows > 0) {
 </div>
 <!-- Book Appointment End -->
 
-<script>
-document.getElementById('estado').addEventListener('change', function() {
-    var id_estado = this.value;
-    var cidadeSelect = document.getElementById('cidade');
-
-    // Limpa as opções anteriores de cidade
-    cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
-
-    // Verifica se um estado foi selecionado
-    if (id_estado !== "") {
-        // Ativa o campo de cidade
-        cidadeSelect.disabled = false;
-
-        // Faz a requisição AJAX para obter as cidades do estado selecionado
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
-        xhr.onload = function() {
-            if (this.status == 200) {
-                var cidades = JSON.parse(this.responseText);
-
-                // Adiciona as cidades ao dropdown
-                cidades.forEach(function(cidade) {
-                    var option = document.createElement('option');
-                    option.value = cidade.id; // ID da cidade
-                    option.textContent = cidade.nome; // Nome da cidade
-                    cidadeSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.send();
-    } else {
-        // Desativa o campo de cidade se nenhum estado foi selecionado
-        cidadeSelect.disabled = true;
-    }
-});
-document.getElementById('estado-ong').addEventListener('change', function() {
-    var id_estado = this.value;
-    var cidadeSelect = document.getElementById('cidade-ong');
-
-    // Limpa as opções anteriores de cidade
-    cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
-
-    // Verifica se um estado foi selecionado
-    if (id_estado !== "") {
-        // Ativa o campo de cidade
-        cidadeSelect.disabled = false;
-
-        // Faz a requisição AJAX para obter as cidades do estado selecionado
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
-        xhr.onload = function() {
-            if (this.status == 200) {
-                var cidades = JSON.parse(this.responseText);
-
-                // Adiciona as cidades ao dropdown
-                cidades.forEach(function(cidade) {
-                    var option = document.createElement('option');
-                    option.value = cidade.id; // ID da cidade
-                    option.textContent = cidade.nome; // Nome da cidade
-                    cidadeSelect.appendChild(option);
-                });
-            }
-        };
-        xhr.send();
-    } else {
-        // Desativa o campo de cidade se nenhum estado foi selecionado
-        cidadeSelect.disabled = true;
-    }
-});
-</script>
 <?php include('./rodape.php') ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+
+<script>
+    jQuery("input.contato")
+        .mask("(99) 9999-9999?9")
+        .focusout(function(event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask("(99) 99999-999?9");
+            } else {
+                element.mask("(99) 9999-9999?9");
+            }
+        });
+    jQuery("input.celular")
+        .mask("(99) 9999-9999?9")
+        .focusout(function(event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, '');
+            element = $(target);
+            element.unmask();
+            if (phone.length > 10) {
+                element.mask("(99) 99999-999?9");
+            } else {
+                element.mask("(99) 9999-9999?9");
+            }
+        });
+
+    document.getElementById('estado').addEventListener('change', function() {
+        var id_estado = this.value;
+        var cidadeSelect = document.getElementById('cidade');
+
+        // Limpa as opções anteriores de cidade
+        cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+        // Verifica se um estado foi selecionado
+        if (id_estado !== "") {
+            // Ativa o campo de cidade
+            cidadeSelect.disabled = false;
+
+            // Faz a requisição AJAX para obter as cidades do estado selecionado
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    var cidades = JSON.parse(this.responseText);
+
+                    // Adiciona as cidades ao dropdown
+                    cidades.forEach(function(cidade) {
+                        var option = document.createElement('option');
+                        option.value = cidade.id; // ID da cidade
+                        option.textContent = cidade.nome; // Nome da cidade
+                        cidadeSelect.appendChild(option);
+                    });
+                }
+            };
+            xhr.send();
+        } else {
+            // Desativa o campo de cidade se nenhum estado foi selecionado
+            cidadeSelect.disabled = true;
+        }
+    });
+    document.getElementById('estado-ong').addEventListener('change', function() {
+        var id_estado = this.value;
+        var cidadeSelect = document.getElementById('cidade-ong');
+
+        // Limpa as opções anteriores de cidade
+        cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+        // Verifica se um estado foi selecionado
+        if (id_estado !== "") {
+            // Ativa o campo de cidade
+            cidadeSelect.disabled = false;
+
+            // Faz a requisição AJAX para obter as cidades do estado selecionado
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'buscar_cidades.php?id_estado=' + id_estado, true);
+            xhr.onload = function() {
+                if (this.status == 200) {
+                    var cidades = JSON.parse(this.responseText);
+
+                    // Adiciona as cidades ao dropdown
+                    cidades.forEach(function(cidade) {
+                        var option = document.createElement('option');
+                        option.value = cidade.id; // ID da cidade
+                        option.textContent = cidade.nome; // Nome da cidade
+                        cidadeSelect.appendChild(option);
+                    });
+                }
+            };
+            xhr.send();
+        } else {
+            // Desativa o campo de cidade se nenhum estado foi selecionado
+            cidadeSelect.disabled = true;
+        }
+    });
+</script>

@@ -18,9 +18,18 @@ if (isset($_SESSION['latitude']) && isset($_SESSION['longitude'])) {
     $latitude = $location[0];
     $longitude = $location[1];
 
+    $cidade = $ip_data['city'] ?? 'Desconhecido';
+    $estado = $ip_data['region'] ?? 'Desconhecido';
+    $pais = $ip_data['country'] ?? 'Desconhecido';
+
     // Armazena na sessão
-    $_SESSION['latitude'] = $latitude;
-    $_SESSION['longitude'] = $longitude;
+    $_SESSION['location'] = [
+        'city' => $cidade,
+        'state' => $estado,
+        'country' => $cidade,
+        'latitude' => $latitude,
+        'longitude' => $longitude
+    ];
 }
 
 $stmt = $conn->prepare("

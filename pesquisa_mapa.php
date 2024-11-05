@@ -4,6 +4,7 @@ include('./pesquisa_mapa_model.php');
 
 $departamentos = getDepartamentos();    
 
+
 $userLocation = '';
 if (isset($_SESSION['location'])) {
     $userLocation = $_SESSION['location']['city'] . ', ' . $_SESSION['location']['state'] . ', ' . $_SESSION['location']['country'];

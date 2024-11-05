@@ -82,7 +82,13 @@
                 geocodeLatLng(userLocation.lat, userLocation.lng);
 
             }, () => {
-                console.log('Erro: Não foi possível obter sua localização.');
+                saveLocationToSession({
+                    city: null,
+                    state: null,
+                    country: null,
+                    latitude: null,
+                    longitude: null
+                });
             });
         } else {
             console.log('Erro: Seu navegador não suporta geolocalização.');

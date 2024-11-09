@@ -84,21 +84,42 @@ include('./perfil_doador_model.php');
                                         value="<?php echo isset($row['cep']) ? $row['cep'] : ''; ?>" maxlength="10">
                                 </div>
 
-                                
+                                <div class="col-xl-6">
+                                    <label for="estado">ESTADO</label>
+                                    <select class="form-control py-3 border-primary bg-transparent" name="estado"
+                                        id="estado" <?php echo $disabled; ?>>
+                                        <option value="">Selecione o Estado</option>
+                                        <?php
+                                $query = "SELECT Id, nome FROM Estados ORDER BY nome";
+                                $result = $conn->query($query);
+
+                                while ($estado = $result->fetch_assoc()) {
+                                    // Verifica se o estado é o selecionado
+                                    $selected = isset($row['estado']) && $row['estado'] == $estado['Id'] ? 'selected' : '';
+                                    echo '<option value="' . $estado['Id'] . '" ' . $selected . '>' . $estado['nome'] . '</option>';
+                                }
+                                ?>
+                                    </select>
+                                </div>
 
                                 <div class="col-xl-6">
-                                    <label for="">ESTADO</label>
-                                    <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent" name="estado"
-                                        placeholder="ESTADO"
-                                        value="<?php echo isset($row['estado']) ? $row['estado'] : ''; ?>">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">CIDADE</label>
-                                    <input type="text"
-                                        class="form-control py-3 border-primary bg-transparent" name="cidade"
-                                        placeholder="CIDADE"
-                                        value="<?php echo isset($row['cidade']) ? $row['cidade'] : ''; ?>">
+                                    <label for="cidade">CIDADE</label>
+                                    <select class="form-control py-3 border-primary bg-transparent" name="cidade"
+                                        id="cidade" <?php echo $disabled; ?>>
+                                        <option value="">Selecione a Cidade</option>
+                                        <?php
+                                if (isset($row['estado'])) {
+                                    $estadoId = $row['estado'];
+                                    $query = "SELECT Id, nome FROM Cidades WHERE id_estado = $estadoId ORDER BY nome";
+                                    $result = $conn->query($query);
+
+                                    while ($cidade = $result->fetch_assoc()) {
+                                        $selected = isset($row['cidade']) && $row['cidade'] == $cidade['Id'] ? 'selected' : '';
+                                        echo '<option value="' . $cidade['Id'] . '" ' . $selected . '>' . $cidade['nome'] . '</option>';
+                                    }
+                                }
+                                ?>
+                                    </select>
                                 </div>
                                 <div class="col-xl-6">
                                     <label for="">ENDEREÇO</label>
@@ -154,7 +175,32 @@ include('./perfil_doador_model.php');
                                             e.target.value = value.substring(0, 5) + '-' + value.substring(5, 8); // Adiciona o hífen
                                         }
                                     });
-                                </script>
+                                    document.getElementById('estado').addEventListener('change', function() {
+    var estadoId = this.value;
+    var cidadeSelect = document.getElementById('cidade');
+
+    // Limpa as opções atuais
+    cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+    if (estadoId) {
+        // Realiza a chamada AJAX para buscar_cidades.php
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'buscar_cidades_perfil.php?estado_id=' + estadoId, true);
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var cidades = JSON.parse(xhr.responseText);
+                cidades.forEach(function(cidade) {
+                    var option = document.createElement('option');
+                    option.value = cidade.Id;
+                    option.text = cidade.nome;
+                    cidadeSelect.add(option);
+                });
+            }
+        };
+        xhr.send();
+    }
+});
+</script>
 
 <?php
 include('./rodape.php');

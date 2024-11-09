@@ -21,12 +21,12 @@ function getCoordinates($endereco, $cidade, $estado)
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (empty($_POST['nome']) || empty($_POST['documento']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email']) || empty($_POST['senha'])) {
+    if (empty($_POST['nome']) || empty($_POST['documento-ong']) || empty($_POST['cep']) || empty($_POST['estado']) || empty($_POST['cidade']) || empty($_POST['endereco']) || empty($_POST['contato']) || empty($_POST['email']) || empty($_POST['senha'])) {
         header('Location: cadastro.php?erro=1');
         exit;
     }
     $nome = $_POST['nome'];
-    $documento = $_POST['documento'];
+    $documento = $_POST['documento-ong'];
     $cep = $_POST['cep'];
     $estado = $_POST['estado'];
     $cidade = $_POST['cidade'];
@@ -79,7 +79,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Obtém as coordenadas
-    $coordenadas = getCoordinates($endereco, $cidade, $estado);
+    $sql_cidade = "SELECT nome FROM cidades WHERE id = '$cidade'";
+    $resultado_cidade = $conn->query($sql_cidade);
+    $nome_cidade = $resultado_cidade->fetch_all(MYSQLI_ASSOC);
+
+    $sql_estado = "SELECT nome FROM estados WHERE id = '$estado'";
+    $resultado_estado = $conn->query($sql_estado);
+    $nome_estado = $resultado_estado->fetch_all(MYSQLI_ASSOC);
+
+
+    $coordenadas = getCoordinates($endereco, $nome_cidade[0]['nome'], $nome_estado[0]['nome']);
 
     if ($coordenadas) {
         $latitude = $coordenadas['latitude'];

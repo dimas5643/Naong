@@ -315,7 +315,7 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                 <div class="col-md-4 d-flex align-items-stretch">
                     <div class="card text-center">
                         <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
-                            <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top">
+                            <img src="./<?php echo $publicacoes['arquivo'] ?>"  class="card-img-top img-fluid" style="height: 350px;">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>
                                 <p class="card-text"><?php echo $publicacoes['descricao'] ?></p>

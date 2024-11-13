@@ -28,6 +28,11 @@ if (isset($_GET['id_ong'])) {
             if ($result_ong->num_rows > 0) {
                 $row = $result_ong->fetch_assoc();
 
+                
+                $nome_cidade = getNomeCidade($conn, $row['cidade']);
+                $nome_estado = getNomeEstado($conn, $row['estado']);
+
+
                 // Executar consultas adicionais se o perfil for encontrado
                 if (isset($sql_list_publicacoes)) {
                     $list_publicacoes = listPublicacao($conn, $id_ong, $sql_list_publicacoes);
@@ -79,6 +84,9 @@ if (isset($_GET['id_ong'])) {
             if ($result_ong->num_rows > 0) {
                 $row = $result_ong->fetch_assoc();
 
+                $nome_cidade = getNomeCidade($conn, $row['cidade']);
+                $nome_estado = getNomeEstado($conn, $row['estado']);
+
                 if ($user_role == 'ong' && $_SESSION['user_id'] == $row['id_ong']) {
                     $mostraCampo = true;
                     $disabled = '';
@@ -118,4 +126,21 @@ function listDepartamento($conn, $sql_list_departamentos)
 {
     $result_list_departamentos = $conn->query($sql_list_departamentos);
     return $list_departamentos = $result_list_departamentos->fetch_all(MYSQLI_ASSOC);
+}
+
+function getNomeCidade($conn, $id_cidade)
+{
+    $sql_get_cidade = "SELECT nome FROM cidades where id = $id_cidade";
+    $result_list_departamentos = $conn->query($sql_get_cidade);
+    $getNomeCidade = $result_list_departamentos->fetch_all(MYSQLI_ASSOC);
+    return $getNomeCidade = $getNomeCidade['nome'];
+}
+
+function getNomeEstado($conn, $id_estado)
+{
+
+    $sql_get_estado = "SELECT nome FROM estados where id = $id_estado";
+    $result_list_departamentos = $conn->query($sql_get_estado);
+    $getNomeEstado = $result_list_departamentos->fetch_all(MYSQLI_ASSOC);
+    return $getNomeEstado = $getNomeEstado['nome'];
 }

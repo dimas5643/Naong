@@ -39,7 +39,7 @@ if (session_status() === PHP_SESSION_NONE) {
   //   define('GOOGLE_MAPS_LOADED', true);
   ?>
 
-  
+
 
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places"></script>
 
@@ -116,7 +116,13 @@ if (session_status() === PHP_SESSION_NONE) {
             <?php } ?>
 
             <?php if ($_SESSION['user_role'] == 'adm') { ?>
-              <a href="departamento.php" class="nav-item nav-link">Departamento</a>
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Departamento</a>
+                <div class="dropdown-menu m-0">
+                  <a href="departamento.php" class="dropdown-item">Cadastrar</a>
+                  <a href="lista_departamento.php" class="dropdown-item">Listar</a>
+                </div>
+              </div>
               <a href="consulta_coleta.php" class="nav-item nav-link">Consulta Pontos de Coleta</a>
               <div class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Doações</a>

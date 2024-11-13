@@ -32,18 +32,19 @@
                 <?php
                 foreach ($listOngs as $ong) {
                 ?>
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="service-item rounded">
+                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s" style="text-align: center;">
+                        <div class="service-item rounded" style="height: 350px;">
                             <div class="service-img rounded-top">
                                 <img src="img/service-1.jpg" class="img-fluid rounded-top w-100" alt="">
                             </div>
-                            <div class="service-content rounded-bottom bg-light p-4">
+                            <div class="service-content rounded-bottom bg-light p-4" style="height: 300px;">
                                 <div class="service-content-inner">
                                     <h5 class="mb-4"><?php echo $ong['nome_fantasia']; ?></h5>
                                     <p class="mb-4"><?php echo $ong['endereco']; ?></p>
                                     <a href="perfil_ong.php?id_ong=<?php echo $ong['id_ong']; ?>" class="btn btn-primary rounded-pill text-white py-2 px-4 mb-2">Leia Mais</a>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 <?php } ?>
@@ -170,7 +171,7 @@
                 ?>
                     <div class="col-md-4 d-flex align-items-stretch">
                         <div class="card text-center">
-                            <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>" >
+                            <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
                                 <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top img-fluid" style="height: 350px;">
                                 <div class="card-body">
                                     <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>

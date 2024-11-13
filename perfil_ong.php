@@ -43,10 +43,10 @@ include('./perfil_ong_model.php');
                     }
 
                     if ($mensagem) { ?>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong><?php echo $mensagem; ?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong><?php echo $mensagem; ?></strong>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                 <?php }
                 }
                 ?>
@@ -107,25 +107,25 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                 <div class="col-md-3">
                                     <h2 class="mt-3">Redes Sociais</h2>
                                     <?php if (isset($row['facebook'])) { ?>
-                                    <p>
-                                        <i class="fa fa-facebook"></i>
-                                        <a href="https://facebook.com/<?php echo $row['facebook']; ?>"
-                                            target="_blank"><?php echo $row['facebook']; ?></a>
-                                    </p>
+                                        <p>
+                                            <i class="fa fa-facebook"></i>
+                                            <a href="https://facebook.com/<?php echo $row['facebook']; ?>"
+                                                target="_blank"><?php echo $row['facebook']; ?></a>
+                                        </p>
                                     <?php } ?>
                                     <?php if (isset($row['instagram'])) { ?>
-                                    <p>
-                                        <i class="fa fa-instagram"></i>
-                                        <a href="https://instagram.com/<?php echo $row['instagram']; ?>"
-                                            target="_blank"><?php echo $row['instagram']; ?></a>
-                                    </p>
+                                        <p>
+                                            <i class="fa fa-instagram"></i>
+                                            <a href="https://instagram.com/<?php echo $row['instagram']; ?>"
+                                                target="_blank"><?php echo $row['instagram']; ?></a>
+                                        </p>
                                     <?php } ?>
                                     <?php if (isset($row['site'])) { ?>
-                                    <p>
-                                        <i class="fa fa-globe"></i>
-                                        <a href="<?php echo (strpos($row['site'], 'http') === 0 ? '' : 'https://') . $row['site']; ?>"
-                                            target="_blank"><?php echo $row['site']; ?></a>
-                                    </p>
+                                        <p>
+                                            <i class="fa fa-globe"></i>
+                                            <a href="<?php echo (strpos($row['site'], 'http') === 0 ? '' : 'https://') . $row['site']; ?>"
+                                                target="_blank"><?php echo $row['site']; ?></a>
+                                        </p>
                                     <?php } ?>
                                 </div>
                             </div>
@@ -134,7 +134,7 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                         <form action="atualizar_<?php echo $user_role; ?>.php" method="POST"
                             enctype="multipart/form-data">
                             <?php if ($mostraCampo) { ?>
-                            <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
+                                <input type="hidden" name="id" value="<?php echo $row['id_' . $user_role]; ?>">
                             <?php } ?>
                             <div class="row gy-3 gx-4">
                                 <div class="col-xl-6">
@@ -164,15 +164,15 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                         id="estado" <?php echo $disabled; ?>>
                                         <option value="">Selecione o Estado</option>
                                         <?php
-                                $query = "SELECT Id, nome FROM Estados ORDER BY nome";
-                                $result = $conn->query($query);
+                                        $query = "SELECT Id, nome FROM Estados ORDER BY nome";
+                                        $result = $conn->query($query);
 
-                                while ($estado = $result->fetch_assoc()) {
-                                    // Verifica se o estado é o selecionado
-                                    $selected = isset($row['estado']) && $row['estado'] == $estado['Id'] ? 'selected' : '';
-                                    echo '<option value="' . $estado['Id'] . '" ' . $selected . '>' . $estado['nome'] . '</option>';
-                                }
-                                ?>
+                                        while ($estado = $result->fetch_assoc()) {
+                                            // Verifica se o estado é o selecionado
+                                            $selected = isset($row['estado']) && $row['estado'] == $estado['Id'] ? 'selected' : '';
+                                            echo '<option value="' . $estado['Id'] . '" ' . $selected . '>' . $estado['nome'] . '</option>';
+                                        }
+                                        ?>
                                     </select>
                                 </div>
 
@@ -182,17 +182,17 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                         id="cidade" <?php echo $disabled; ?>>
                                         <option value="">Selecione a Cidade</option>
                                         <?php
-                                if (isset($row['estado'])) {
-                                    $estadoId = $row['estado'];
-                                    $query = "SELECT Id, nome FROM Cidades WHERE id_estado = $estadoId ORDER BY nome";
-                                    $result = $conn->query($query);
+                                        if (isset($row['estado'])) {
+                                            $estadoId = $row['estado'];
+                                            $query = "SELECT Id, nome FROM Cidades WHERE id_estado = $estadoId ORDER BY nome";
+                                            $result = $conn->query($query);
 
-                                    while ($cidade = $result->fetch_assoc()) {
-                                        $selected = isset($row['cidade']) && $row['cidade'] == $cidade['Id'] ? 'selected' : '';
-                                        echo '<option value="' . $cidade['Id'] . '" ' . $selected . '>' . $cidade['nome'] . '</option>';
-                                    }
-                                }
-                                ?>
+                                            while ($cidade = $result->fetch_assoc()) {
+                                                $selected = isset($row['cidade']) && $row['cidade'] == $cidade['Id'] ? 'selected' : '';
+                                                echo '<option value="' . $cidade['Id'] . '" ' . $selected . '>' . $cidade['nome'] . '</option>';
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-xl-6">
@@ -210,39 +210,39 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                         <?php echo $disabled ?>>
                                 </div>
                                 <?php if ($mostraCampo) { ?>
-                                <div class="col-xl-6">
-                                    <label for="">EMAIL</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                        name="email" placeholder="EMAIL"
-                                        value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>"
-                                        <?php echo $disabled ?>>
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">SENHA</label>
-                                    <input type="password" class="form-control py-3 border-primary bg-transparent"
-                                        name="senha" placeholder="SENHA">
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">SITE</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                        name="site" placeholder="SITE"
-                                        value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>"
-                                        <?php echo $disabled ?>>
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">INSTAGRAM</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                        name="instagram" placeholder="INSTAGRAM"
-                                        value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>"
-                                        <?php echo $disabled ?>>
-                                </div>
-                                <div class="col-xl-6">
-                                    <label for="">FACEBOOK</label>
-                                    <input type="text" class="form-control py-3 border-primary bg-transparent"
-                                        name="facebook" placeholder="FACEBOOK"
-                                        value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>"
-                                        <?php echo $disabled ?>>
-                                </div>
+                                    <div class="col-xl-6">
+                                        <label for="">EMAIL</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            name="email" placeholder="EMAIL"
+                                            value="<?php echo isset($row['email']) ? $row['email'] : ''; ?>"
+                                            <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">SENHA</label>
+                                        <input type="password" class="form-control py-3 border-primary bg-transparent"
+                                            name="senha" placeholder="SENHA">
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">SITE</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            name="site" placeholder="SITE"
+                                            value="<?php echo isset($row['site']) ? $row['site'] : $row['site']; ?>"
+                                            <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">INSTAGRAM</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            name="instagram" placeholder="INSTAGRAM"
+                                            value="<?php echo isset($row['instagram']) ? $row['instagram'] : $row['instagram']; ?>"
+                                            <?php echo $disabled ?>>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <label for="">FACEBOOK</label>
+                                        <input type="text" class="form-control py-3 border-primary bg-transparent"
+                                            name="facebook" placeholder="FACEBOOK"
+                                            value="<?php echo isset($row['facebook']) ? $row['facebook'] : $row['facebook']; ?>"
+                                            <?php echo $disabled ?>>
+                                    </div>
                                 <?php } ?>
                                 <div class="col-xl-6">
                                     <label for="">ÁREA DE ATUAÇÃO</label>
@@ -259,19 +259,19 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                         <?php echo $disabled ?>>
                                         <option value=""></option>
                                         <?php foreach ($list_departamentos as $departamentos) { ?>
-                                        <option value="<?php echo $departamentos['id_departamento']; ?>" <?php if (isset($row['id_departamento'])) {
+                                            <option value="<?php echo $departamentos['id_departamento']; ?>" <?php if (isset($row['id_departamento'])) {
                                                                                                                     echo $row['id_departamento'] == $departamentos['id_departamento'] ? 'selected' : '';
                                                                                                                 } ?>>
-                                            <?php echo $departamentos['nome_departamento']; ?></option>
+                                                <?php echo $departamentos['nome_departamento']; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
                                 <?php if ($mostraCampo) { ?>
-                                <div class="col-xl-6">
-                                    <label for="">FOTO DE PERFIL</label>
-                                    <input type="file" class="form-control py-3 border-primary bg-transparent"
-                                        name="foto_perfil">
-                                </div>
+                                    <div class="col-xl-6">
+                                        <label for="">FOTO DE PERFIL</label>
+                                        <input type="file" class="form-control py-3 border-primary bg-transparent"
+                                            name="foto_perfil">
+                                    </div>
                                 <?php } ?>
                                 <div class="col-xl-12">
                                     <label for="" class="form-label">DESCRIÇÃO DA NECESSIDADE</label>
@@ -281,7 +281,7 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                                 </div>
                                 <div class="col-12">
                                     <?php if ($mostraCampo) { ?>
-                                    <button type="submit" class="btn btn-primary w-100 py-3 px-5">ATUALIZAR</button>
+                                        <button type="submit" class="btn btn-primary w-100 py-3 px-5">ATUALIZAR</button>
                                     <?php } ?>
                                 </div>
 
@@ -312,22 +312,22 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
                 // Formatar a data para 'd-m-Y' ou outro formato desejado
                 $dataFormatada = $dataPublicacao ? $dataPublicacao->format('d-m-Y') : '';
             ?>
-            <div class="col-md-4 d-flex align-items-stretch">
-                <div class="card text-center">
-                    <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
-                        <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>
-                            <p class="card-text"><?php echo $publicacoes['descricao'] ?></p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-body-secondary d-flex justify-content-between">
-                                <span class="text-left"><?php echo $row['nome_fantasia'] ?></span>
-                                <span class="text-right"><?php echo $dataFormatada ?></span></small>
-                        </div>
-                    </a>
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card text-center">
+                        <a href="./cadastro_publicacao.php?id_publicacao=<?php echo $publicacoes['id_publicacoes'] ?>">
+                            <img src="./<?php echo $publicacoes['arquivo'] ?>" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $publicacoes['titulo'] ?></h5>
+                                <p class="card-text"><?php echo $publicacoes['descricao'] ?></p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-body-secondary d-flex justify-content-between">
+                                    <span class="text-left"><?php echo $row['nome_fantasia'] ?></span>
+                                    <span class="text-right"><?php echo $dataFormatada ?></span></small>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
             <?php } ?>
 
@@ -339,55 +339,59 @@ Acesse o perfil completo e descubra como eles estão transformando vidas: http:/
 include('./rodape.php');
 ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&callback=initMap" async
-    defer></script>
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&callback=initMap" async
+    defer></script> -->
 <script>
-function initMap() {
-    var geocoder = new google.maps.Geocoder();
-    var address =
-        "<?php echo $row['endereco'] . ', ' . $row['cidade'] . ', ' . $row['estado'] . ', ' . $row['pais']; ?>";
+    $(document).ready(function() {
+        initMap();
+    });
 
-    geocoder.geocode({
-        'address': address
-    }, function(results, status) {
-        if (status === 'OK') {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 15,
-                center: results[0].geometry.location
-            });
-            var marker = new google.maps.Marker({
-                position: results[0].geometry.location,
-                map: map
-            });
-        } else {
-            alert('Geocoding falhou: ' + status);
+    function initMap() {
+        var geocoder = new google.maps.Geocoder();
+        var address =
+            "<?php echo $row['endereco'] . ', ' . $nome_cidade . ', ' . $nome_estado . ', ' . 'Brasil'; ?>";
+
+        geocoder.geocode({
+            'address': address
+        }, function(results, status) {
+            if (status === 'OK') {
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 15,
+                    center: results[0].geometry.location
+                });
+                var marker = new google.maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map
+                });
+            } else {
+                alert('Geocoding falhou: ' + status);
+            }
+        });
+    }
+
+    document.getElementById('estado').addEventListener('change', function() {
+        var estadoId = this.value;
+        var cidadeSelect = document.getElementById('cidade');
+
+        // Limpa as opções atuais
+        cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
+
+        if (estadoId) {
+            // Realiza a chamada AJAX para buscar_cidades.php
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'buscar_cidades_perfil.php?estado_id=' + estadoId, true);
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var cidades = JSON.parse(xhr.responseText);
+                    cidades.forEach(function(cidade) {
+                        var option = document.createElement('option');
+                        option.value = cidade.Id;
+                        option.text = cidade.nome;
+                        cidadeSelect.add(option);
+                    });
+                }
+            };
+            xhr.send();
         }
     });
-}
-
-document.getElementById('estado').addEventListener('change', function() {
-    var estadoId = this.value;
-    var cidadeSelect = document.getElementById('cidade');
-
-    // Limpa as opções atuais
-    cidadeSelect.innerHTML = '<option value="">Selecione a Cidade</option>';
-
-    if (estadoId) {
-        // Realiza a chamada AJAX para buscar_cidades.php
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'buscar_cidades_perfil.php?estado_id=' + estadoId, true);
-        xhr.onload = function() {
-            if (xhr.status === 200) {
-                var cidades = JSON.parse(xhr.responseText);
-                cidades.forEach(function(cidade) {
-                    var option = document.createElement('option');
-                    option.value = cidade.Id;
-                    option.text = cidade.nome;
-                    cidadeSelect.add(option);
-                });
-            }
-        };
-        xhr.send();
-    }
-});
 </script>

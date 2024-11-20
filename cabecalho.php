@@ -41,7 +41,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
 
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB-N9uCpQNAjSVptM-LjXOCmfS19UZiPhs&libraries=places"></script>
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAttzGQKiqv9He-_JHLn5WQkDkfONMSbvI&libraries=places"></script>
 
 
   <?php

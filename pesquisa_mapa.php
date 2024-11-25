@@ -2,7 +2,7 @@
 include('./cabecalho.php');
 include('./pesquisa_mapa_model.php');
 
-$departamentos = getDepartamentos();    
+$departamentos = getDepartamentos();
 
 
 $userLocation = '';
@@ -23,7 +23,8 @@ if (isset($_SESSION['location'])) {
                         <!-- Input de pesquisa e botão -->
                         <div id="map-controls" class="mb-4">
                             <label class="form-label">Digite o local</label>
-                            <input id="search-box" type="text" value="<?php echo htmlspecialchars($userLocation); ?>" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />                        </div>
+                            <input id="search-box" type="text" value="<?php echo htmlspecialchars($userLocation); ?>" placeholder="Pesquisar local..." class="form-control py-2 mb-2" />
+                        </div>
 
                         <!-- Filtro de Departamento -->
                         <div class="form-group mb-4">
@@ -38,7 +39,7 @@ if (isset($_SESSION['location'])) {
                             </select>
                         </div>
 
-                        <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5 mb-4">Atualizar Mapa</button>
+                        <button id="search-btn" class="btn btn-primary text-white w-100 py-3 px-5 mb-4" onclick="initMap()">Atualizar Mapa</button>
 
                         <!-- Mapa -->
                         <div id="map" style="height: 500px; width: 100%; margin-top: 20px;"></div>
@@ -59,12 +60,6 @@ if (isset($_SESSION['location'])) {
 
 <script>
     $(document).ready(function() {
-        initMap();
-    });
-
-    function initMap() {
-        console.log('initamp')
-
         <?php if (isset($_SESSION['location'])) { ?>
             userLatitude = <?php echo (float)$_SESSION['location']['latitude']; ?>;
             userLongitude = <?php echo (float)$_SESSION['location']['longitude']; ?>;
@@ -72,6 +67,39 @@ if (isset($_SESSION['location'])) {
             userLatitude = -28.681709540162558;
             userLongitude = -49.37358875197284;
         <?php } ?>
+
+        initMap(userLatitude, userLongitude);
+    });
+
+    document.getElementById('search-btn').addEventListener('click', function() {
+        const address = document.getElementById('search-box').value;
+
+        if (!address) {
+            alert('Por favor, insira um local válido para pesquisar.');
+            return;
+        }
+
+        const geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({
+            address: address
+        }, function(results, status) {
+            if (status === 'OK') {
+                const location = results[0].geometry.location;
+                const lat = location.lat();
+                const lng = location.lng();
+
+                // Chama a função para carregar os marcadores de ONGs
+                initMap(lat, lng);
+            } else {
+                alert('Geocodificação falhou: ' + status);
+            }
+        });
+    });
+
+
+    function initMap(userLatitude, userLongitude) {
+
 
         const map = new google.maps.Map(document.getElementById('map'), {
             center: {
@@ -84,11 +112,11 @@ if (isset($_SESSION['location'])) {
 
         let markers = [];
         const searchBox = new google.maps.places.SearchBox(document.getElementById('search-box'));
-        
+
+
 
         // Função para remover todos os marcadores do mapa
         function clearMarkers() {
-            console.log('cleanmaker')
             for (let i = 0; i < markers.length; i++) {
                 markers[i].setMap(null); // Remove o marcador do mapa
             }
@@ -119,7 +147,6 @@ if (isset($_SESSION['location'])) {
 
         // Função para carregar os marcadores de ONGs
         function carregaMakers(lat, lng) {
-            console.log('carregamakers')
             const departamentoId = document.getElementById('departamento').value;
 
             clearMarkers();
@@ -164,7 +191,6 @@ if (isset($_SESSION['location'])) {
 
                         markers.push(marker);
 
-                        console.log('lista')
                         const listItem = document.createElement('div');
                         listItem.className = 'ong-item';
                         listItem.innerHTML = `
